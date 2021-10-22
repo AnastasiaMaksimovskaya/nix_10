@@ -28,6 +28,7 @@ public final class Reverse {
     }
 
     public static String reverse(String src, String dest) {
+
         StringBuilder stringBuilder = new StringBuilder(src);
         stringBuilder.insert(src.indexOf(dest), reverseSubstring(dest));
         stringBuilder.delete(stringBuilder.indexOf(dest), stringBuilder.indexOf(dest) + dest.length());
@@ -37,10 +38,9 @@ public final class Reverse {
     public static String reverse(String src, int firstIndex, int
             lastIndex) {
         StringBuilder stringBuilder = new StringBuilder(src);
-        String insert = reverse(stringBuilder.substring(firstIndex, lastIndex), false);
-        System.out.println(insert);
-        stringBuilder.delete(firstIndex, lastIndex);
-        stringBuilder.insert(firstIndex, insert);
+        String insert = reverse(stringBuilder.substring(firstIndex - 1, lastIndex), false);
+        stringBuilder.delete(firstIndex - 1, lastIndex);
+        stringBuilder.insert(firstIndex - 1, insert);
         return stringBuilder.toString();
     }
 

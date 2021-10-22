@@ -18,16 +18,26 @@ public class StringMain {
                     System.out.println("enter a string");
                     input = scanner.nextLine();
                     System.out.println("Select 1 if you want to reverse full string or 2 if you want to reverse each word");
-                    if (scanner.nextLine().equals("1")) {
+                    String choice = scanner.nextLine();
+                    if (choice.equals("1")) {
                         System.out.println(Reverse.reverse(input, true));
-                    } else System.out.println(Reverse.reverse(input, false));
+                    }
+                    if (choice.equals("2")) {
+                        System.out.println(Reverse.reverse(input, false));
+                    }
                     print();
                     break;
                 case "2":
                     System.out.println("enter a string");
                     input = scanner.nextLine();
                     System.out.println("enter a substring");
-                    System.out.println(Reverse.reverse(input, scanner.next()));
+                    try {
+                        System.out.println(Reverse.reverse(input, scanner.next()));
+                    }
+                    catch (Exception e){
+                        System.out.println("is not a substring");
+                    }
+
                     print();
                     break;
                 case "3":
@@ -37,7 +47,12 @@ public class StringMain {
                     int firstIndex = scanner.nextInt();
                     System.out.println("enter last index");
                     int lastIndex = scanner.nextInt();
-                    System.out.println(Reverse.reverse(input, firstIndex, lastIndex));
+                    try {
+                        System.out.println(Reverse.reverse(input, firstIndex, lastIndex));
+                    }
+                    catch (Exception e){
+                        System.out.println("invalid data format");
+                    }
                     print();
                     break;
                 case "0":
