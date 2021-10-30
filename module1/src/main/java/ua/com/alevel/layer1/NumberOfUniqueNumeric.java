@@ -1,40 +1,43 @@
 package ua.com.alevel.layer1;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class NumberOfUniqueNumeric {
-    static String regex = "^(\\-|\\+)?\\d+(\\.\\d+)?$";
-    public static double[] createNumberArray(String input) {
-        String inputArray[] = input.split(regex);
-        int count = 0;
 
+    static String regex = "^(\\-|\\+)?\\d+";
+
+    private static List createNumberArray(String input) {
+        String inputArray[] = input.split(" ");
+        List<Integer> numberArray = new ArrayList<Integer>();
         for (int i = 0; i < inputArray.length; i++) {
-            if (inputArray[i].matches("")) {
-                count++;
-            }
-        }
-
-        double numberArray[] = new double[count];
-
-        for (int i = 0; i < numberArray.length; i++) {
-            for (int j = i; j < inputArray.length; j++) {
-                if (inputArray[j].matches(regex)) {
-                    numberArray[i] = Double.parseDouble(inputArray[j]);
-                    break;
-                }
+            if (inputArray[i].matches(regex)) {
+                numberArray.add(Integer.parseInt(inputArray[i]));
             }
         }
         return numberArray;
     }
 
-
-    public static int calculateUnique(double[] arr) {
-        Set<Double> unique = new HashSet<>();
-        for (int i = 0; i < arr.length; i++) {
-            unique.add(arr[i]);
+    private static int calculateUnique(List<Integer> list) {
+        Set<Integer> unique = new HashSet<>();
+        for (int numbers : list) {
+            unique.add(numbers);
         }
         return unique.size();
     }
 
+    public static void run(Scanner scanner) {
+        System.out.println("Enter a string to get number of unique numeric, press S to stop");
+        while (true) {
+            String input = scanner.nextLine();
+            List<Integer> list = createNumberArray(input);
+            if (input.equals("S")) {
+                break;
+            }
+            for (int numbers : list) {
+                System.out.print(numbers + " ");
+            }
+            System.out.println("\nnubmer of unique numeric is " + calculateUnique(list));
+            System.out.println("Enter a string to get number of unique numeric, press S to stop");
+        }
+    }
 }

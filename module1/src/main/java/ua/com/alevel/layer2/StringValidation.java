@@ -1,61 +1,54 @@
 package ua.com.alevel.layer2;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class StringValidation {
 
-    public static boolean isValid(String input) {
-
-        Stack<String> stackOfBrackets = new Stack<String>();
-        String arrayOfBrackets[] = input.split("");
-        if (arrayOfBrackets.length==0){
-            return true;
-        }
-        if (arrayOfBrackets.length%2==1){
-            return false;
-        }
-
-        for (int i = 0; i < arrayOfBrackets.length; i++) {
-            if (arrayOfBrackets[i].equals("{") || arrayOfBrackets[i].equals("[") || arrayOfBrackets[i].equals("(")) {
-                stackOfBrackets.push(arrayOfBrackets[i]);
-            }
-            else if (arrayOfBrackets[i].equals(")")) {
-                if (stackOfBrackets.peek().equals("(")){
-                    stackOfBrackets.pop();
+    private static boolean isValid(String input) {
+        Stack stack = new Stack();
+        String[] symbols = input.split("");
+        for (String symb : symbols
+        ) {
+            if ((symb.equals("(")) || (symb.equals(")")) || (symb.equals("{"))
+                    || (symb.equals("}")) || (symb.equals("[")) || (symb.equals("]"))) {
+                if ((symb.equals("(")) || (symb.equals("{")) || (symb.equals("["))) {
+                    stack.push(symb);
+                } else {
+                    switch (symb) {
+                        case ")":
+                            symb = "(";
+                            break;
+                        case "}":
+                            symb = "{";
+                            break;
+                        case "]":
+                            symb = "[";
+                            break;
+                    }
+                    if (stack.empty()) {
+                        return false;
+                    }
+                    if (stack.lastElement().equals(symb)) {
+                        stack.pop();
+                    } else {
+                        return false;
+                    }
                 }
-                else return false;
-            }
-            else if (arrayOfBrackets[i].equals("}")) {
-                if (stackOfBrackets.peek().equals("{")){
-                    stackOfBrackets.pop();
-                }
-                else return false;
-            }
-            else if (arrayOfBrackets[i].equals("]")) {
-                if (stackOfBrackets.peek().equals("[")){
-                    stackOfBrackets.pop();
-                }
-                else return false;
             }
         }
-        return true;
+        return stack.empty();
     }
 
-    public static void run(){
-        Scanner scanner = new Scanner(System.in);
+    public static void run(Scanner scanner) {
         System.out.println("Enter string to validate, if you want to stop press S");
-        while (true){
+        while (true) {
             String line = scanner.nextLine();
-            if (line.equals("S")){
+            if (line.equals("S")) {
                 break;
             }
-            if (isValid(line)==true){
+            if (isValid(line) == true) {
                 System.out.println("Input string is valid");
-            }
-            else System.out.println("Input string is invalid)");
+            } else System.out.println("Input string is invalid)");
         }
-        scanner.close();
     }
 }

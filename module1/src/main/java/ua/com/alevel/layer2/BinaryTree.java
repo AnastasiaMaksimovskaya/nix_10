@@ -11,7 +11,6 @@ class Node {
 
     }
 
-
     public int getValue() {
         return value;
     }
@@ -49,8 +48,7 @@ public class BinaryTree {
         } else {
             Node currentNode = treeNode;
             Node parentNode;
-            while (true)
-            {
+            while (true) {
                 parentNode = currentNode;
                 if (value == currentNode.getValue()) {
                     System.out.println("element already exists");
@@ -72,7 +70,7 @@ public class BinaryTree {
         }
     }
 
-    public static BinaryTree generate() {
+    private static BinaryTree generate() {
         BinaryTree tree = new BinaryTree();
         Random random = new Random();
         int testArray[] = {1, 10, 4, 2, 9, 6, 11, 12, 8, 10};
@@ -82,7 +80,7 @@ public class BinaryTree {
         return tree;
     }
 
-    public static int getDepth(Node node) {
+    private static int getDepth(Node node) {
         if (node != null) {
             int depthRight = getDepth(node.getRight());
             int depthLeft = getDepth(node.getLeft());
@@ -93,16 +91,14 @@ public class BinaryTree {
         return 0;
     }
 
-    public static int getMaxDepth(Node node) {
+    private static int getMaxDepth(Node node) {
         return getDepth(treeNode);
     }
 
-    public static void printTree(Node node) {
-        Queue<Node> current= new LinkedList<Node>();
-        Queue<Node> next= new LinkedList<Node>();
-
+    private static void printTree(Node node) {
+        Queue<Node> current = new LinkedList<Node>();
+        Queue<Node> next = new LinkedList<Node>();
         current.add(node);
-
         while (!current.isEmpty()) {
             Iterator<Node> iterator = current.iterator();
             while (iterator.hasNext()) {
@@ -118,31 +114,24 @@ public class BinaryTree {
             System.out.println();
             current = next;
             next = new LinkedList<Node>();
-
         }
     }
 
-    public static void run() {
-        Scanner scanner = new Scanner(System.in);
+    public static void run(Scanner scanner) {
         System.out.println("please enter a value to insert in tree, if you want to stop, press S");
-        while (true){
+        while (true) {
             String val = scanner.nextLine();
-            if (val.equals("S")){
+            if (val.equals("S")) {
                 break;
             }
             try {
                 insertNode(Integer.parseInt(val));
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("invalid data format");
             }
             printTree(treeNode);
-
         }
-        scanner.close();
-
-        System.out.println("Max depth is " +getMaxDepth(treeNode));
+        System.out.println("Max depth is " + getMaxDepth(treeNode));
     }
-
-
 }
 
