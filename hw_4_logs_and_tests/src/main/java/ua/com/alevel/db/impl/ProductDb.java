@@ -9,7 +9,7 @@ import java.util.UUID;
 public class ProductDb implements ProductDB {
 
     private Product[] products;
-    private Product[] newProducts;
+
     protected static ProductDb instance;
 
     public ProductDb() {

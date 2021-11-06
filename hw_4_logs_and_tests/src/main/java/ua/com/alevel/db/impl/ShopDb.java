@@ -1,6 +1,5 @@
 package ua.com.alevel.db.impl;
 
-import ua.com.alevel.db.ProductDB;
 import ua.com.alevel.db.ShopDB;
 import ua.com.alevel.entity.Product;
 import ua.com.alevel.entity.Shop;

@@ -1,7 +1,5 @@
 package ua.com.alevel.entity;
 
-import java.util.Arrays;
-
 public class Shop extends BaseEntity {
     private String adress;
     private String name;
