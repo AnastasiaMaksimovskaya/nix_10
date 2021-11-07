@@ -11,6 +11,7 @@ import ua.com.alevel.service.ShopService;
 
 @ActiveClass
 public class ShopServiceImpl implements ShopService {
+
     private static final Logger LOGGER_INFO = LoggerFactory.getLogger("info");
     private static final Logger LOGGER_WARN = LoggerFactory.getLogger("warn");
 
@@ -20,11 +21,11 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public void create(Shop entity) {
         LOGGER_INFO.info("start create " + entity);
-        if (!shopDao.existByAddress(entity.getAdress())) {
+        if (!shopDao.existByAddress(entity.getAddress())) {
             shopDao.create(entity);
         } else {
             System.out.println("shop exist by address");
-            LOGGER_WARN.warn("shop exist by address" + entity.getAdress());
+            LOGGER_WARN.warn("shop exist by address" + entity.getAddress());
         }
         LOGGER_INFO.info("finish create " + entity);
 

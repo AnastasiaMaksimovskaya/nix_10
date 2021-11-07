@@ -8,6 +8,7 @@ import ua.com.alevel.entity.Shop;
 
 @ActiveClass
 public class ShopDaoImpl implements ShopDao {
+
     private final ShopDb db = ShopDb.getInstance();
 
     @Override

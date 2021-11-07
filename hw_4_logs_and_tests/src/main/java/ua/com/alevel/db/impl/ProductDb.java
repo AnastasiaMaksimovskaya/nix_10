@@ -130,6 +130,6 @@ public class ProductDb implements ProductDB {
         if (findById(id) == null) {
             return ("does not exist");
         }
-        return findById(id).getShop().getAdress();
+        return findById(id).getShop().getAddress();
     }
 }
