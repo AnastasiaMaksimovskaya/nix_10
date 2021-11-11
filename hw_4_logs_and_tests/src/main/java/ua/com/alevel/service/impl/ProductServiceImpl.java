@@ -8,7 +8,6 @@ import ua.com.alevel.dao.ProductDao;
 import ua.com.alevel.entity.Product;
 import ua.com.alevel.service.ProductService;
 
-
 @ActiveClass
 public class ProductServiceImpl implements ProductService {
 

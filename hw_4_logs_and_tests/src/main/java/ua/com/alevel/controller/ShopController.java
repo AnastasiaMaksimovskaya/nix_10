@@ -79,7 +79,7 @@ public class ShopController {
             System.out.println("Please, enter name");
             String name = reader.readLine();
             Shop shop = new Shop();
-            shop.setAdress(address);
+            shop.setAddress(address);
             shop.setName(name);
             shopService.create(shop);
         } catch (IOException e) {

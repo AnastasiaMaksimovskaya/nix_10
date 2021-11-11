@@ -10,6 +10,7 @@ import ua.com.alevel.service.impl.ProductServiceImpl;
 import ua.com.alevel.service.impl.ShopServiceImpl;
 
 public class ServicesTest {
+
     public static final ProductServiceImpl productService = new ProductServiceImpl();
     public static final ShopServiceImpl shopService = new ShopServiceImpl();
 
@@ -53,7 +54,7 @@ public class ServicesTest {
     public void shouldBeCreateShopWhenAddressIsNotDuplicate() {
         Shop shop = generateRandomShop();
         shopService.create(shop);
-        Shop shops[] = shopService.findAll();
+        Shop[] shops = shopService.findAll();
         Assertions.assertEquals(shops.length, DEFAULT_SIZE + 1);
     }
 
@@ -62,7 +63,7 @@ public class ServicesTest {
     public void shouldBeCreateShopWhenAddressIsDuplicate() {
         Shop shop = generateRandomShop();
         shopService.create(shop);
-        Shop shops[] = shopService.findAll();
+        Shop[] shops = shopService.findAll();
         Assertions.assertEquals(shops.length, DEFAULT_SIZE + 1);
     }
 
@@ -80,7 +81,7 @@ public class ServicesTest {
     @Order(4)
     public void shouldBeFindAllProducts() {
         int numberOfNullElements = 0;
-        Product products[] = productService.findAll();
+        Product[] products = productService.findAll();
         for (int i = 0; i < products.length; i++) {
             if (products[i] == null) {
                 numberOfNullElements++;
@@ -101,7 +102,7 @@ public class ServicesTest {
     public void shouldBeCreateProduct() {
         Product product = generateRandomProduct();
         productService.create(product);
-        Product products[] = productService.findAll();
+        Product[] products = productService.findAll();
         Assertions.assertEquals(products.length, DEFAULT_SIZE_PRODUCTS + 1);
     }
 
@@ -123,7 +124,7 @@ public class ServicesTest {
         Shop shop = product.getShop();
         productService.delete(product.getId());
         Assertions.assertEquals(productService.findAll().length, DEFAULT_SIZE_PRODUCTS);
-        Product products[] = shopService.findAllProducts(shop);
+        Product[] products = shopService.findAllProducts(shop);
         for (int i = 0; i < products.length; i++) {
             if (products[i] != null) {
                 notNullElement++;
@@ -137,7 +138,7 @@ public class ServicesTest {
     public void shouldBeDeleteShopById() {
         int numberOfNotNullElements = 0;
         Shop shop = generateRandomShop();
-        Product products[] = shopService.findAllProducts(shop);
+        Product[] products = shopService.findAllProducts(shop);
         for (int i = 0; i < products.length; i++) {
             if (products[i] == null) {
                 numberOfNotNullElements++;
@@ -151,14 +152,14 @@ public class ServicesTest {
         Shop shop = new Shop();
         shop.setId(ID);
         shop.setName(NAME);
-        shop.setAdress(ADDRESS);
+        shop.setAddress(ADDRESS);
         return shop;
     }
 
     private static Shop generateShop(String name, String address) {
         Shop shop = new Shop();
         shop.setName(name);
-        shop.setAdress(address);
+        shop.setAddress(address);
         return shop;
     }
 

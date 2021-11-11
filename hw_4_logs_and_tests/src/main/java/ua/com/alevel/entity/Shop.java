@@ -1,20 +1,21 @@
 package ua.com.alevel.entity;
 
 public class Shop extends BaseEntity {
-    private String adress;
+
+    private String address;
     private String name;
-    private Product products[];
+    private Product[] products;
 
     public Shop() {
         products = new Product[10];
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getName() {
@@ -45,7 +46,7 @@ public class Shop extends BaseEntity {
     }
 
     public void changeSize() {
-        Product newProducts[] = new Product[products.length * 2];
+        Product[] newProducts = new Product[products.length * 2];
         for (int i = 0; i < products.length; i++) {
             newProducts[i] = products[i];
         }
@@ -56,7 +57,7 @@ public class Shop extends BaseEntity {
     public String toString() {
         return "Shop{" +
                 "id='" + super.getId() + '\'' +
-                ", address='" + adress + '\'' +
+                ", address='" + address + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }

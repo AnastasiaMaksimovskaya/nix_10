@@ -53,7 +53,7 @@ public class ShopDb implements ShopDB {
     @Override
     public void delete(String id) {
         if (findById(id) != null) {
-            Product products[] = findAllProducts(findById(id));
+            Product[] products = findAllProducts(findById(id));
             for (int i = 0; i < products.length; i++) {
                 if (products[0] != null) {
                     ProductDb.getInstance().delete(products[0].getId());
@@ -100,8 +100,7 @@ public class ShopDb implements ShopDB {
                 counter++;
             }
         }
-        Shop newShops[] = Arrays.copyOf(shops, counter);
-        return newShops;
+        return Arrays.copyOf(shops, counter);
     }
 
     @Override
@@ -111,7 +110,7 @@ public class ShopDb implements ShopDB {
             if (shops[i] == null) {
                 return false;
             }
-            if (shops[i].getAdress().equals(address)) {
+            if (shops[i].getAddress().equals(address)) {
                 return true;
             }
         }
@@ -124,7 +123,7 @@ public class ShopDb implements ShopDB {
     }
 
     public void changeSize() {
-        Shop newShops[] = new Shop[shops.length * 2];
+        Shop[] newShops = new Shop[shops.length * 2];
         for (int i = 0; i < shops.length; i++) {
             newShops[i] = shops[i];
         }
