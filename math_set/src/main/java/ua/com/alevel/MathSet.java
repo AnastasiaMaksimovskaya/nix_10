@@ -1,7 +1,6 @@
 package ua.com.alevel;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class MathSet {
@@ -17,7 +16,6 @@ public class MathSet {
         this.capacity = capacity;
         this.mathSet = new Number[capacity];
     }
-
 
     MathSet(Number[] numbers) {
         this.mathSet = fromArrayToSet(numbers);
@@ -138,7 +136,10 @@ public class MathSet {
     }
 
     Number get(int index) {
-        return mathSet[index];
+        if (mathSet[index] != null) {
+            return mathSet[index];
+        }
+        else throw new ArrayIndexOutOfBoundsException();
     }
 
     Number getMax() {
@@ -218,8 +219,12 @@ public class MathSet {
     }
 
     void clear(Number[] numbers) {
-        for (int i = 0; i < numbers.length; i++) {
-            mathSet[getIndex(numbers[i])] = null;
+        for (int j = 0; j < numbers.length; j++) {
+            for (int i = 0; i < mathSet.length; i++) {
+                if (mathSet[i] != null && compareTo(mathSet[i], numbers[j]) == 0) {
+                    mathSet[i] = null;
+                }
+            }
         }
     }
 
@@ -373,7 +378,7 @@ public class MathSet {
 
     private int getIndex(Number number) {
         for (int i = 0; i < mathSet.length; i++) {
-            if (compareTo(mathSet[i],number)==0) {
+            if (mathSet[i] != null && compareTo(mathSet[i], number) == 0) {
                 return i;
             }
         }

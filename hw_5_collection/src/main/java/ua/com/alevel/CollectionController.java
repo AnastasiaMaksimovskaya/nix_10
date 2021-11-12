@@ -65,181 +65,245 @@ public class CollectionController {
         System.out.println();
     }
 
-    private void go(String position, BufferedReader reader) throws Exception {
-        switch (position) {
-            case "1":
-                createMathSet();
-                break;
-            case "2":
-                createMathSetWithCapacity(reader);
-                break;
-            case "3":
-                createMathSetFromArray(reader);
-                break;
-            case "4":
-                createMathSetFromArrayVarargs(reader);
-                break;
-            case "5":
-                System.out.println("введите элементы матсета через пробел, чтоб завершить, нажмите Enter");
-                input = reader.readLine();
-                mathSet = new MathSet(fromInputMathset(input));
-                break;
-            case "6":
-                System.out.println("Введите целочисленные значения массива через пробела, чтоб начать новый массив, " +
-                        "разделите массивы с помощью ';' , для конца ввода намите enter");
-                input = reader.readLine();
-                mathSet = new MathSet(fromInputToVarargsMathsets(input));
-                break;
-            case "7":
-                System.out.println("введите число");
-                mathSet.add(parseNumber(reader.readLine()));
-                break;
-            case "8":
-                System.out.println("введите элементы массива через пробел, чтоб завершить, нажмите Enter");
-                input = reader.readLine();
-                stringArray = input.split(" ");
-                numberArray = new Number[stringArray.length];
-                for (int i = 0; i < numberArray.length; i++) {
-                    numberArray[i] = parseNumber(stringArray[i]);
-                }
-                mathSet.add(numberArray);
-                break;
-            case "9":
-                System.out.println("введите элементы нового матсета через пробел, чтоб завершить, нажмите Enter");
-                input = reader.readLine();
-                stringArray = input.split(" ");
-                numberArray = new Number[stringArray.length];
-                for (int i = 0; i < numberArray.length; i++) {
-                    numberArray[i] = parseNumber(stringArray[i]);
-                }
-                ms = new MathSet(numberArray);
-                mathSet.join(ms);
-                break;
-            case "10":
-                System.out.println("Введите целочисленные значения массива через пробела, чтоб начать новый массив, " +
-                        "разделите массивы с помощью ';' , для конца ввода намите enter");
-                input = reader.readLine();
-                mathSet.join(fromInputToVarargsMathsets(input));
-                break;
-            case "11":
-                input = reader.readLine();
-                stringArray = input.split(" ");
-                numberArray = new Number[stringArray.length];
-                for (int i = 0; i < numberArray.length; i++) {
-                    numberArray[i] = parseNumber(stringArray[i]);
-                }
-                ms = new MathSet(numberArray);
-                mathSet.intersection(ms);
-                break;
-            case "12":
-                System.out.println("Введите численные значения массива через пробела, чтоб начать новый массив, " +
-                        "разделите массивы с помощью ';' , для конца ввода намите enter");
-                System.out.println("Например:2 3;9 10;1 739 -5 0.25");
-                input = reader.readLine();
-                mathSet.intersection(fromInputToVarargsMathsets(input));
-                break;
-            case "13":
-                mathSet.sortDesc();
-                break;
-            case "14":
-                int firstIndex = 0;
-                int lastIndex = 0;
-                try {
-                    System.out.println("введите начальный индекс");
-                    firstIndex = Integer.parseInt(reader.readLine());
-                    System.out.println("введите конечный индекс");
-                    lastIndex = Integer.parseInt(reader.readLine());
-                } catch (Exception e) {
-                    System.out.println("неправильный ввод данных");
-                }
-                mathSet.sortDesc(firstIndex, lastIndex);
-                break;
-            case "15":
-                int value = 0;
-                try {
-                    System.out.println("введите значение");
-                    value = Integer.parseInt(reader.readLine());
-                } catch (NoSuchElementException e) {
-                    System.out.println("такого элемента нет в матсете");
-                } catch (NumberFormatException exception) {
-                    System.out.println("неправильный вод данных");
-                }
-                mathSet.sortDesc(value);
-                break;
-            case "16":
-                mathSet.sortAsc();
-                break;
-            case "17":
-                firstIndex = 0;
-                lastIndex = 0;
-                try {
-                    System.out.println("введите начальный индекс");
-                    firstIndex = Integer.parseInt(reader.readLine());
-                    System.out.println("введите конечный индекс");
-                    lastIndex = Integer.parseInt(reader.readLine());
-                } catch (Exception e) {
-                    System.out.println("неправильный ввод данных");
-                }
-                mathSet.sortAsc(firstIndex, lastIndex);
-                break;
-            case "18":
-                value = 0;
-                try {
-                    System.out.println("введите значение");
-                    value = Integer.parseInt(reader.readLine());
-                } catch (NoSuchElementException e) {
-                    System.out.println("такого элемента нет в матсете");
-                } catch (NumberFormatException exception) {
-                    System.out.println("неправильный вод данных");
-                }
-                mathSet.sortAsc(value);
-                break;
-            case "19":
-                int index = 0;
-                try {
-                    System.out.println("введите индекс");
-                    index = Integer.parseInt(reader.readLine());
-                } catch (NumberFormatException exception) {
-                    System.out.println("неправильный вод данных");
-                }
-                try {
-                    System.out.println(mathSet.get(index));
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("вы вышли за пределы матсета");
-                }
-                break;
-            case "20":
-                System.out.println(mathSet.getMin());
-                break;
-            case "21":
-                System.out.println(mathSet.getMax());
-                break;
-            case "22":
-                System.out.println(mathSet.getAverage());
-                break;
-            case "23":
-                System.out.println(mathSet.getMedian());
-                break;
-            case "24":
-                mathSet.clear();
-                break;
-            case "25":
-                firstIndex = 0;
-                lastIndex = 0;
-                try {
-                    System.out.println("введите начальный индекс");
-                    firstIndex = Integer.parseInt(reader.readLine());
-                    System.out.println("введите конечный индекс");
-                    lastIndex = Integer.parseInt(reader.readLine());
-                } catch (Exception e) {
-                    System.out.println("неправильный ввод данных");
-                }
-                mathSet.cut(firstIndex, lastIndex);
-                break;
-            case "0":
-                System.exit(0);
+    private void go(String position, BufferedReader reader) {
+        try {
+            switch (position) {
+                case "1":
+                    createMathSet();
+                    break;
+                case "2":
+                    createMathSetWithCapacity(reader);
+                    break;
+                case "3":
+                    createMathSetFromArray(reader);
+                    break;
+                case "4":
+                    createMathSetFromArrayVarargs(reader);
+                    break;
+                case "5":
+                    System.out.println("введите элементы матсета через пробел, чтоб завершить, нажмите Enter");
+                    try {
+                        input = reader.readLine();
+                        mathSet = new MathSet(fromInputMathset(input));
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильно введены данные");
+                    }
+                    break;
+                case "6":
+                    System.out.println("Введите численные значения mathseta через пробела, чтоб начать новый массив, " +
+                            "разделите массивы с помощью ';' , для конца ввода намите enter");
+                    System.out.println("Например:2 3;9 10;1 739 -5 0.25");
+                    try {
+                        input = reader.readLine();
+                        mathSet = new MathSet(fromInputToVarargsMathsets(input));
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильно введены данные");
+                    }
+                    break;
+                case "7":
+                    System.out.println("введите число");
+                    try {
+                        mathSet.add(parseNumber(reader.readLine()));
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильно введены данные");
+                    }
+                    break;
+                case "8":
+                    System.out.println("введите элементы массива через пробел, чтоб завершить, нажмите Enter");
+                    input = reader.readLine();
+                    stringArray = input.split(" ");
+                    numberArray = new Number[stringArray.length];
+                    try {
+                        for (int i = 0; i < numberArray.length; i++) {
+                            numberArray[i] = parseNumber(stringArray[i]);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильно введены данные");
+                        break;
+                    }
+                    mathSet.add(numberArray);
+                    break;
+                case "9":
+                    System.out.println("введите элементы нового матсета через пробел, чтоб завершить, нажмите Enter");
+                    input = reader.readLine();
+                    stringArray = input.split(" ");
+                    numberArray = new Number[stringArray.length];
+                    try {
+                        for (int i = 0; i < numberArray.length; i++) {
+                            numberArray[i] = parseNumber(stringArray[i]);
+                        }
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильно введены данные");
+                        break;
+                    }
+                    ms = new MathSet(numberArray);
+                    mathSet.join(ms);
+                    break;
+                case "10":
+                    System.out.println("Введите численные значения mathseta через пробела, чтоб начать новый массив, " +
+                            "разделите массивы с помощью ';' , для конца ввода намите enter");
+                    System.out.println("Например:2 3;9 10;1 739 -5 0.25");
+                    input = reader.readLine();
+                    mathSet.join(fromInputToVarargsMathsets(input));
+                    break;
+                case "11":
+                    System.out.println("введите элементы нового матсета через пробел, чтоб завершить, нажмите Enter");
+                    input = reader.readLine();
+                    stringArray = input.split(" ");
+                    numberArray = new Number[stringArray.length];
+                    try {
+                        for (int i = 0; i < numberArray.length; i++) {
+                            numberArray[i] = parseNumber(stringArray[i]);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильно введены данные");
+                        break;
+                    }
+                    ms = new MathSet(numberArray);
+                    mathSet.intersection(ms);
+                    break;
+                case "12":
+                    System.out.println("Введите численные значения mathseta через пробела, чтоб начать новый массив, " +
+                            "разделите массивы с помощью ';' , для конца ввода намите enter");
+                    System.out.println("Например:2 3;9 10;1 739 -5 0.25");
+                    input = reader.readLine();
+                    try {
+                        mathSet.intersection(fromInputToVarargsMathsets(input));
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильно введены данные");
+                    }
+                    break;
+                case "13":
+                    mathSet.sortDesc();
+                    break;
+                case "14":
+                    int firstIndex = 0;
+                    int lastIndex = 0;
+                    try {
+                        System.out.println("введите начальный индекс, начиная с 0");
+                        firstIndex = Integer.parseInt(reader.readLine());
+                        System.out.println("введите конечный индекс");
+                        lastIndex = Integer.parseInt(reader.readLine());
+                        mathSet.sortDesc(firstIndex, lastIndex);
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильный ввод данных");
+                    } catch (ArrayIndexOutOfBoundsException exception) {
+                        System.out.println("вы вышли за пределы массива");
+                    }
+                    break;
+                case "15":
+                    Number value = 0;
+                    try {
+                        System.out.println("введите значение");
+                        value = parseNumber(reader.readLine());
+                    } catch (NoSuchElementException e) {
+                        System.out.println("такого элемента нет в матсете");
+                    } catch (NumberFormatException exception) {
+                        System.out.println("неправильный вод данных");
+                    }
+                    mathSet.sortDesc(value);
+                    break;
+                case "16":
+                    mathSet.sortAsc();
+                    break;
+                case "17":
+                    try {
+                        System.out.println("введите начальный индекс,начиная с 0");
+                        firstIndex = Integer.parseInt(reader.readLine());
+                        System.out.println("введите конечный индекс");
+                        lastIndex = Integer.parseInt(reader.readLine());
+                        mathSet.sortAsc(firstIndex, lastIndex);
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильный ввод данных");
+                    } catch (ArrayIndexOutOfBoundsException exception) {
+                        System.out.println("вы вышли за пределы массива");
+                    }
+                    break;
+                case "18":
+                    Number val = 0;
+                    try {
+                        System.out.println("введите значение");
+                        val = parseNumber(reader.readLine());
+                        mathSet.sortAsc(val);
+                    } catch (NoSuchElementException e) {
+                        System.out.println("такого элемента нет в матсете");
+                    } catch (NumberFormatException exception) {
+                        System.out.println("неправильный вод данных");
+                    }
+                    break;
+                case "19":
+                    int index = 0;
+                    try {
+                        System.out.println("введите индекс");
+                        index = Integer.parseInt(reader.readLine());
+                    } catch (NumberFormatException exception) {
+                        System.out.println("неправильный вод данных");
+                    }
+                    try {
+                        System.out.println(mathSet.get(index));
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("вы вышли за пределы матсета");
+                    }
+                    break;
+                case "20":
+                    System.out.println(mathSet.getMin());
+                    break;
+                case "21":
+                    System.out.println(mathSet.getMax());
+                    break;
+                case "22":
+                    System.out.println(mathSet.getAverage());
+                    break;
+                case "23":
+                    System.out.println(mathSet.getMedian());
+                    break;
+                case "24":
+                    mathSet.clear();
+                    break;
+                case "25":
+                    try {
+                        System.out.println("введите начальный индекс");
+                        firstIndex = Integer.parseInt(reader.readLine());
+                        System.out.println("введите конечный индекс");
+                        lastIndex = Integer.parseInt(reader.readLine());
+                        mathSet.cut(firstIndex, lastIndex);
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильный ввод данных");
+                    } catch (ArrayIndexOutOfBoundsException exception) {
+                        System.out.println("вы вышли за пределы массива");
+                    }
+                    break;
+                case "26":
+                    System.out.println("введите элементы нового матсета через пробел, чтоб завершить, нажмите Enter");
+                    input = reader.readLine();
+                    String[] subArray = input.split(" ");
+                    numberArray = new Number[subArray.length];
+                    try {
+                        for (int i = 0; i < numberArray.length; i++) {
+                            if (subArray[i] != null) {
+                                numberArray[i] = parseNumber(subArray[i]);
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("неправильно введены данные");
+                        break;
+                    }
+                    mathSet.clear(numberArray);
+                    break;
+                case "0":
+                    System.exit(0);
+            }
+        } catch (NullPointerException e) {
+            System.out.println("сначала создайте матсет, используя пункты 1-6");
+        } catch (IndexOutOfBoundsException exception) {
+            System.out.println("вы вышли за пределы матсета");
+        }catch (IOException exception2){
+            System.out.println("проблема с чтением файла");
         }
-        System.out.println(mathSet);
+        if (mathSet != null) {
+            System.out.println(mathSet);
+        }
         runNavigation();
     }
 
@@ -253,18 +317,28 @@ public class CollectionController {
         try {
             capacity = Integer.parseInt(reader.readLine());
             if (capacity < 0) {
-                throw new RuntimeException();
+                System.out.println("capacity должно быть целочисленным и положительным");
+                return;
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println("capacity должно быть целочисленным и положительным");
+            return;
+        } catch (IOException exception) {
+            System.out.println("проблема с чтением строки");
             return;
         }
         mathSet = new MathSet(capacity);
     }
 
-    public void createMathSetFromArray(BufferedReader reader) throws IOException {
+    public void createMathSetFromArray(BufferedReader reader)  {
         System.out.println("Введите целочисленные значения массива через пробела, для конца ввода намите enter");
-        String input = reader.readLine();
+        String input = null;
+        try {
+            input = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("неправильный ввод данных");
+            return;
+        }
         String stringArray[] = input.split(" ");
         Number numberArray[] = new Number[stringArray.length];
         for (int i = 0; i < numberArray.length; i++) {
@@ -275,44 +349,50 @@ public class CollectionController {
                     numberArray[i] = Double.parseDouble(stringArray[i]);
                 } catch (RuntimeException exception) {
                     System.out.println("Массив должен сожержать только числа");
+                    return;
                 }
             }
         }
         mathSet = new MathSet(numberArray);
     }
 
-    public void createMathSetFromArrayVarargs(BufferedReader reader) throws Exception {
+    public void createMathSetFromArrayVarargs(BufferedReader reader) {
         System.out.println("Введите численные значения массива через пробела, чтоб начать новый массив, " +
                 "разделите массивы с помощью ';' , для конца ввода намите enter");
-        String input = reader.readLine();
-        String stringArray[] = input.split(";");
-        Number numberArray[] = null;
+        System.out.println("Например:2 3;9 10;1 739 -5 0.25");
+        String input = null;
+        try {
+            input = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("неправильный ввод данных");
+            return;
+        }
+        stringArray = input.split(";");
+        Number[][] array = new Number[stringArray.length][];
         for (int i = 0; i < stringArray.length; i++) {
-            String subArray[] = stringArray[i].split(" ");
-            numberArray = new Number[subArray[i].length()];
+            String[] subArray = stringArray[i].split(" ");
+            numberArray = new Number[subArray.length];
+            for (int j = 0; j < numberArray.length; j++) {
+                numberArray[j] = parseNumber(subArray[j]);
+            }
+            array[i] = numberArray;
         }
-
-        for (int i = 0; i < numberArray.length; i++) {
-            numberArray[i] = parseNumber(stringArray[i]);
-        }
-        mathSet = new MathSet(numberArray);
-        System.out.println(mathSet);
+        mathSet = new MathSet(array);
     }
 
-    private Number parseNumber(String input) throws Exception {
+    private Number parseNumber(String input) {
         try {
             return Long.parseLong(input);
         } catch (Exception e) {
             try {
                 return Double.parseDouble(input);
-            } catch (Exception exception) {
-                System.out.println("неправильно введены данные");
+            } catch (NumberFormatException exception) {
+                throw exception;
             }
         }
-        throw new Exception("что-то пошло не так");
     }
 
-    private MathSet[] fromInputToVarargsMathsets(String input) throws Exception {
+    private MathSet[] fromInputToVarargsMathsets(String input) {
         stringArray = input.split(";");
         MathSet[] mathSets = new MathSet[stringArray.length];
         for (int i = 0; i < stringArray.length; i++) {
@@ -326,7 +406,7 @@ public class CollectionController {
         return mathSets;
     }
 
-    private MathSet fromInputMathset(String input) throws Exception {
+    private MathSet fromInputMathset(String input)  {
         String[] subArray = input.split(" ");
         numberArray = new Number[subArray.length];
         for (int j = 0; j < numberArray.length; j++) {
