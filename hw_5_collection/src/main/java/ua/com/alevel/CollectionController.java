@@ -298,7 +298,7 @@ public class CollectionController {
             System.out.println("сначала создайте матсет, используя пункты 1-6");
         } catch (IndexOutOfBoundsException exception) {
             System.out.println("вы вышли за пределы матсета");
-        }catch (IOException exception2){
+        } catch (IOException exception2) {
             System.out.println("проблема с чтением файла");
         }
         if (mathSet != null) {
@@ -330,7 +330,7 @@ public class CollectionController {
         mathSet = new MathSet(capacity);
     }
 
-    public void createMathSetFromArray(BufferedReader reader)  {
+    public void createMathSetFromArray(BufferedReader reader) {
         System.out.println("Введите целочисленные значения массива через пробела, для конца ввода намите enter");
         String input = null;
         try {
@@ -406,7 +406,7 @@ public class CollectionController {
         return mathSets;
     }
 
-    private MathSet fromInputMathset(String input)  {
+    private MathSet fromInputMathset(String input) {
         String[] subArray = input.split(" ");
         numberArray = new Number[subArray.length];
         for (int j = 0; j < numberArray.length; j++) {

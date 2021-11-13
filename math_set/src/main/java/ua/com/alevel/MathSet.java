@@ -138,8 +138,7 @@ public class MathSet {
     Number get(int index) {
         if (mathSet[index] != null) {
             return mathSet[index];
-        }
-        else throw new ArrayIndexOutOfBoundsException();
+        } else throw new ArrayIndexOutOfBoundsException();
     }
 
     Number getMax() {
