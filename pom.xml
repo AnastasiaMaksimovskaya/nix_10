@@ -29,6 +29,7 @@
         <module>math_set</module>
         <module>hw_5_collection</module>
         <module>hw_5_collection</module>
+        <module>hw_6_exception</module>
     </modules>
 
 
