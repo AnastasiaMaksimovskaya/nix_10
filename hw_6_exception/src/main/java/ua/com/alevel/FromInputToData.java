@@ -1,5 +1,6 @@
 package ua.com.alevel;
 
+import ua.com.alevel.data.MyData;
 import ua.com.alevel.exeption.InvalidInputException;
 import ua.com.alevel.utils.DataUtils;
 

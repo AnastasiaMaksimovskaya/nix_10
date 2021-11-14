@@ -1,4 +1,4 @@
-package ua.com.alevel;
+package ua.com.alevel.data;
 
 public class MyData {
     private int year;
