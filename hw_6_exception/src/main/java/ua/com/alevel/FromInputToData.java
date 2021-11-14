@@ -13,11 +13,20 @@ public class FromInputToData {
     private final String hours_minutes_seconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}";
     private final String hours_minutes = "\\d{0,2}:\\d{0,2}";
     boolean isDayFirst;
-    MyData data = new MyData();
+    MyData data;
 
+    public MyData getData() {
+        return data;
+    }
 
-    public void convertInputToData(String input) throws InvalidInputException {
+    public void setData(MyData data) {
+        this.data = data;
+    }
+
+    public MyData convertInputToData(String input) throws InvalidInputException {
+        data = new MyData();
         DataUtils.fillMonthMap();
+
         String[] dmyAndHmsm = input.split(" ");
         if (dmyAndHmsm.length == 1) {
             convertDaysMonthsYears(dmyAndHmsm[0]);
@@ -27,6 +36,7 @@ public class FromInputToData {
             convertHoursMinutesSecondsMilliseconds(dmyAndHmsm[1]);
         }
         isValid();
+        return data;
     }
 
     private void convertFromFormatDdMmYyyy(String format) {

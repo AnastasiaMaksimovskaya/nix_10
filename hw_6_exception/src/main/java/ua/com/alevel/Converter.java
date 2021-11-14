@@ -7,15 +7,19 @@ public class Converter {
     private final long MILLISEC_IN_DAY = 86_400_000L;
 
 
-    public long fromDateToDays(MyData data) {
+    private long fromDateToDays(MyData data) {
         DataUtils.fillMonthDayMap();
         long days = data.getDay() + fromMonthToDays(data.getMonth(), DataUtils.isBissextile(data.getYear()))
                 + numberOfBissextile(data.getYear()) * 366
                 + (data.getYear() - numberOfBissextile(data.getYear())) * 365;
         return days;
     }
-    public long fromDaysToMilliseconds(long days){
+    private long fromDaysToMilliseconds(long days){
         return days*MILLISEC_IN_DAY;
+    }
+    public long fromDateToMilliseconds(MyData data){
+        return fromDaysToMilliseconds(fromDateToDays(data))+data.getMilliseconds()+data.getSeconds()*1000+
+                data.getMinutes()*60*1000+data.getHours()*3600*1000;
     }
 
     private int numberOfBissextile(int year) {

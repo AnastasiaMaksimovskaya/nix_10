@@ -1,5 +1,6 @@
 package ua.com.alevel;
 
+import ua.com.alevel.data.MyData;
 import ua.com.alevel.utils.DataUtils;
 
 public class Invertor {
@@ -13,40 +14,42 @@ public class Invertor {
     private int minutes;
     private int seconds;
     private int milliseconds;
+    MyData invertedData = new MyData();
 
-    public void extract(long milliseconds) {
+    public MyData extract(long milliseconds) {
         int day = 0;
         while (milliseconds / MILLISEC_IN_DAY > 0) {
             milliseconds -= MILLISEC_IN_DAY;
             day++;
         }
-        System.out.println("day after converting from milliseconds = " + day);
-
         int year = 0;
-
-
         while (day > 365) {
             if (DataUtils.isBissextile(year)) {
-                if (day==366){
+                if (day == 366) {
                     break;
-                }
-                else{
+                } else {
                     year++;
                     day -= 366;
                 }
-            }
-            else {
+            } else {
                 year++;
-                day-=365;
+                day -= 365;
             }
         }
-
-
         int month = fromDayToMonth(day, year);
         day -= new Converter().fromMonthToDays(month, DataUtils.isBissextile(year));
-        System.out.println("year = " + year);
-        System.out.println("month = " + month);
-        System.out.println("day= " + day);
+        invertedData.setDay(day);
+        invertedData.setMonth(month);
+        invertedData.setYear(year);
+        int invertedMilliseconds = (int) milliseconds % 1000;
+        invertedData.setMilliseconds(invertedMilliseconds);
+        int invrtedSeconds = (int) ((milliseconds - invertedMilliseconds) / 1000) % 60;
+        invertedData.setSeconds(invrtedSeconds);
+        int invertedHours = (int) (milliseconds / 3600000);
+        invertedData.setHours(invertedHours);
+        int invertedMinutes = (int) (milliseconds / 60000 - invertedHours * 60);
+        invertedData.setMinutes(invertedMinutes);
+        return invertedData;
     }
 
     private int fromDayToMonth(int days, int year) {
