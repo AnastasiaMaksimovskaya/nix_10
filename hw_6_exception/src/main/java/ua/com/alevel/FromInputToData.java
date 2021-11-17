@@ -5,13 +5,13 @@ import ua.com.alevel.exeption.InvalidInputException;
 import ua.com.alevel.utils.DataUtils;
 
 public class FromInputToData {
-    private final String dd_mm_yyyy = "\\d{0,2}/\\d{0,2}/\\d{0,4}";
-    private final String m_d_yyyy = "\\d{0,2}/\\d{0,2}/\\d{0,4}";
-    private final String mmm_d_yyyy = "\\D+-\\d{0,2}-\\d{0,4}";
-    private final String dd_mmm_yyyy = "\\d{0,2}-\\D+-\\d{0,4}";
-    private final String hours_minutes_seconds_milliseconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}:\\d{0,3}";
-    private final String hours_minutes_seconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}";
-    private final String hours_minutes = "\\d{0,2}:\\d{0,2}";
+    private static final String dd_mm_yyyy = "\\d{0,2}/\\d{0,2}/\\d{0,4}";
+    private static final String m_d_yyyy = "\\d{0,2}/\\d{0,2}/\\d{0,4}";
+    private static final String mmm_d_yyyy = "\\D+-\\d{0,2}-\\d{0,4}";
+    private static final String dd_mmm_yyyy = "\\d{0,2}-\\D+-\\d{0,4}";
+    private static final String hours_minutes_seconds_milliseconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}:\\d{0,3}";
+    private static final String hours_minutes_seconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}";
+    private static final String hours_minutes = "\\d{0,2}:\\d{0,2}";
     boolean isDayFirst;
     MyData data;
 
