@@ -5,9 +5,10 @@ import ua.com.alevel.utils.DataUtils;
 
 public class Invertor {
     private final long MILLISEC_IN_DAY = 86_400_000L;
-    MyData invertedData = new MyData();
+    MyData invertedData ;
 
     public MyData extract(long milliseconds) {
+        invertedData = new MyData();
         int day = 0;
         while (milliseconds / MILLISEC_IN_DAY > 0) {
             milliseconds -= MILLISEC_IN_DAY;

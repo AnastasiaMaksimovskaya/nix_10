@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Service {
 
-    public void compareDatas(MyData... data) {
+    public MyData[] compareDatas(MyData... data) {
         Converter converter = new Converter();
         Invertor invertor = new Invertor();
         long dataMills[] = new long[data.length];
@@ -16,9 +16,11 @@ public class Service {
             dataMills[i] = converter.fromDateToMilliseconds(data[i]);
         }
         Arrays.sort(dataMills);
+        MyData[] myData = new MyData[dataMills.length];
         for (int i = 0; i < dataMills.length; i++) {
-            System.out.println(invertor.extract(dataMills[i]));
+            myData[i] = invertor.extract(dataMills[i]);
         }
+        return myData;
     }
 
     public MyData addMilliseconds(MyData data, long ms) {
@@ -62,8 +64,6 @@ public class Service {
     }
 
     public MyData addYear(MyData data, int y) {
-        Converter converter = new Converter();
-        Invertor invertor = new Invertor();
         int currentYear = data.getYear();
         data.setHours(currentYear + y);
         return data;
@@ -110,20 +110,45 @@ public class Service {
     }
 
     public MyData subtractYear(MyData data, int y) {
-        Converter converter = new Converter();
-        Invertor invertor = new Invertor();
         int currentYear = data.getYear();
         data.setHours(currentYear - y);
         return data;
     }
 
-    public MyData difference(MyData data1, MyData data2) {
+    public long differenceInMilliseconds(MyData data1, MyData data2) {
         Converter converter = new Converter();
-        Invertor invertor = new Invertor();
         long ms1 = converter.fromDateToMilliseconds(data1);
         long ms2 = converter.fromDateToMilliseconds(data2);
         long difference = Math.abs(ms2 - ms1);
-        MyData newData = invertor.extract(difference);
-        return newData;
+        return difference;
+    }
+
+    public double differenceInSeconds(MyData data1, MyData data2) {
+        Converter converter = new Converter();
+        long ms1 = converter.fromDateToMilliseconds(data1);
+        long ms2 = converter.fromDateToMilliseconds(data2);
+        long difference = Math.abs(ms2 - ms1);
+        return difference / 1000;
+    }
+
+    public double differenceInMinutes(MyData data1, MyData data2) {
+        Converter converter = new Converter();
+        long ms1 = converter.fromDateToMilliseconds(data1);
+        long ms2 = converter.fromDateToMilliseconds(data2);
+        long difference = Math.abs(ms2 - ms1);
+        return difference / 60000;
+    }
+
+    public double differenceInHours(MyData data1, MyData data2) {
+        Converter converter = new Converter();
+        long ms1 = converter.fromDateToMilliseconds(data1);
+        long ms2 = converter.fromDateToMilliseconds(data2);
+        long difference = Math.abs(ms2 - ms1);
+
+        return difference / (1000 * 3600);
+    }
+
+    public double differenceInDays(MyData data1, MyData data2) {
+        return differenceInHours(data1, data2) / 24;
     }
 }

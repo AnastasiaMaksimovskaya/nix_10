@@ -12,7 +12,7 @@ public class FromInputToData {
     private static final String hours_minutes_seconds_milliseconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}:\\d{0,3}";
     private static final String hours_minutes_seconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}";
     private static final String hours_minutes = "\\d{0,2}:\\d{0,2}";
-    boolean isDayFirst;
+    static boolean isDayFirst;
     MyData data;
 
     public MyData getData() {
