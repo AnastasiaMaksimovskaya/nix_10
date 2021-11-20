@@ -1,4 +1,4 @@
-package ua.com.alevel;
+package ua.com.alevel.service;
 
 import ua.com.alevel.data.MyData;
 import ua.com.alevel.exeption.InvalidInputException;
@@ -12,16 +12,8 @@ public class FromInputToData {
     private static final String hours_minutes_seconds_milliseconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}:\\d{0,3}";
     private static final String hours_minutes_seconds = "\\d{0,2}:\\d{0,2}:\\d{0,2}";
     private static final String hours_minutes = "\\d{0,2}:\\d{0,2}";
-    static boolean isDayFirst;
+    public static boolean isDayFirst;
     MyData data;
-
-    public MyData getData() {
-        return data;
-    }
-
-    public void setData(MyData data) {
-        this.data = data;
-    }
 
     public MyData convertInputToData(String input) throws InvalidInputException {
         data = new MyData();
@@ -106,8 +98,6 @@ public class FromInputToData {
         if (hourMinuteSecondMilliSecond[3].equals("")) {
             data.setMilliseconds(0);
         } else data.setMilliseconds(Integer.parseInt(hourMinuteSecondMilliSecond[3]));
-
-
     }
 
     private void convertFromHoursMinuteSecond(String format) {

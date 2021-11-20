@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataUtils {
+
     static Map<String, Integer> monthNames = new HashMap<>();
     static Map<Integer, Integer> monthAndDays = new HashMap<>();
 
@@ -20,7 +21,7 @@ public class DataUtils {
         monthNames.put("Февраль", 2);
         monthNames.put("Март", 3);
         monthNames.put("Апрель", 4);
-        monthNames.put("Mай", 5);
+        monthNames.put("Май", 5);
         monthNames.put("Июнь", 6);
         monthNames.put("Июль", 7);
         monthNames.put("Август", 8);

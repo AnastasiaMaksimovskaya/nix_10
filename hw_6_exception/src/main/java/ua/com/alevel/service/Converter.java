@@ -1,11 +1,10 @@
-package ua.com.alevel;
+package ua.com.alevel.service;
 
 import ua.com.alevel.data.MyData;
 import ua.com.alevel.utils.DataUtils;
 
 public class Converter {
     private final long MILLISEC_IN_DAY = 86_400_000L;
-
 
     private long fromDateToDays(MyData data) {
         DataUtils.fillMonthDayMap();
@@ -14,12 +13,14 @@ public class Converter {
                 + (data.getYear() - numberOfBissextile(data.getYear())) * 365;
         return days;
     }
-    private long fromDaysToMilliseconds(long days){
-        return days*MILLISEC_IN_DAY;
+
+    private long fromDaysToMilliseconds(long days) {
+        return days * MILLISEC_IN_DAY;
     }
-    public long fromDateToMilliseconds(MyData data){
-        return fromDaysToMilliseconds(fromDateToDays(data))+data.getMilliseconds()+data.getSeconds()*1000+
-                data.getMinutes()*60*1000+data.getHours()*3600*1000;
+
+    public long fromDateToMilliseconds(MyData data) {
+        return fromDaysToMilliseconds(fromDateToDays(data)) + data.getMilliseconds() + data.getSeconds() * 1000 +
+                data.getMinutes() * 60 * 1000 + data.getHours() * 3600 * 1000;
     }
 
     private int numberOfBissextile(int year) {
@@ -31,8 +32,6 @@ public class Converter {
         }
         return numberOfBissextile;
     }
-
-
 
     protected int fromMonthToDays(int month, boolean isBissextile) {
         int numberOfDays = 0;

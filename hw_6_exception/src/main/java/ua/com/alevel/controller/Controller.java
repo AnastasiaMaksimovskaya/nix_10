@@ -1,11 +1,15 @@
-package ua.com.alevel;
+package ua.com.alevel.controller;
 
 import ua.com.alevel.data.MyData;
 import ua.com.alevel.exeption.InvalidInputException;
+import ua.com.alevel.exeption.NegatoryTimeException;
+import ua.com.alevel.exeption.OutOfEraException;
+import ua.com.alevel.exeption.OutOfTenThousandException;
+import ua.com.alevel.service.FromDataToOuutput;
+import ua.com.alevel.service.FromInputToData;
 import ua.com.alevel.service.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -108,25 +112,25 @@ public class Controller {
         );
     }
 
-
     public void selectDataFormat() {
-        System.out.println("dd/mm/yyyy press 1 \n" +
-                "mm/dd/yyyy press 2 \n" +
-                "mmm-dd-yyyy press 3\n" +
-                "dd-mmm-yyyy press 4 \n" +
-                "dd/mm/yyyy 00:00 press 5 \n" +
-                "mm/dd/yyyy 00:00 press 6 \n" +
-                "mmm-dd-yyyy 00:00 press 7\n" +
-                "dd-mmm-yyyy 00:00 press 8 \n" +
-                "dd/mm/yyyy 00:00:00 press 9 \n" +
-                "mm/dd/yyyy 00:00:00 press 10 \n" +
-                "mmm-dd-yyyy 00:00:00 press 11\n" +
-                "dd-mmm-yyyy 00:00:00:000 press 12 \n" +
-                "dd/mm/yyyy 00:00:00:000 press 13 \n" +
-                "mm/dd/yyyy 00:00:00:000 press 14 \n" +
-                "mmm-dd-yyyy 00:00:00:000 press 15\n" +
-                "dd-mmm-yyyy 00:00:00:000 press 16 \n"
-        );
+        System.out.println("dd/mm/yyyy нажмите 1 \n" +
+                "mm/dd/yyyy нажмите 2 \n" +
+                "mmm-dd-yyyy нажмите 3\n" +
+                "dd-mmm-yyyy нажмите 4 \n" +
+                "dd/mm/yyyy 00:00 нажмите 5 \n" +
+                "mm/dd/yyyy 00:00 нажмите 6 \n" +
+                "mmm-dd-yyyy 00:00 нажмите 7 \n" +
+                "dd-mmm-yyyy 00:00 нажмите 8 \n" +
+                "dd/mm/yyyy 00:00:00 нажмите 9 \n" +
+                "mm/dd/yyyy 00:00:00 нажмите 10 \n" +
+                "mmm-dd-yyyy 00:00:00 нажмите 11\n" +
+                "dd-mmm-yyyy 00:00:00:000 нажмите 12 \n" +
+                "dd/mm/yyyy 00:00:00:000 нажмите 13 \n" +
+                "mm/dd/yyyy 00:00:00:000 нажмите 14 \n" +
+                "mmm-dd-yyyy 00:00:00:000 нажмите 15\n" +
+                "dd-mmm-yyyy 00:00:00:000 нажмите 16 \n" +
+                "названия месяцев вводите на русском с заглавной буквы в именительном падеже");
+
         String choiceFormat = scanner.nextLine();
         switch (choiceFormat) {
             case "1":
@@ -219,10 +223,13 @@ public class Controller {
             System.out.println("введите количество миллисекунд");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.addMilliseconds(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfTenThousandException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод миллисекунд");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -242,10 +249,13 @@ public class Controller {
             System.out.println("введите количество секунд");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.addSeconds(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfTenThousandException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод секунд");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -265,10 +275,13 @@ public class Controller {
             System.out.println("введите количество минут");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.addMinutes(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfTenThousandException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод минут");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -288,10 +301,13 @@ public class Controller {
             System.out.println("введите количество часов");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.addHours(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfTenThousandException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод часов");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -311,10 +327,13 @@ public class Controller {
             System.out.println("введите количество дней");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.addDays(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfTenThousandException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод дней");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -334,10 +353,13 @@ public class Controller {
             System.out.println("введите количество годов");
             int ms = Integer.parseInt(scanner.nextLine());
             toOutput(service.addYear(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfTenThousandException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод годов");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -357,10 +379,12 @@ public class Controller {
             System.out.println("введите количество миллисекунд");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.subtractMilliseconds(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | NegatoryTimeException | OutOfEraException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод миллисекунд");
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -380,10 +404,12 @@ public class Controller {
             System.out.println("введите количество секунд");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.subtractSeconds(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | NegatoryTimeException | OutOfEraException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод секунд");
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -403,10 +429,13 @@ public class Controller {
             System.out.println("введите количество минут");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.subtractMinutes(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfEraException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод минут");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -426,10 +455,13 @@ public class Controller {
             System.out.println("введите количество часов");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.subtractHours(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfEraException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод часов");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -449,10 +481,13 @@ public class Controller {
             System.out.println("введите количество дней");
             long ms = Long.parseLong(scanner.nextLine());
             toOutput(service.subtractDays(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfEraException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод дней");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -472,10 +507,13 @@ public class Controller {
             System.out.println("введите количество годов");
             int ms = Integer.parseInt(scanner.nextLine());
             toOutput(service.subtractYear(data, ms));
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException | OutOfEraException | NegatoryTimeException e) {
             System.out.println(e);
         } catch (NumberFormatException exception) {
             System.out.println("неправильный ввод годов");
+            return;
+        } catch (NullPointerException exception) {
+            System.out.println("Неправильно введен месяц");
             return;
         }
     }
@@ -495,6 +533,9 @@ public class Controller {
                         datas.add(fromInputToData.convertInputToData(data));
                     } catch (InvalidInputException e) {
                         System.out.println(e);
+                        return;
+                    } catch (NullPointerException exception) {
+                        System.out.println("Неправильно введен месяц");
                         return;
                     }
                 }

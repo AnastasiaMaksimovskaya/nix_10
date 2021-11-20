@@ -1,11 +1,11 @@
-package ua.com.alevel;
+package ua.com.alevel.service;
 
 import ua.com.alevel.data.MyData;
 import ua.com.alevel.utils.DataUtils;
 
 public class Invertor {
     private final long MILLISEC_IN_DAY = 86_400_000L;
-    MyData invertedData ;
+    MyData invertedData;
 
     public MyData extract(long milliseconds) {
         invertedData = new MyData();
