@@ -1,23 +1,48 @@
-4
+8
 gdansk
 2
 2 1
 3 3
 bydgoszcz
-3
+4
+5 1
 1 1
 3 1
 4 4
 torun
-3
+4
 1 3
 2 1
 4 1
+6 2
 warszawa
-2
+3
 2 4
+5 2
 3 1
+kharkiv
+3
+2 1
+4 2
+6 1
+kiyv
 2
+5 1
+3 2
+lvov
+1
+8 3
+uzhhorod
+1
+7 3
+10
 bydgoszcz warszawa
 gdansk warszawa
-
+gdansk kharkiv
+gdansk bydgoszcz
+gdansk torun
+gdansk kiyv
+kiyv gdansk
+torun kharkiv
+kiyv warszawa
+kiyv lvov

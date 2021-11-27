@@ -1,10 +1,11 @@
 package ua.com.alevel.cities;
 
+import java.util.Arrays;
+
 public class City {
     private int id;
-    private int [] idOfNeighbours;
-    private int [] pricesToNeighbour;
-    private int price;
+    private int[] idOfNeighbours;
+    private int[] pricesToNeighbour;
     private String name;
 
     public String getName() {
@@ -13,14 +14,6 @@ public class City {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public int getId() {
@@ -45,5 +38,15 @@ public class City {
 
     public void setPricesToNeighbour(int[] pricesToNeighbour) {
         this.pricesToNeighbour = pricesToNeighbour;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", idOfNeighbours=" + Arrays.toString(idOfNeighbours) +
+                ", pricesToNeighbour=" + Arrays.toString(pricesToNeighbour) +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

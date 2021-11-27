@@ -1,57 +1,55 @@
 package ua.com.alevel.datas;
 
-
 import java.io.*;
 import java.util.*;
 
 public class UniqueDatas {
 
     public static void run() throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(".\\module2\\src\\main\\java\\ua\\com\\alevel\\datas\\input.txt"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(".\\src\\main\\java\\ua\\com\\alevel\\datas\\input.txt"));
         StringBuilder stringBuilder = new StringBuilder();
-        while (bufferedReader.ready()){
+        while (bufferedReader.ready()) {
             stringBuilder.append(bufferedReader.readLine()).append("\n");
         }
         bufferedReader.close();
-        String [] sequences = stringBuilder.toString().split("\\s+|[\n]+");
+        String[] sequences = stringBuilder.toString().split("\\s+|[\n]+");
         Set<String> uniqueDatas = new LinkedHashSet<>();
         for (int i = 0; i < sequences.length; i++) {
-            if (sequences[i].matches("\\d{0,2}/\\d{0,2}/\\d{0,4}")){
-                String [] parts = sequences[i].split("/");
-                int month=Integer.parseInt(parts[1]);
-                int day=Integer.parseInt(parts[0]);
-                int year=Integer.parseInt(parts[2]);
-                if (check(month,day,year)){
-                    uniqueDatas.add(parts[2]+parts[1]+parts[0]);
+            if (sequences[i].matches("\\d{0,2}/\\d{0,2}/\\d{0,4}")) {
+                String[] parts = sequences[i].split("/");
+                int month = Integer.parseInt(parts[1]);
+                int day = Integer.parseInt(parts[0]);
+                int year = Integer.parseInt(parts[2]);
+                if (check(month, day, year)) {
+                    uniqueDatas.add(parts[2] + parts[1] + parts[0]);
                 }
-            }
-            else if (sequences[i].matches("\\d{0,4}/\\d{0,2}/\\d{0,2}")){
-                String [] parts = sequences[i].split("/");
-                int month=Integer.parseInt(parts[1]);
-                int day=Integer.parseInt(parts[2]);
-                int year=Integer.parseInt(parts[0]);
-                if (check(month,day,year)){
-                    uniqueDatas.add(parts[0]+parts[1]+parts[2]);
+            } else if (sequences[i].matches("\\d{0,4}/\\d{0,2}/\\d{0,2}")) {
+                String[] parts = sequences[i].split("/");
+                int month = Integer.parseInt(parts[1]);
+                int day = Integer.parseInt(parts[2]);
+                int year = Integer.parseInt(parts[0]);
+                if (check(month, day, year)) {
+                    uniqueDatas.add(parts[0] + parts[1] + parts[2]);
                 }
-            }
-            else if(sequences[i].matches("\\d{0,2}-\\d{0,2}-\\d{0,4}")){
-                String [] parts = sequences[i].split("-");
-                int month=Integer.parseInt(parts[0]);
-                int day=Integer.parseInt(parts[1]);
-                int year=Integer.parseInt(parts[2]);
-                if (check(month,day,year)){
-                    uniqueDatas.add(parts[2]+parts[0]+parts[1]);
+            } else if (sequences[i].matches("\\d{0,2}-\\d{0,2}-\\d{0,4}")) {
+                String[] parts = sequences[i].split("-");
+                int month = Integer.parseInt(parts[0]);
+                int day = Integer.parseInt(parts[1]);
+                int year = Integer.parseInt(parts[2]);
+                if (check(month, day, year)) {
+                    uniqueDatas.add(parts[2] + parts[0] + parts[1]);
                 }
             }
         }
-        try (BufferedWriter writter = new BufferedWriter(new FileWriter(".\\module2\\src\\main\\java\\ua\\com\\alevel\\datas\\output.txt"))) {
+        try (BufferedWriter writter = new BufferedWriter(new FileWriter(".\\src\\main\\java\\ua\\com\\alevel\\datas\\output.txt"))) {
             for (String value : uniqueDatas) {
                 writter.write(value + "\n");
             }
         }
     }
-    private static boolean check(int month, int day, int year){
-        if (month<0||day<0||year<0){
+
+    private static boolean check(int month, int day, int year) {
+        if (month < 0 || day < 0 || year < 0) {
             return false;
         }
         if ((month == 1 | month == 3 | month == 5 | month == 7 | month == 8 | month == 10 | month == 12) && day > 31) {
@@ -74,5 +72,4 @@ public class UniqueDatas {
         }
         return false;
     }
-
 }
