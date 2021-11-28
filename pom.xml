@@ -31,6 +31,8 @@
         <module>hw_5_collection</module>
         <module>hw_6_exception</module>
         <module>module2</module>
+        <module>csv_converter</module>
+        <module>hw_7_ionio</module>
     </modules>
 
 
