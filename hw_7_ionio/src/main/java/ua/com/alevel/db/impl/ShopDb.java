@@ -15,12 +15,12 @@ import java.util.UUID;
 
 public class ShopDb implements ShopDB {
 
+    File products = new File("product.csv");
+    MyCsvWriter myCsvWriterPd = new MyCsvWriter(products);
+    MyCsvReader myCsvReaderPd = new MyCsvReader(products);
     File shops = new File("shop.csv");
-    File productsAndShops = new File("products_and_shops.csv");
     MyCsvWriter myCsvWriterSh = new MyCsvWriter(shops);
     MyCsvReader myCsvReaderSh = new MyCsvReader(shops);
-    MyCsvWriter myCsvWriterPdAndSh = new MyCsvWriter(productsAndShops);
-    MyCsvReader myCsvReaderPdAndSh = new MyCsvReader(productsAndShops);
 
     public static ShopDb instance;
 
@@ -39,35 +39,60 @@ public class ShopDb implements ShopDB {
 
     @Override
     public void update(Shop shop) {
+
+        File buffer = new File("buffer.csv");
+        List<String[]> allInCsv = myCsvReaderSh.read();
+        String shopLine = " ";
+        for (int i = 0; i < allInCsv.size(); i++) {
+            if (allInCsv.get(i)[0].equals(shop.getId())) {
+                shopLine = allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " ";
+            }
+        }
         try {
             String id = shop.getId();
             Shop current = findById(id);
-            delete(shop.getId());
             current.setId(shop.getId());
             current.setName(shop.getName());
-            myCsvWriterSh.write(current.getId(),current.getAddress(), current.getName());
-        } catch(ShopNotFoundException e){
-        System.out.println(e);
+            BufferedReader reader = new BufferedReader(new FileReader(shops));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(buffer));
+            while (reader.ready()) {
+                String currentLine = reader.readLine();
+                if (!(currentLine.equals(shopLine) || shopLine.equals(currentLine + " ") || currentLine.equals(shopLine + " "))) {
+                    writer.write(currentLine + "\n");
+                }
+            }
+            writer.write(current.getId()+" "+ current.getAddress()+" "+ current.getName());
+            writer.flush();
+            reader.close();
+            writer.close();
+            shops.delete();
+            buffer.renameTo(shops);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (ShopNotFoundException e) {
+            System.out.println(e);
+        }
     }
-}
 
     @Override
     public void delete(String id) {
         File buffer = new File("buffer.csv");
         List<String[]> allInCsv = myCsvReaderSh.read();
+        List<String[]> allInProducts = myCsvReaderPd.read();
         String shopLine = " ";
+        List<String> productLines = new ArrayList<>();
         for (int i = 0; i < allInCsv.size(); i++) {
             if (allInCsv.get(i)[0].equals(id)) {
-                shopLine = allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2]+" ";
+                shopLine = allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " ";
             }
         }
         try {
             BufferedReader reader = new BufferedReader(new FileReader(shops));
             BufferedWriter writer = new BufferedWriter(new FileWriter(buffer));
-            while (reader.ready()){
+            while (reader.ready()) {
                 String current = reader.readLine();
-                if (!(current.equals(shopLine)||shopLine.equals(current+" ")||current.equals(shopLine+" "))){
-                    writer.write(current+"\n");
+                if (!(current.equals(shopLine) || shopLine.equals(current + " ") || current.equals(shopLine + " "))) {
+                    writer.write(current + "\n");
                 }
             }
             writer.flush();
@@ -78,6 +103,36 @@ public class ShopDb implements ShopDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        for (int i = 0; i < allInProducts.size(); i++) {
+            if (allInProducts.get(i)[4].equals(id)) {
+                productLines.add(allInProducts.get(i)[0] + " " + allInProducts.get(i)[1] + " " + allInProducts.get(i)[2] + " " + allInProducts.get(i)[3] + " " + allInProducts.get(i)[4]);
+            }
+        }
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(products));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(buffer));
+            while (reader.ready()) {
+                boolean flag = true;
+                String current = reader.readLine();
+                for (int i = 0; i < productLines.size(); i++) {
+                    if ((current.equals(productLines.get(i)) || productLines.get(i).equals(current + " ") || current.equals(productLines.get(i) + " "))) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    writer.write(current + "\n");
+                }
+
+            }
+            writer.flush();
+            reader.close();
+            writer.close();
+            products.delete();
+            buffer.renameTo(products);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -123,9 +178,20 @@ public class ShopDb implements ShopDB {
 
     @Override
     public List<Product> findAllProducts(Shop shop) {
-        return Collections.emptyList();
+        List<String[]> allInProducts = myCsvReaderPd.read();
+        List<Product> products = new ArrayList<>();
+        for (int i = 0; i < allInProducts.size(); i++) {
+            if (allInProducts.get(i)[4].equals(shop.getId())) {
+                Product product = new Product();
+                product.setId(allInProducts.get(i)[0]);
+                product.setName(allInProducts.get(i)[1]);
+                product.setBrand(allInProducts.get(i)[2]);
+                product.setPrice(Integer.parseInt(allInProducts.get(i)[3]));
+                product.setShopId(allInProducts.get(i)[4]);
+                products.add(product);            }
+        }
+        return products;
     }
-
 
     private String generateId(Shop shop) {
         String id = UUID.randomUUID().toString();

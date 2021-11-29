@@ -3,6 +3,7 @@ package ua.com.alevel.controller;
 import ua.com.alevel.ProductNotFoundException;
 import ua.com.alevel.ShopNotFoundException;
 import ua.com.alevel.config.GenerateImplementationFromInterfaceFactory;
+import ua.com.alevel.entity.Product;
 import ua.com.alevel.entity.Shop;
 import ua.com.alevel.service.ShopService;
 
@@ -153,12 +154,18 @@ public class ShopController {
                 System.out.println("shop with id '" + id + "' not found");
                 return;
             }
-            if (shopService.findAllProducts(shopService.findById(id)) == null) {
+            else if (shopService.findAllProducts(shopService.findById(id)) == null) {
                 System.out.println("there is no products in shop " + shopService.findById(id).getName());
                 return;
             }
-            if (count == shopService.findAllProducts(shopService.findById(id)).size()) {
+            else if (count == shopService.findAllProducts(shopService.findById(id)).size()) {
                 System.out.println("product list is empty");
+            }
+            else{
+                List<Product> findAll=shopService.findAllProducts(shopService.findById(id));
+                for (int i = 0; i <findAll.size() ; i++) {
+                    System.out.println(findAll.get(i));
+                }
             }
         } catch (IOException e) {
             System.out.println("problem: = " + e.getMessage());

@@ -16,12 +16,8 @@ public class ProductDb implements ProductDB {
 
     protected static ProductDb instance;
     File products = new File("product.csv");
-    File productsAndShops = new File("products_and_shops.csv");
     MyCsvWriter myCsvWriterPd = new MyCsvWriter(products);
     MyCsvReader myCsvReaderPd = new MyCsvReader(products);
-    MyCsvWriter myCsvWriterPdAndSh = new MyCsvWriter(productsAndShops);
-    MyCsvReader myCsvReaderPdAndSh = new MyCsvReader(productsAndShops);
-
 
     public static ProductDb getInstance() {
         if (instance == null) {
@@ -33,7 +29,6 @@ public class ProductDb implements ProductDB {
     public void create(Product product) {
         product.setId(generateId(product));
         myCsvWriterPd.write(product.getId(), product.getName(), product.getBrand(), String.valueOf(product.getPrice()), product.getShopId());
-        myCsvWriterPdAndSh.write(product.getId(), product.getShopId());
     }
 
     public void update(Product product) {
@@ -50,11 +45,8 @@ public class ProductDb implements ProductDB {
 
     public void delete(String id) {
         File buffer = new File("buffer.csv");
-        File bufferShopsProducts = new File("bufferRelation.csv");
         List<String[]> allInCsv = myCsvReaderPd.read();
-        List<String[]> allInRelation;
         String productLine = " ";
-        String relationLine = " ";
         for (int i = 0; i < allInCsv.size(); i++) {
             if (allInCsv.get(i)[0].equals(id)) {
                 productLine = allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " " + allInCsv.get(i)[3] + " " + allInCsv.get(i)[4] + " ";
@@ -77,7 +69,6 @@ public class ProductDb implements ProductDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 
