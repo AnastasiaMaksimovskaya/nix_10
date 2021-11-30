@@ -1,7 +1,5 @@
 package ua.com.alevel.service;
 
-import ua.com.alevel.ProductNotFoundException;
-import ua.com.alevel.ShopNotFoundException;
 import ua.com.alevel.entity.BaseEntity;
 
 import java.util.List;

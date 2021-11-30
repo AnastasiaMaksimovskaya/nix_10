@@ -1,6 +1,6 @@
 package ua.com.alevel.dao.impl;
 
-import ua.com.alevel.ShopNotFoundException;
+import ua.com.alevel.service.ShopNotFoundException;
 import ua.com.alevel.config.ActiveClass;
 import ua.com.alevel.dao.ShopDao;
 import ua.com.alevel.db.impl.ShopDb;

@@ -2,14 +2,13 @@ package ua.com.alevel.db.impl;
 
 import ua.com.alevel.MyCsvReader;
 import ua.com.alevel.MyCsvWriter;
-import ua.com.alevel.ShopNotFoundException;
+import ua.com.alevel.service.ShopNotFoundException;
 import ua.com.alevel.db.ShopDB;
 import ua.com.alevel.entity.Product;
 import ua.com.alevel.entity.Shop;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package ua.com.alevel.controller;
 
-import ua.com.alevel.ProductNotFoundException;
-import ua.com.alevel.ShopNotFoundException;
+import ua.com.alevel.service.ProductNotFoundException;
+import ua.com.alevel.service.ShopNotFoundException;
 import ua.com.alevel.config.GenerateImplementationFromInterfaceFactory;
 import ua.com.alevel.entity.Product;
 import ua.com.alevel.entity.Shop;
