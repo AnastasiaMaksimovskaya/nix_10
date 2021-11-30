@@ -2,9 +2,10 @@ package ua.com.alevel.db.impl;
 
 import ua.com.alevel.MyCsvReader;
 import ua.com.alevel.MyCsvWriter;
-import ua.com.alevel.service.ProductNotFoundException;
+import ua.com.alevel.exception.ProductNotFoundException;
 import ua.com.alevel.db.ProductDB;
 import ua.com.alevel.entity.Product;
+import ua.com.alevel.util.UpdateAndDeleteByRewriting;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,9 +13,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class ProductDb implements ProductDB {
+    private final String FILE_PATH = ".\\src\\main\\java\\ua\\com\\alevel\\files\\";
 
     protected static ProductDb instance;
-    File products = new File("product.csv");
+    File products = new File(FILE_PATH + "product.csv");
     MyCsvWriter myCsvWriterPd = new MyCsvWriter(products);
     MyCsvReader myCsvReaderPd = new MyCsvReader(products);
 
@@ -31,45 +33,50 @@ public class ProductDb implements ProductDB {
     }
 
     public void update(Product product) {
+        List<String[]> allInCsv = myCsvReaderPd.read();
+        List<String> productLines = new ArrayList<>();
+        Product current = null;
         try {
-            Product current = findById(product.getId());
-            delete(product.getId());
-            current.setId(product.getId());
-            current.setPrice(product.getPrice());
-            myCsvWriterPd.write(current.getId(), current.getName(), current.getBrand(), String.valueOf(current.getPrice()), current.getShopId());
+            current = findById(product.getId());
+            if (current==null){
+                throw new ProductNotFoundException();
+            }
         } catch (ProductNotFoundException e) {
             System.out.println(e);
         }
-    }
-
-    public void delete(String id) {
-        File buffer = new File("buffer.csv");
-        List<String[]> allInCsv = myCsvReaderPd.read();
-        String productLine = " ";
+        delete(product.getId());
+        if (current != null) {
+            current.setId(product.getId());
+        }
+        else return;
+        current.setPrice(product.getPrice());
         for (int i = 0; i < allInCsv.size(); i++) {
-            if (allInCsv.get(i)[0].equals(id)) {
-                productLine = allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " " + allInCsv.get(i)[3] + " " + allInCsv.get(i)[4] + " ";
+            if (allInCsv.get(i)[0].equals(product.getId())) {
+                productLines.add(allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " " + allInCsv.get(i)[3] + " " + allInCsv.get(i)[4] + " ");
             }
         }
+        String updated = current.getId() +" "+ current.getName()+" " + current.getBrand()+" " + current.getPrice()+" " + current.getShopId();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(products));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(buffer));
-            while (reader.ready()) {
-                String current = reader.readLine();
-                if (!(current.equals(productLine) || productLine.equals(current + " ") || current.equals(productLine + " "))) {
-                    writer.write(current + "\n");
-                }
-            }
-            writer.flush();
-            reader.close();
-            writer.close();
-            products.delete();
-            buffer.renameTo(products);
+            new UpdateAndDeleteByRewriting().updateEntity(productLines, products, updated);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void delete(String id) {
+        List<String[]> allInCsv = myCsvReaderPd.read();
+        List<String> productLines = new ArrayList<>();
+        for (int i = 0; i < allInCsv.size(); i++) {
+            if (allInCsv.get(i)[0].equals(id)) {
+                productLines.add(allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " " + allInCsv.get(i)[3] + " " + allInCsv.get(i)[4] + " ");
+            }
+        }
+        try {
+            new UpdateAndDeleteByRewriting().deleteEntity(productLines, products);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Product findById(String id) throws ProductNotFoundException {
         List<String[]> allInCsv = myCsvReaderPd.read();
@@ -118,6 +125,5 @@ public class ProductDb implements ProductDB {
         } catch (ProductNotFoundException e) {
             return ("does not exist");
         }
-
     }
 }

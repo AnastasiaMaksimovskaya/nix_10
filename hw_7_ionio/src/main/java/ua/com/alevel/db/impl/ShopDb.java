@@ -2,10 +2,11 @@ package ua.com.alevel.db.impl;
 
 import ua.com.alevel.MyCsvReader;
 import ua.com.alevel.MyCsvWriter;
-import ua.com.alevel.service.ShopNotFoundException;
+import ua.com.alevel.exception.ShopNotFoundException;
 import ua.com.alevel.db.ShopDB;
 import ua.com.alevel.entity.Product;
 import ua.com.alevel.entity.Shop;
+import ua.com.alevel.util.UpdateAndDeleteByRewriting;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,11 +14,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class ShopDb implements ShopDB {
+    private final String FILE_PATH = ".\\src\\main\\java\\ua\\com\\alevel\\files\\";
 
-    File products = new File("product.csv");
-    MyCsvWriter myCsvWriterPd = new MyCsvWriter(products);
+    File products = new File(FILE_PATH + "product.csv");
     MyCsvReader myCsvReaderPd = new MyCsvReader(products);
-    File shops = new File("shop.csv");
+    File shops = new File(FILE_PATH + "shop.csv");
     MyCsvWriter myCsvWriterSh = new MyCsvWriter(shops);
     MyCsvReader myCsvReaderSh = new MyCsvReader(shops);
 
@@ -38,67 +39,47 @@ public class ShopDb implements ShopDB {
 
     @Override
     public void update(Shop shop) {
-
-        File buffer = new File("buffer.csv");
         List<String[]> allInCsv = myCsvReaderSh.read();
-        String shopLine = " ";
+        List<String> shopLines = new ArrayList<>();
         for (int i = 0; i < allInCsv.size(); i++) {
             if (allInCsv.get(i)[0].equals(shop.getId())) {
-                shopLine = allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " ";
+                shopLines.add(allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " ");
             }
         }
+        String id = shop.getId();
+        Shop current = null;
         try {
-            String id = shop.getId();
-            Shop current = findById(id);
-            current.setId(shop.getId());
-            current.setName(shop.getName());
-            BufferedReader reader = new BufferedReader(new FileReader(shops));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(buffer));
-            while (reader.ready()) {
-                String currentLine = reader.readLine();
-                if (!(currentLine.equals(shopLine) || shopLine.equals(currentLine + " ") || currentLine.equals(shopLine + " "))) {
-                    writer.write(currentLine + "\n");
-                }
-            }
-            writer.write(current.getId()+" "+ current.getAddress()+" "+ current.getName());
-            writer.flush();
-            reader.close();
-            writer.close();
-            shops.delete();
-            buffer.renameTo(shops);
+            current = findById(id);
+        } catch (ShopNotFoundException e) {
+            System.out.println(e);
+            return;
+        }
+        current.setName(shop.getName());
+        try {
+            new UpdateAndDeleteByRewriting().updateEntity(shopLines, shops, current.getId() + " " + current.getAddress() + " " + current.getName());
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (ShopNotFoundException e) {
-            System.out.println(e);
         }
     }
 
     @Override
     public void delete(String id) {
-        File buffer = new File("buffer.csv");
+        List<String> productStrings = new ArrayList<>();
+        List<Product> productsByShop = findAllProducts(id);
+        for (int i = 0; i < productsByShop.size(); i++) {
+            productStrings.add(productsByShop.get(i).getId());
+        }
         List<String[]> allInCsv = myCsvReaderSh.read();
         List<String[]> allInProducts = myCsvReaderPd.read();
-        String shopLine = " ";
+        List<String> shopLines = new ArrayList<>();
         List<String> productLines = new ArrayList<>();
         for (int i = 0; i < allInCsv.size(); i++) {
             if (allInCsv.get(i)[0].equals(id)) {
-                shopLine = allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " ";
+                shopLines.add(allInCsv.get(i)[0] + " " + allInCsv.get(i)[1] + " " + allInCsv.get(i)[2] + " ");
             }
         }
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(shops));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(buffer));
-            while (reader.ready()) {
-                String current = reader.readLine();
-                if (!(current.equals(shopLine) || shopLine.equals(current + " ") || current.equals(shopLine + " "))) {
-                    writer.write(current + "\n");
-                }
-            }
-            writer.flush();
-            reader.close();
-            writer.close();
-            shops.delete();
-            buffer.renameTo(shops);
+            new UpdateAndDeleteByRewriting().deleteEntity(shopLines, shops);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -108,30 +89,10 @@ public class ShopDb implements ShopDB {
             }
         }
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(products));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(buffer));
-            while (reader.ready()) {
-                boolean flag = true;
-                String current = reader.readLine();
-                for (int i = 0; i < productLines.size(); i++) {
-                    if ((current.equals(productLines.get(i)) || productLines.get(i).equals(current + " ") || current.equals(productLines.get(i) + " "))) {
-                        flag = false;
-                    }
-                }
-                if (flag) {
-                    writer.write(current + "\n");
-                }
-
-            }
-            writer.flush();
-            reader.close();
-            writer.close();
-            products.delete();
-            buffer.renameTo(products);
+            new UpdateAndDeleteByRewriting().deleteEntity(productLines, products);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -165,7 +126,6 @@ public class ShopDb implements ShopDB {
 
     @Override
     public boolean existByAddress(String address) {
-
         List<String[]> allInCsv = myCsvReaderSh.read();
         for (int i = 0; i < allInCsv.size(); i++) {
             if (allInCsv.get(i)[1].equals(address)) {
@@ -176,18 +136,19 @@ public class ShopDb implements ShopDB {
     }
 
     @Override
-    public List<Product> findAllProducts(Shop shop) {
+    public List<Product> findAllProducts(String shopId) {
         List<String[]> allInProducts = myCsvReaderPd.read();
         List<Product> products = new ArrayList<>();
         for (int i = 0; i < allInProducts.size(); i++) {
-            if (allInProducts.get(i)[4].equals(shop.getId())) {
+            if (allInProducts.get(i)[4].equals(shopId)) {
                 Product product = new Product();
                 product.setId(allInProducts.get(i)[0]);
                 product.setName(allInProducts.get(i)[1]);
                 product.setBrand(allInProducts.get(i)[2]);
                 product.setPrice(Integer.parseInt(allInProducts.get(i)[3]));
                 product.setShopId(allInProducts.get(i)[4]);
-                products.add(product);            }
+                products.add(product);
+            }
         }
         return products;
     }

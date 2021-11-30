@@ -1,7 +1,7 @@
 package ua.com.alevel.controller;
 
-import ua.com.alevel.service.ProductNotFoundException;
-import ua.com.alevel.service.ShopNotFoundException;
+import ua.com.alevel.exception.ProductNotFoundException;
+import ua.com.alevel.exception.ShopNotFoundException;
 import ua.com.alevel.config.GenerateImplementationFromInterfaceFactory;
 import ua.com.alevel.entity.Product;
 import ua.com.alevel.entity.Shop;
@@ -124,13 +124,16 @@ public class ProductController {
             String pr = reader.readLine();
             try {
                 price = Integer.parseInt(pr);
-            } catch (NoSuchElementException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("invalid data format");
+                return;
             }
             Product product = new Product();
             product.setId(id);
             product.setPrice(price);
-            productService.update(product);
+            if (productService != null) {
+                productService.update(product);
+            }
         } catch (IOException e) {
             System.out.println("problem: = " + e.getMessage());
         }

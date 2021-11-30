@@ -2,8 +2,8 @@ package ua.com.alevel.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.com.alevel.service.ProductNotFoundException;
-import ua.com.alevel.service.ShopNotFoundException;
+import ua.com.alevel.exception.ProductNotFoundException;
+import ua.com.alevel.exception.ShopNotFoundException;
 import ua.com.alevel.config.ActiveClass;
 import ua.com.alevel.config.GenerateImplementationFromInterfaceFactory;
 import ua.com.alevel.dao.ShopDao;
@@ -32,7 +32,6 @@ public class ShopServiceImpl implements ShopService {
             LOGGER_WARN.warn("shop exist by address" + entity.getAddress());
         }
         LOGGER_INFO.info("finish create " + entity);
-
     }
 
     @Override
@@ -68,9 +67,8 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<Product> findAllProducts(Shop shop) {
-        LOGGER_INFO.info("finding all products in " + shop);
-        return shopDao.findAllProducts(shop);
+    public List<Product> findAllProducts(String shopId) {
+        LOGGER_INFO.info("finding all products in " + shopId);
+        return shopDao.findAllProducts(shopId);
     }
-
 }

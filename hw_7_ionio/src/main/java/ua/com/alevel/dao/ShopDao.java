@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ShopDao extends BaseDao<Shop> {
     boolean existByAddress(String address);
-    List<Product> findAllProducts(Shop shop);
+
+    List<Product> findAllProducts(String shopId);
 }

@@ -4,17 +4,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import ua.com.alevel.config.ConfigFiles;
 import ua.com.alevel.entity.Product;
 import ua.com.alevel.entity.Shop;
-import ua.com.alevel.service.ProductNotFoundException;
-import ua.com.alevel.service.ShopNotFoundException;
+import ua.com.alevel.exception.ProductNotFoundException;
+import ua.com.alevel.exception.ShopNotFoundException;
 import ua.com.alevel.service.impl.ProductServiceImpl;
 import ua.com.alevel.service.impl.ShopServiceImpl;
 
 import java.util.List;
 
 public class ServicesTest {
-
     public static final ProductServiceImpl productService = new ProductServiceImpl();
     public static final ShopServiceImpl shopService = new ShopServiceImpl();
 
@@ -36,6 +36,7 @@ public class ServicesTest {
     @BeforeAll
     @Order(1)
     public static void setUpShops() {
+        new ConfigFiles().configFiles();
         for (int i = 0; i < DEFAULT_SIZE; i++) {
             Shop shop = generateShop(NAME + i, i + ADDRESS);
             shopService.create(shop);
@@ -135,7 +136,7 @@ public class ServicesTest {
         }
         productService.delete(product.getId());
         Assertions.assertEquals(productService.findAll().size(), DEFAULT_SIZE_PRODUCTS);
-        List<Product> products = shopService.findAllProducts(shop);
+        List<Product> products = shopService.findAllProducts(shop.getId());
         Assertions.assertEquals(products.size(), DEFAULT_SIZE_PRODUCTS - 1);
     }
 

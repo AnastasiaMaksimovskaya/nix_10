@@ -1,7 +1,7 @@
 package ua.com.alevel.controller;
 
-import ua.com.alevel.service.ProductNotFoundException;
-import ua.com.alevel.service.ShopNotFoundException;
+import ua.com.alevel.exception.ProductNotFoundException;
+import ua.com.alevel.exception.ShopNotFoundException;
 import ua.com.alevel.config.GenerateImplementationFromInterfaceFactory;
 import ua.com.alevel.entity.Product;
 import ua.com.alevel.entity.Shop;
@@ -101,7 +101,9 @@ public class ShopController {
             shop.setId(id);
             shop.setAddress(shop.getAddress());
             shop.setName(name);
-            shopService.update(shop);
+            if (shopService != null) {
+                shopService.update(shop);
+            }
         } catch (IOException e) {
             System.out.println("problem: = " + e.getMessage());
         }
@@ -154,15 +156,15 @@ public class ShopController {
                 System.out.println("shop with id '" + id + "' not found");
                 return;
             }
-            else if (shopService.findAllProducts(shopService.findById(id)) == null) {
+            else if (shopService.findAllProducts(id) == null) {
                 System.out.println("there is no products in shop " + shopService.findById(id).getName());
                 return;
             }
-            else if (count == shopService.findAllProducts(shopService.findById(id)).size()) {
+            else if (count == shopService.findAllProducts(id).size()) {
                 System.out.println("product list is empty");
             }
             else{
-                List<Product> findAll=shopService.findAllProducts(shopService.findById(id));
+                List<Product> findAll=shopService.findAllProducts(id);
                 for (int i = 0; i <findAll.size() ; i++) {
                     System.out.println(findAll.get(i));
                 }

@@ -1,6 +1,6 @@
 package ua.com.alevel.dao.impl;
 
-import ua.com.alevel.service.ShopNotFoundException;
+import ua.com.alevel.exception.ShopNotFoundException;
 import ua.com.alevel.config.ActiveClass;
 import ua.com.alevel.dao.ShopDao;
 import ua.com.alevel.db.impl.ShopDb;
@@ -45,7 +45,7 @@ public class ShopDaoImpl implements ShopDao {
     }
 
     @Override
-    public List<Product> findAllProducts(Shop shop) {
-        return db.findAllProducts(shop);
+    public List<Product> findAllProducts(String shopId) {
+        return db.findAllProducts(shopId);
     }
 }

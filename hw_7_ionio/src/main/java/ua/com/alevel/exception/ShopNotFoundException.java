@@ -1,4 +1,4 @@
-package ua.com.alevel.service;
+package ua.com.alevel.exception;
 
 public class ShopNotFoundException extends Throwable {
     @Override

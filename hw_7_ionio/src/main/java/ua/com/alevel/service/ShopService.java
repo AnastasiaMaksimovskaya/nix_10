@@ -5,7 +5,8 @@ import ua.com.alevel.entity.Shop;
 
 import java.util.List;
 
-public interface ShopService extends  BaseService<Shop> {
+public interface ShopService extends BaseService<Shop> {
     boolean existByAddress(String address);
-   List<Product> findAllProducts(Shop shop);
+
+    List<Product> findAllProducts(String shopId);
 }
