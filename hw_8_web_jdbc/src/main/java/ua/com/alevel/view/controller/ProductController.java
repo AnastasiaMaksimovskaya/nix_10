@@ -55,8 +55,12 @@ public class ProductController extends BaseController{
 
     @PostMapping("/create")
     public String create(@ModelAttribute("product") ProductRequestDto dto) {
-        System.out.println("ProductController.create");
         productFacade.create(dto);
+        return "redirect:/products";
+    }
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        productFacade.delete(id);
         return "redirect:/products";
     }
 

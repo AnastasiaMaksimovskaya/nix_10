@@ -28,6 +28,7 @@ public class ShopDaoImpl implements ShopDao {
     private final static String FIND_SHOP_BY_ID_QUERY = "select * from shops as sh left join product_shop as p on sh.id = p.shop_id where sh.id = ";
     private final static String FIND_ALL_SHOPS_QUERY = "select * from shops";
     private final static String FIND_ALL_SHOPS_BY_PRODUCT_QUERY = "select * from shops as sh left join product_shop as psh on sh.id = psh.shop_id where psh.product_id = ";
+    private final static String DELETE_PRODUCTS_AFTER_DELETING_SHOP = "delete p from products as p left join product_shop as psh on p.id = psh.product_id where psh.product_id IS NULL";
 
 
 
@@ -64,8 +65,16 @@ public class ShopDaoImpl implements ShopDao {
     public void delete(Long id) {
         try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(DELETE_SHOP_QUERY + id)) {
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
+        }
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(DELETE_PRODUCTS_AFTER_DELETING_SHOP)) {
+            System.out.println("ShopDaoImpl.delete");
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException exception){
+            exception.printStackTrace();
         }
     }
 
