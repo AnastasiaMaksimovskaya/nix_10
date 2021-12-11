@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Author details</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Author details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${shop.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>First name</th>
+                            <td th:text="${shop.getAddress()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Last name</th>
+                            <td th:text="${shop.getName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Created</th>
+                            <td th:text="${#calendars.format(shop.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Updated</th>
+                            <td th:text="${#calendars.format(shop.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>All products</th>
+                            <td>
+                                <ul th:each="product : ${products}">
+                                    <li>
+                                        <a role="button" class="btn btn-link" th:href="@{'/products/details/' + ${product.getKey()}}" th:text="${product.getValue()}">details</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

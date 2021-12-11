@@ -1,0 +1,22 @@
+package ua.com.alevel.exception;
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.sql.SQLException;
+
+//@ControllerAdvice
+public class GlobalExceptionHandler {
+//
+//    @ExceptionHandler(value = {EntityNotFoundException.class})
+//    public ModelAndView defaultErrorHandler(EntityNotFoundException exception) {
+//        exception.printStackTrace();
+//        System.out.println(exception.getMessage());
+//        ModelAndView mav = new ModelAndView();
+//        mav.addObject("showMessage", true);
+//        mav.addObject("errorMessage", exception.getMessage());
+//        mav.setViewName("error");
+//        return mav;
+  //  }
+}

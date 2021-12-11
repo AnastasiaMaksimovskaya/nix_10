@@ -1,0 +1,31 @@
+package ua.com.alevel.view.dto.request;
+
+public class ProductRequestDto extends RequestDto{
+    private String productName;
+    private String brand;
+    private Integer price;
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+}
