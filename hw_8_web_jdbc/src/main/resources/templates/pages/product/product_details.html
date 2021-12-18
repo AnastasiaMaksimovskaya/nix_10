@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="utf-8">
-    <title>Product details</title>
+    <title>Product Details</title>
 </head>
 <body>
 
@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    Product details
+                    Product Details
                 </div>
                 <div class="card-body">
                     <table class="table table-hover">
@@ -24,11 +24,19 @@
                             <td th:text="${product.getId()}"></td>
                         </tr>
                         <tr>
-                            <th>Product name</th>
+                            <th>Product Name</th>
                             <td th:text="${product.getName()}"></td>
                         </tr>
                         <tr>
-                            <th>Product shops</th>
+                            <th>Created</th>
+                            <td th:text="${#calendars.format(product.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Updated</th>
+                            <td th:text="${#calendars.format(product.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Product Shops</th>
                             <td>
                                 <table>
                                     <tr th:each="shop : ${shops}">

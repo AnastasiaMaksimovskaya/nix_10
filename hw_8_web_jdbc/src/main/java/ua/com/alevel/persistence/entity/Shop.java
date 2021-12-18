@@ -4,6 +4,15 @@ public class Shop extends BaseEntity {
 
     private String address;
     private String name;
+    private Integer productCount;
+
+    public Integer getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
+    }
 
     public String getAddress() {
         return address;

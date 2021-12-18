@@ -25,8 +25,9 @@ public class ShopDaoImpl implements ShopDao {
     private static final String UPDATE_SHOP_QUERY = "update shops set shop_name = ?,updated = ? where id = ";
     private static final String DELETE_SHOP_QUERY = "delete from shops where id = ";
     private final static String EXIST_SHOP_BY_ID_QUERY = "select count(*) from shops where id = ";
-    private final static String FIND_SHOP_BY_ID_QUERY = "select * from shops as sh left join product_shop as p on sh.id = p.shop_id where sh.id = ";
-    private final static String FIND_ALL_SHOPS_QUERY = "select * from shops";
+    private final static String FIND_SHOP_BY_ID_QUERY = "select *,count(product_id) as productCount from shops left join product_shop ps on shops.id = ps.shop_id where id = ";
+    private final static String FIND_ALL_SHOPS_QUERY = "select *,count(product_id) as productCount from shops left join product_shop ps on shops.id = ps.shop_id group by shops.id order by ";
+    private final static String FIND_ALL_SHOPS_COUNT = "select count(*) from shops";
     private final static String FIND_ALL_SHOPS_BY_PRODUCT_QUERY = "select * from shops as sh left join product_shop as psh on sh.id = psh.shop_id where psh.product_id = ";
     private final static String DELETE_PRODUCTS_AFTER_DELETING_SHOP = "delete p from products as p left join product_shop as psh on p.id = psh.product_id where psh.product_id IS NULL";
 
@@ -70,7 +71,6 @@ public class ShopDaoImpl implements ShopDao {
             e.printStackTrace();
         }
         try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(DELETE_PRODUCTS_AFTER_DELETING_SHOP)) {
-            System.out.println("ShopDaoImpl.delete");
             preparedStatement.executeUpdate();
         }
         catch (SQLException exception){
@@ -106,7 +106,13 @@ public class ShopDaoImpl implements ShopDao {
     @Override
     public DataTableResponse<Shop> findAll(DataTableRequest request) {
         List<Shop> shops = new ArrayList<>();
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_SHOPS_QUERY)) {
+        int limit = (request.getCurrentPage() - 1) * request.getPageSize();
+        String sqlFindWithParams = FIND_ALL_SHOPS_QUERY+
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize();
+        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(sqlFindWithParams)) {
             while (resultSet.next()) {
                 shops.add(convertResultSetToShop(resultSet));
             }
@@ -120,7 +126,15 @@ public class ShopDaoImpl implements ShopDao {
 
     @Override
     public long count() {
-        return 0;
+        int count = 0;
+        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_SHOPS_COUNT)) {
+            if (resultSet.next()) {
+                count = resultSet.getInt("count(*)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
@@ -144,12 +158,14 @@ public class ShopDaoImpl implements ShopDao {
         Timestamp updated = resultSet.getTimestamp("updated");
         Boolean visible = resultSet.getBoolean("visible");
         String shopName = resultSet.getString("shop_name");
+        Integer count = resultSet.getInt("productCount");
         String address = resultSet.getString("address");
         Shop shop = new Shop();
         shop.setId(id);
         shop.setName(shopName);
         shop.setAddress(address);
         shop.setVisible(visible);
+        shop.setProductCount(count);
         shop.setCreated(new Date(created.getTime()));
         shop.setUpdated(new Date(updated.getTime()));
         return shop;

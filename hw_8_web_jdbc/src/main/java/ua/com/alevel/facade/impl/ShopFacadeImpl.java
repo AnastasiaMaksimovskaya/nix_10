@@ -15,6 +15,7 @@ import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.ProductResponseDto;
 import ua.com.alevel.view.dto.response.ShopResponseDto;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,7 +40,10 @@ public class ShopFacadeImpl implements ShopFacade {
 
     @Override
     public void update(ShopRequestDto shopRequestDto, Long id) {
-        shopService.update(shopService.findById(id));
+        Shop shop = shopService.findById(id);
+        shop.setName(shopRequestDto.getName());
+        shop.setUpdated(new Timestamp(System.currentTimeMillis()));
+        shopService.update(shop);
     }
 
     @Override

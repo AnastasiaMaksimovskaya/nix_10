@@ -1,18 +1,19 @@
 package ua.com.alevel.persistence.entity;
 
+
 public class Product extends BaseEntity {
 
     private String name;
     private String brand;
-    private int price;
-    private String shopId;
+    private Integer price;
+    private Integer shopCount;
 
-    public String getShopId() {
-        return shopId;
+    public int getShopCount() {
+        return shopCount;
     }
 
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
+    public void setShopCount(int shopCount) {
+        this.shopCount = shopCount;
     }
 
     public String getName() {
@@ -42,11 +43,10 @@ public class Product extends BaseEntity {
     @Override
     public String toString() {
         return "Product{" +
-                "id='" + super.getId() + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", brand='" + brand + '\'' +
                 ", price=" + price +
-                ", shopId=" + getShopId() +
+                ", shopCount=" + shopCount +
                 '}';
     }
 }

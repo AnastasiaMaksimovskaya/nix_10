@@ -13,6 +13,7 @@ import ua.com.alevel.view.dto.request.ProductRequestDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.ProductResponseDto;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,12 +33,17 @@ public class ProductFacadeImpl implements ProductFacade {
         product.setName(productRequestDto.getProductName());
         product.setBrand(productRequestDto.getBrand());
         product.setPrice(productRequestDto.getPrice());
+        List<Integer> shopsId = productRequestDto.getShopsId();
         productService.create(product);
+        productService.createRelationship(product,shopsId);
     }
 
     @Override
     public void update(ProductRequestDto productRequestDto, Long id) {
-        productService.update(productService.findById(id));
+        Product product = productService.findById(id);
+        product.setPrice(productRequestDto.getPrice());
+        product.setUpdated(new Timestamp(System.currentTimeMillis()));
+        productService.update(product);
     }
 
     @Override
@@ -52,18 +58,17 @@ public class ProductFacadeImpl implements ProductFacade {
 
     @Override
     public PageData<ProductResponseDto> findAll(WebRequest request) {
+
         DataTableRequest dataTableRequest = WebRequestUtil.initDataTableRequest(request);
         DataTableResponse<Product> tableResponse = productService.findAll(dataTableRequest);
 
         List<ProductResponseDto> products = tableResponse.getItems().stream().
                 map(ProductResponseDto::new).
-                peek(productResponseDto -> productResponseDto.setShopsCount((Integer) tableResponse.
-                        getOtherParamMap().get(productResponseDto.getId()))).
                 collect(Collectors.toList());
 
         PageData<ProductResponseDto> pageData = (PageData<ProductResponseDto>) WebResponseUtil.initPageData(tableResponse);
         pageData.setItems(products);
-
+        System.out.println("pageData.getItems() = " + pageData.getItems());
         return pageData;
     }
 

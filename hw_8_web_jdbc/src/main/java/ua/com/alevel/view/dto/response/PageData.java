@@ -3,13 +3,13 @@ package ua.com.alevel.view.dto.response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageData<REQ extends ResponseDto> {
+public class PageData<RES extends ResponseDto> {
 
     private int currentPage;
     private int pageSize;
     private int totalPageSize;
     private long itemsSize;
-    private List<REQ> items;
+    private List<RES> items;
     private final int[] pageSizeItems;
     private boolean showFirst;
     private boolean showPrevious;
@@ -17,16 +17,16 @@ public class PageData<REQ extends ResponseDto> {
     private boolean showLast;
     private String sort;
     private String order;
-    private int currentShowFromEntries;
-    private int currentShowToEntries;
+    private long currentShowFromEntries;
+    private long currentShowToEntries;
 
     public PageData() {
         this.currentPage = 0;
-        this.pageSizeItems = new int[]{ 5, 10, 25, 50, 100 };
+        this.pageSizeItems = new int[]{2, 5, 10, 25, 50, 100};
         this.pageSize = this.pageSizeItems[0];
         this.totalPageSize = 0;
-        this.itemsSize = 0;
         this.items = new ArrayList<>();
+        this.itemsSize = 0;
         this.showFirst = false;
         this.showPrevious = false;
         this.showNext = false;
@@ -35,14 +35,34 @@ public class PageData<REQ extends ResponseDto> {
 
     public void initPaginationState() {
         if (pageSize < itemsSize) {
-            this.totalPageSize = (int) itemsSize / pageSize; // TODO fix this
+            if (itemsSize % pageSize == 0) {
+                this.totalPageSize = (int) itemsSize / pageSize;
+            } else {
+                this.totalPageSize = (int) itemsSize / pageSize + 1;
+            }
             this.showFirst = currentPage != 1;
             this.showPrevious = currentPage - 1 != 0;
-            this.showLast = currentPage - 1 != totalPageSize;
-            this.showNext = currentPage - 1 != totalPageSize;
+            this.showLast = currentPage != totalPageSize;
+            this.showNext = currentPage != totalPageSize;
+
+         if (itemsSize != 0) {
+                currentShowFromEntries = ((long) (currentPage - 1) * pageSize) + 1;
+                int showTo = ((currentPage) * pageSize);
+                if (showTo > itemsSize) {
+                    currentShowToEntries = itemsSize;
+                } else {
+                    currentShowToEntries = showTo;
+                }
+            } else {
+                currentShowToEntries = 0;
+                currentShowFromEntries = 0;
+
+            }
         }
-        currentShowFromEntries = ((currentPage - 1) * pageSize) + 1;
-        currentShowToEntries = ((currentPage - 1) * pageSize) + items.size();
+        else {
+            currentShowToEntries = itemsSize;
+            currentShowFromEntries = 1;
+        }
     }
 
     public int getCurrentPage() {
@@ -77,11 +97,11 @@ public class PageData<REQ extends ResponseDto> {
         this.itemsSize = itemsSize;
     }
 
-    public List<REQ> getItems() {
+    public List<RES> getItems() {
         return items;
     }
 
-    public void setItems(List<REQ> items) {
+    public void setItems(List<RES> items) {
         this.items = items;
     }
 
@@ -137,7 +157,7 @@ public class PageData<REQ extends ResponseDto> {
         this.order = order;
     }
 
-    public int getCurrentShowFromEntries() {
+    public long getCurrentShowFromEntries() {
         return currentShowFromEntries;
     }
 
@@ -145,7 +165,7 @@ public class PageData<REQ extends ResponseDto> {
         this.currentShowFromEntries = currentShowFromEntries;
     }
 
-    public int getCurrentShowToEntries() {
+    public long getCurrentShowToEntries() {
         return currentShowToEntries;
     }
 

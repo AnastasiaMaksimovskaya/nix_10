@@ -8,6 +8,7 @@ import ua.com.alevel.persistence.entity.Product;
 import ua.com.alevel.service.ProductService;
 import ua.com.alevel.util.WebResponseUtil;
 
+import java.util.List;
 import java.util.Map;
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -49,5 +50,10 @@ productDao.delete(id);
     @Override
     public Map<Long, String> findAllByShopId(Long shopId) {
         return productDao.findAllByShopId(shopId);
+    }
+
+    @Override
+    public void createRelationship(Product p, List<Integer> shopsId) {
+        productDao.createRelationship(p,shopsId);
     }
 }

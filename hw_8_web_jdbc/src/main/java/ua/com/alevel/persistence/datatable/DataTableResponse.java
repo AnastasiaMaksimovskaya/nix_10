@@ -2,9 +2,7 @@ package ua.com.alevel.persistence.datatable;
 
 import ua.com.alevel.persistence.entity.BaseEntity;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataTableResponse<ENTITY extends BaseEntity> {
 
@@ -17,8 +15,8 @@ public class DataTableResponse<ENTITY extends BaseEntity> {
     private String order;
 
     public DataTableResponse() {
-        items = Collections.emptyList();
-        otherParamMap = Collections.emptyMap();
+        items = new ArrayList<>();
+        otherParamMap = new HashMap<>();
         itemsSize = 0;
     }
 

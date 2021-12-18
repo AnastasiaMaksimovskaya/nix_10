@@ -5,7 +5,7 @@
       layout:decorate="~{fragments/data_table}">
 <head>
     <meta charset="utf-8">
-    <title>authors</title>
+    <title>Shops</title>
 </head>
 <body>
 
@@ -15,11 +15,12 @@
         <td th:text="${iter.count}"></td>
         <td th:text="${shop.getName()}"></td>
         <td th:text="${shop.getAddress()}"></td>
+        <td th:text="${shop.getProductCount()}"></td>
         <td>
-            <a th:href="@{'/products?shopId=' + ${shop.getId()}}" th:text="${shop.getProductCount()}" type="button" class="btn btn-link">details</a>
+            <a th:href="@{'/shops/details/' + ${shop.getId()}}" type="button" class="btn btn-info">details</a>
         </td>
         <td>
-            <a th:href="@{'/shops/details/' + ${shop.getId()}}" type="button" class="btn btn-primary">details</a>
+            <a th:href="@{'/shops/update/' + ${shop.getId()}}" type="button" class="btn btn-primary">update</a>
         </td>
         <td>
             <a th:href="@{'/shops/delete/' + ${shop.getId()}}" type="button" class="btn btn-danger">delete</a>

@@ -28,14 +28,14 @@ public class ProductDaoImpl implements ProductDao {
     private static final String UPDATE_PRODUCT_QUERY = "update products set price = ?,updated = ? where id = ";
     private static final String DELETE_PRODUCT_QUERY = "delete from products where id = ";
     private final static String EXIST_PRODUCT_BY_ID_QUERY = "select count(*) from products where id = ";
-    private final static String FIND_PRODUCT_BY_ID_QUERY = "select * from products where id = ";
-    private final static String FIND_ALL_PRODUCTS_QUERY = "select * from products";
+    private final static String FIND_ALL_PRODUCTS_COUNT = "select count(*) from products";
+    private final static String FIND_PRODUCT_BY_ID_QUERY = "select *,count(shop_id) as shopCount from products left join product_shop ps on products.id = ps.product_id where id = ";
+    private final static String FIND_ALL_PRODUCTS_QUERY = "select *,count(shop_id) as shopCount from products left join product_shop ps on products.id = ps.product_id group by products.id order by ";
     private final static String FIND_ALL_PRODUCT_BY_SHOP_QUERY = "select * from products as p left join product_shop as psh on p.id = psh.product_id where psh.shop_id = ";
 
 
     @Override
     public void create(Product entity) {
-        System.out.println("ProductDaoImpl.create");
         try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(CREATE_PRODUCT_QUERY)) {
             preparedStatement.setTimestamp(1, new Timestamp(entity.getCreated().getTime()));
             preparedStatement.setTimestamp(2, new Timestamp(entity.getUpdated().getTime()));
@@ -47,7 +47,6 @@ public class ProductDaoImpl implements ProductDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -104,23 +103,30 @@ public class ProductDaoImpl implements ProductDao {
         String productName = resultSet.getString("product_name");
         String brand = resultSet.getString("brand");
         Integer price = resultSet.getInt("price");
+        Integer count = resultSet.getInt("shopCount");
         product.setId(id);
         product.setName(productName);
         product.setBrand(brand);
         product.setPrice(price);
+        product.setShopCount(count);
         product.setVisible(visible);
         product.setCreated(new Date(created.getTime()));
         product.setUpdated(new Date(updated.getTime()));
-        System.out.println("product = " + product);
         return product;
     }
 
     @Override
     public DataTableResponse<Product> findAll(DataTableRequest request) {
         List<Product> products = new ArrayList<>();
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_PRODUCTS_QUERY)) {
+        int limit = (request.getCurrentPage() - 1) * request.getPageSize();
+        String sqlFindWithParams = FIND_ALL_PRODUCTS_QUERY+
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize();
+        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(sqlFindWithParams)) {
             while (resultSet.next()) {
-                products.add(convertResultSetToShop(resultSet));
+                products.add(convertResultSetToProduct(resultSet));
             }
         } catch (SQLException e) {
             System.out.println("problem: = " + e.getMessage());
@@ -130,28 +136,18 @@ public class ProductDaoImpl implements ProductDao {
         return dataTableResponse;
     }
 
-    private Product convertResultSetToShop(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
-        Timestamp created = resultSet.getTimestamp("created");
-        Timestamp updated = resultSet.getTimestamp("updated");
-        Boolean visible = resultSet.getBoolean("visible");
-        String productName = resultSet.getString("product_name");
-        String brand = resultSet.getString("brand");
-        Integer price = resultSet.getInt("price");
-        Product product = new Product();
-        product.setId(id);
-        product.setName(productName);
-        product.setBrand(brand);
-        product.setVisible(visible);
-        product.setCreated(new Date(created.getTime()));
-        product.setUpdated(new Date(updated.getTime()));
-        product.setPrice(price);
-        return product;
-    }
 
     @Override
     public long count() {
-        return 0;
+        int count = 0;
+        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_PRODUCTS_COUNT)) {
+            if (resultSet.next()) {
+                count = resultSet.getInt("count(*)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
@@ -167,5 +163,16 @@ public class ProductDaoImpl implements ProductDao {
             System.out.println("problem: = " + e.getMessage());
         }
         return map;
+    }
+
+    public void createRelationship(Product p,List<Integer> shopsId){
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("insert into product_shop values (LAST_INSERT_ID(),?)")) {
+            for (Integer integer : shopsId) {
+                preparedStatement.setLong(1, integer);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

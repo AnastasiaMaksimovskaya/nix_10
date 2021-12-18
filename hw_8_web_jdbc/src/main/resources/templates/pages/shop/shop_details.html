@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="utf-8">
-    <title>Author details</title>
+    <title>Shop Details</title>
 </head>
 <body>
 
@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    Author details
+                    Shop Details
                 </div>
                 <div class="card-body">
                     <table class="table table-hover">
@@ -24,11 +24,11 @@
                             <td th:text="${shop.getId()}"></td>
                         </tr>
                         <tr>
-                            <th>First name</th>
+                            <th>Shop Address</th>
                             <td th:text="${shop.getAddress()}"></td>
                         </tr>
                         <tr>
-                            <th>Last name</th>
+                            <th>Shop Name</th>
                             <td th:text="${shop.getName()}"></td>
                         </tr>
                         <tr>
