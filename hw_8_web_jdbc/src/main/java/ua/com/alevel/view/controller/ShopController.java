@@ -8,19 +8,18 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.ProductFacade;
 import ua.com.alevel.facade.ShopFacade;
-import ua.com.alevel.view.dto.request.ProductRequestDto;
 import ua.com.alevel.view.dto.request.ShopRequestDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.ShopResponseDto;
 
 @Controller
 @RequestMapping("/shops")
-public class ShopController extends BaseController{
+public class ShopController extends BaseController {
 
     private Long idToUpdate = 0L;
     private final ProductFacade productFacade;
     private final ShopFacade shopFacade;
-    private final HeaderName[] columnNames = new HeaderName[] {
+    private final HeaderName[] columnNames = new HeaderName[]{
             new HeaderName("#", null, null),
             new HeaderName("Shop Name", "shop_name", "shop_name"),
             new HeaderName("Shop address", "address", "address"),
@@ -34,7 +33,6 @@ public class ShopController extends BaseController{
         this.productFacade = productFacade;
         this.shopFacade = shopFacade;
     }
-
 
     @GetMapping
     public String findAll(Model model, WebRequest request) {
@@ -59,24 +57,26 @@ public class ShopController extends BaseController{
 
     @PostMapping("/create")
     public String create(@ModelAttribute("shop") ShopRequestDto dto) {
-        System.out.println("ShopController.create");
         shopFacade.create(dto);
         return "redirect:/shops";
     }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         System.out.println("ShopController.delete");
         shopFacade.delete(id);
         return "redirect:/shops";
     }
+
     @GetMapping("/update/{id}")
     public String update(@ModelAttribute("shop") ShopRequestDto dto, @PathVariable Long id) {
         idToUpdate = id;
         return "pages/shop/shop_update";
     }
+
     @PostMapping("/update")
     public String update(@ModelAttribute("shop") ShopRequestDto dto) {
-        shopFacade.update(dto,idToUpdate);
+        shopFacade.update(dto, idToUpdate);
         return "redirect:/shops";
     }
 

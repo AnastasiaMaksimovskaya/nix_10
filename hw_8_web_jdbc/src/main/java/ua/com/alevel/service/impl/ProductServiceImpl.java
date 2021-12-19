@@ -10,6 +10,7 @@ import ua.com.alevel.util.WebResponseUtil;
 
 import java.util.List;
 import java.util.Map;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -26,12 +27,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void update(Product entity) {
-productDao.update(entity);
+        productDao.update(entity);
     }
 
     @Override
     public void delete(Long id) {
-productDao.delete(id);
+        productDao.delete(id);
     }
 
     @Override
@@ -54,6 +55,6 @@ productDao.delete(id);
 
     @Override
     public void createRelationship(Product p, List<Integer> shopsId) {
-        productDao.createRelationship(p,shopsId);
+        productDao.createRelationship(p, shopsId);
     }
 }

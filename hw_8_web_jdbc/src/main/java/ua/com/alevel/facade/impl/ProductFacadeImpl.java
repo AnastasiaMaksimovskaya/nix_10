@@ -68,7 +68,6 @@ public class ProductFacadeImpl implements ProductFacade {
 
         PageData<ProductResponseDto> pageData = (PageData<ProductResponseDto>) WebResponseUtil.initPageData(tableResponse);
         pageData.setItems(products);
-        System.out.println("pageData.getItems() = " + pageData.getItems());
         return pageData;
     }
 

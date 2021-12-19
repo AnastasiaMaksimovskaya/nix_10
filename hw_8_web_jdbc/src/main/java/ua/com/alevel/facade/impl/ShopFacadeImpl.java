@@ -5,14 +5,12 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.ShopFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
-import ua.com.alevel.persistence.entity.Product;
 import ua.com.alevel.persistence.entity.Shop;
 import ua.com.alevel.service.ShopService;
 import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.util.WebResponseUtil;
 import ua.com.alevel.view.dto.request.ShopRequestDto;
 import ua.com.alevel.view.dto.response.PageData;
-import ua.com.alevel.view.dto.response.ProductResponseDto;
 import ua.com.alevel.view.dto.response.ShopResponseDto;
 
 import java.sql.Timestamp;
@@ -28,7 +26,6 @@ public class ShopFacadeImpl implements ShopFacade {
     public ShopFacadeImpl(ShopService shopService) {
         this.shopService = shopService;
     }
-
 
     @Override
     public void create(ShopRequestDto shopRequestDto) {

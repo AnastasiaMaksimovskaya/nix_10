@@ -2,7 +2,7 @@ package ua.com.alevel.view.dto.request;
 
 import java.util.List;
 
-public class ProductRequestDto extends RequestDto{
+public class ProductRequestDto extends RequestDto {
     private String productName;
     private String brand;
     private Integer price;

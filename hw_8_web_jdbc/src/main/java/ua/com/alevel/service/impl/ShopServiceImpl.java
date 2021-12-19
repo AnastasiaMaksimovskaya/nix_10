@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import ua.com.alevel.persistence.dao.ShopDao;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
-import ua.com.alevel.persistence.entity.Product;
 import ua.com.alevel.persistence.entity.Shop;
 import ua.com.alevel.service.ShopService;
 import ua.com.alevel.util.WebResponseUtil;

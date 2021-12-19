@@ -44,7 +44,9 @@
                             <td>
                                 <ul th:each="product : ${products}">
                                     <li>
-                                        <a role="button" class="btn btn-link" th:href="@{'/products/details/' + ${product.getKey()}}" th:text="${product.getValue()}">details</a>
+                                        <a role="button" class="btn btn-link"
+                                           th:href="@{'/products/details/' + ${product.getKey()}}"
+                                           th:text="${product.getValue()}">details</a>
                                     </li>
                                 </ul>
                             </td>

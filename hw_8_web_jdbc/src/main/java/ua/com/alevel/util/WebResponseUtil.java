@@ -3,14 +3,13 @@ package ua.com.alevel.util;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.BaseEntity;
-import ua.com.alevel.view.dto.request.PageAndSizeData;
-import ua.com.alevel.view.dto.request.SortData;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.ResponseDto;
 
 public final class WebResponseUtil {
 
-    private WebResponseUtil() { }
+    private WebResponseUtil() {
+    }
 
     public static PageData<? extends ResponseDto> initPageData(
             DataTableResponse<? extends BaseEntity> tableResponse) {

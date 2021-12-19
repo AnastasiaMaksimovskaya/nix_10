@@ -21,6 +21,7 @@ public class ShopDaoImpl implements ShopDao {
     ShopDaoImpl(JpaConfig jpaConfig) {
         this.jpaConfig = jpaConfig;
     }
+
     private static final String CREATE_SHOP_QUERY = "insert into shops values(default, ?,?,?,?,?)";
     private static final String UPDATE_SHOP_QUERY = "update shops set shop_name = ?,updated = ? where id = ";
     private static final String DELETE_SHOP_QUERY = "delete from shops where id = ";
@@ -31,49 +32,41 @@ public class ShopDaoImpl implements ShopDao {
     private final static String FIND_ALL_SHOPS_BY_PRODUCT_QUERY = "select * from shops as sh left join product_shop as psh on sh.id = psh.shop_id where psh.product_id = ";
     private final static String DELETE_PRODUCTS_AFTER_DELETING_SHOP = "delete p from products as p left join product_shop as psh on p.id = psh.product_id where psh.product_id IS NULL";
 
-
-
-
-
     @Override
     public void create(Shop entity) {
-        try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(CREATE_SHOP_QUERY)) {
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(CREATE_SHOP_QUERY)) {
             preparedStatement.setTimestamp(1, new Timestamp(entity.getCreated().getTime()));
             preparedStatement.setTimestamp(2, new Timestamp(entity.getUpdated().getTime()));
             preparedStatement.setBoolean(3, entity.getVisible());
             preparedStatement.setString(4, entity.getName());
             preparedStatement.setString(5, entity.getAddress());
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void update(Shop entity) {
-        try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(UPDATE_SHOP_QUERY+entity.getId())) {
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(UPDATE_SHOP_QUERY + entity.getId())) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setTimestamp(2, new Timestamp(entity.getUpdated().getTime()));
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void delete(Long id) {
-        try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(DELETE_SHOP_QUERY + id)) {
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(DELETE_SHOP_QUERY + id)) {
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(DELETE_PRODUCTS_AFTER_DELETING_SHOP)) {
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException exception){
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }
@@ -81,7 +74,7 @@ public class ShopDaoImpl implements ShopDao {
     @Override
     public boolean existById(Long id) {
         int count = 0;
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(EXIST_SHOP_BY_ID_QUERY + id)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(EXIST_SHOP_BY_ID_QUERY + id)) {
             if (resultSet.next()) {
                 count = resultSet.getInt("count(*)");
             }
@@ -93,7 +86,7 @@ public class ShopDaoImpl implements ShopDao {
 
     @Override
     public Shop findById(Long id) {
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_SHOP_BY_ID_QUERY + id)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_SHOP_BY_ID_QUERY + id)) {
             if (resultSet.next()) {
                 return convertResultSetToShop(resultSet);
             }
@@ -107,12 +100,12 @@ public class ShopDaoImpl implements ShopDao {
     public DataTableResponse<Shop> findAll(DataTableRequest request) {
         List<Shop> shops = new ArrayList<>();
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
-        String sqlFindWithParams = FIND_ALL_SHOPS_QUERY+
+        String sqlFindWithParams = FIND_ALL_SHOPS_QUERY +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
                 request.getPageSize();
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(sqlFindWithParams)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sqlFindWithParams)) {
             while (resultSet.next()) {
                 shops.add(convertResultSetToShop(resultSet));
             }
@@ -127,7 +120,7 @@ public class ShopDaoImpl implements ShopDao {
     @Override
     public long count() {
         int count = 0;
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_SHOPS_COUNT)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_SHOPS_COUNT)) {
             if (resultSet.next()) {
                 count = resultSet.getInt("count(*)");
             }
@@ -140,7 +133,7 @@ public class ShopDaoImpl implements ShopDao {
     @Override
     public Map<Long, String> findAllByProductId(Long productId) {
         Map<Long, String> map = new HashMap<>();
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_SHOPS_BY_PRODUCT_QUERY + productId)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_SHOPS_BY_PRODUCT_QUERY + productId)) {
             while (resultSet.next()) {
                 Long id = resultSet.getLong("id");
                 String name = resultSet.getString("shop_name");

@@ -41,7 +41,9 @@
                                 <table>
                                     <tr th:each="shop : ${shops}">
                                         <td>
-                                            <a role="button" class="btn btn-link" th:href="@{'/shops/details/' + ${shop.getKey()}}" th:text="${shop.getValue()}">details</a>
+                                            <a role="button" class="btn btn-link"
+                                               th:href="@{'/shops/details/' + ${shop.getKey()}}"
+                                               th:text="${shop.getValue()}">details</a>
                                         </td>
                                     </tr>
                                 </table>

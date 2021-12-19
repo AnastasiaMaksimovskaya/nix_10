@@ -2,20 +2,21 @@ package ua.com.alevel.view.dto.response;
 
 import ua.com.alevel.persistence.entity.Shop;
 
-public class ShopResponseDto extends ResponseDto{
+public class ShopResponseDto extends ResponseDto {
 
     private String name;
     private String address;
     private Integer productCount;
 
-    public ShopResponseDto() { }
+    public ShopResponseDto() {
+    }
 
     public ShopResponseDto(Shop shop) {
         setId(shop.getId());
         setCreated(shop.getCreated());
         setUpdated(shop.getUpdated());
         setVisible(shop.getVisible());
-        this.productCount= shop.getProductCount();
+        this.productCount = shop.getProductCount();
         this.name = shop.getName();
         this.address = shop.getAddress();
     }

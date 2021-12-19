@@ -45,7 +45,7 @@ public class PageData<RES extends ResponseDto> {
             this.showLast = currentPage != totalPageSize;
             this.showNext = currentPage != totalPageSize;
 
-         if (itemsSize != 0) {
+            if (itemsSize != 0) {
                 currentShowFromEntries = ((long) (currentPage - 1) * pageSize) + 1;
                 int showTo = ((currentPage) * pageSize);
                 if (showTo > itemsSize) {
@@ -58,8 +58,7 @@ public class PageData<RES extends ResponseDto> {
                 currentShowFromEntries = 0;
 
             }
-        }
-        else {
+        } else {
             currentShowToEntries = itemsSize;
             currentShowFromEntries = 1;
         }

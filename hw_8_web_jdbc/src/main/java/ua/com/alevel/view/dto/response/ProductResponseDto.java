@@ -4,7 +4,6 @@ import ua.com.alevel.persistence.entity.Product;
 
 public class ProductResponseDto extends ResponseDto {
 
-
     private String name;
     private String brand;
     private Integer price;
@@ -18,7 +17,7 @@ public class ProductResponseDto extends ResponseDto {
         setCreated(product.getCreated());
         setUpdated(product.getUpdated());
         setVisible(product.getVisible());
-        this.shopCount =product.getShopCount();
+        this.shopCount = product.getShopCount();
         this.name = product.getName();
         this.brand = product.getBrand();
         this.price = product.getPrice();

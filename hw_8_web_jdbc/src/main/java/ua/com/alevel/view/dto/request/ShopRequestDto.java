@@ -1,6 +1,6 @@
 package ua.com.alevel.view.dto.request;
 
-public class ShopRequestDto extends RequestDto{
+public class ShopRequestDto extends RequestDto {
     private String name;
 
     private String address;

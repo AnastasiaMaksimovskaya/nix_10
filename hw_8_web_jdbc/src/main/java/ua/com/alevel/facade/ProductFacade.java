@@ -7,5 +7,4 @@ import java.util.Map;
 
 public interface ProductFacade extends BaseFacade<ProductRequestDto, ProductResponseDto> {
     Map<Long, String> findAllByShopId(Long shopId);
-
 }

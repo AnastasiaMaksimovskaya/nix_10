@@ -14,11 +14,11 @@ import ua.com.alevel.view.dto.response.ProductResponseDto;
 
 @Controller
 @RequestMapping("/products")
-public class ProductController extends BaseController{
+public class ProductController extends BaseController {
     private Long idToUpdate = 0L;
     private final ProductFacade productFacade;
     private final ShopFacade shopFacade;
-    private final HeaderName[] columnNames = new HeaderName[] {
+    private final HeaderName[] columnNames = new HeaderName[]{
             new HeaderName("#", null, null),
             new HeaderName("Brand", null, null),
             new HeaderName("Product name", null, null),
@@ -33,7 +33,6 @@ public class ProductController extends BaseController{
         this.productFacade = productFacade;
         this.shopFacade = shopFacade;
     }
-
 
     @GetMapping
     public String findAll(Model model, WebRequest request) {
@@ -51,7 +50,7 @@ public class ProductController extends BaseController{
     }
 
     @GetMapping("/new")
-    public String redirectToNewAuthorPage(Model model,WebRequest request) {
+    public String redirectToNewAuthorPage(Model model, WebRequest request) {
         model.addAttribute("product", new ProductRequestDto());
         model.addAttribute("shops", shopFacade.findAll(request));
         return "pages/product/product_new";
@@ -62,23 +61,26 @@ public class ProductController extends BaseController{
         productFacade.create(dto);
         return "redirect:/products";
     }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         productFacade.delete(id);
         return "redirect:/products";
     }
+
     @GetMapping("/update/{id}")
     public String update(@ModelAttribute("product") ProductRequestDto dto, @PathVariable Long id) {
         idToUpdate = id;
         return "pages/product/product_update";
     }
+
     @PostMapping("/update")
     public String update(@ModelAttribute("product") ProductRequestDto dto) {
-        productFacade.update(dto,idToUpdate);
+        productFacade.update(dto, idToUpdate);
         return "redirect:/products";
     }
 
-        @GetMapping("/details/{id}")
+    @GetMapping("/details/{id}")
     public String redirectToNewAuthorPage(@PathVariable Long id, Model model) {
         model.addAttribute("product", productFacade.findById(id));
         model.addAttribute("shops", shopFacade.findAllByProductId(id));

@@ -6,7 +6,6 @@ import ua.com.alevel.persistence.dao.ProductDao;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.Product;
-import ua.com.alevel.persistence.entity.Shop;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +15,6 @@ import java.util.*;
 
 @Service
 public class ProductDaoImpl implements ProductDao {
-
 
     JpaConfig jpaConfig;
 
@@ -32,7 +30,6 @@ public class ProductDaoImpl implements ProductDao {
     private final static String FIND_PRODUCT_BY_ID_QUERY = "select *,count(shop_id) as shopCount from products left join product_shop ps on products.id = ps.product_id where id = ";
     private final static String FIND_ALL_PRODUCTS_QUERY = "select *,count(shop_id) as shopCount from products left join product_shop ps on products.id = ps.product_id group by products.id order by ";
     private final static String FIND_ALL_PRODUCT_BY_SHOP_QUERY = "select * from products as p left join product_shop as psh on p.id = psh.product_id where psh.shop_id = ";
-
 
     @Override
     public void create(Product entity) {
@@ -62,7 +59,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void delete(Long id) {
-        try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(DELETE_PRODUCT_QUERY + id)) {
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(DELETE_PRODUCT_QUERY + id)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,7 +69,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public boolean existById(Long id) {
         int count = 0;
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(EXIST_PRODUCT_BY_ID_QUERY + id)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(EXIST_PRODUCT_BY_ID_QUERY + id)) {
             if (resultSet.next()) {
                 count = resultSet.getInt("count(*)");
             }
@@ -84,7 +81,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product findById(Long id) {
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_PRODUCT_BY_ID_QUERY + id)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_PRODUCT_BY_ID_QUERY + id)) {
             if (resultSet.next()) {
                 return convertResultSetToProduct(resultSet);
             }
@@ -119,12 +116,12 @@ public class ProductDaoImpl implements ProductDao {
     public DataTableResponse<Product> findAll(DataTableRequest request) {
         List<Product> products = new ArrayList<>();
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
-        String sqlFindWithParams = FIND_ALL_PRODUCTS_QUERY+
+        String sqlFindWithParams = FIND_ALL_PRODUCTS_QUERY +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
                 request.getPageSize();
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(sqlFindWithParams)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sqlFindWithParams)) {
             while (resultSet.next()) {
                 products.add(convertResultSetToProduct(resultSet));
             }
@@ -136,11 +133,10 @@ public class ProductDaoImpl implements ProductDao {
         return dataTableResponse;
     }
 
-
     @Override
     public long count() {
         int count = 0;
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_PRODUCTS_COUNT)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_PRODUCTS_COUNT)) {
             if (resultSet.next()) {
                 count = resultSet.getInt("count(*)");
             }
@@ -153,7 +149,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Map<Long, String> findAllByShopId(Long shopId) {
         Map<Long, String> map = new HashMap<>();
-        try(ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_PRODUCT_BY_SHOP_QUERY+ shopId)) {
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_PRODUCT_BY_SHOP_QUERY + shopId)) {
             while (resultSet.next()) {
                 Long id = resultSet.getLong("id");
                 String name = resultSet.getString("product_name");
@@ -165,7 +161,7 @@ public class ProductDaoImpl implements ProductDao {
         return map;
     }
 
-    public void createRelationship(Product p,List<Integer> shopsId){
+    public void createRelationship(Product p, List<Integer> shopsId) {
         try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement("insert into product_shop values (LAST_INSERT_ID(),?)")) {
             for (Integer integer : shopsId) {
                 preparedStatement.setLong(1, integer);
