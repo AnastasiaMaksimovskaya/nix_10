@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html, body {
+    background: url('https://www.cheltv.ru/wp-content/uploads/2019/08/D7EvgHpXYAANnlX.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
+a.nav-item.nav-link {
+    color: yellow;
+}
+
+.sort {
+    cursor: pointer;
+    margin-right: 2em;
+}

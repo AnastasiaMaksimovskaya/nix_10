@@ -37,4 +37,3 @@ create table product_shop
     foreign key (shop_id) references shops (id) ON DELETE CASCADE
 
 );
-SET global sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
