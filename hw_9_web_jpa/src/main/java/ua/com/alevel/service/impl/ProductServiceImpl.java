@@ -49,8 +49,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Map<Long, String> findAllByShopId(Long shopId) {
-        return productDao.findAllByShopId(shopId);
+    public Map<Long, String> findAllShopsByProductId(Long shopId) {
+        return productDao.findAllShopsByProductId(shopId);
     }
 
     @Override

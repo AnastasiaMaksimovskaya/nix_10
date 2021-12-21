@@ -6,5 +6,5 @@ import ua.com.alevel.view.dto.response.ProductResponseDto;
 import java.util.Map;
 
 public interface ProductFacade extends BaseFacade<ProductRequestDto, ProductResponseDto> {
-    Map<Long, String> findAllByShopId(Long shopId);
+    Map<Long, String> findAllShopsByProductId(Long shopId);
 }

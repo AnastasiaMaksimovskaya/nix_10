@@ -83,7 +83,7 @@ public class ProductController extends BaseController {
     @GetMapping("/details/{id}")
     public String redirectToNewAuthorPage(@PathVariable Long id, Model model) {
         model.addAttribute("product", productFacade.findById(id));
-        model.addAttribute("shops", shopFacade.findAllByProductId(id));
+        model.addAttribute("shops", productFacade.findAllShopsByProductId(id));
         return "pages/product/product_details";
     }
 }

@@ -17,7 +17,7 @@ public class Shop extends BaseEntity {
             CascadeType.REMOVE
     })
     @JoinTable(
-            name = "product_shop",
+            name = "shop_product",
             joinColumns = @JoinColumn(name = "shop_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products;
@@ -49,6 +49,16 @@ public class Shop extends BaseEntity {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.getShops().remove(this);
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getShops().add(this);
     }
 
     @Override

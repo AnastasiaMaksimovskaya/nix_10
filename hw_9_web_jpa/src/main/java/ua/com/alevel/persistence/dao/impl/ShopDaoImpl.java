@@ -1,9 +1,11 @@
 package ua.com.alevel.persistence.dao.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.persistence.dao.ShopDao;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.Product;
 import ua.com.alevel.persistence.entity.Shop;
 
 import javax.persistence.EntityManager;
@@ -12,13 +14,12 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.*;
 
 @Service
+@Transactional
 public class ShopDaoImpl implements ShopDao {
 
     @PersistenceContext
@@ -76,11 +77,17 @@ public class ShopDaoImpl implements ShopDao {
 
     @Override
     public long count() {
-        return 0;
+        Query query = entityManager.createQuery("select count(id) from Shop");
+        return (Long) query.getSingleResult();
     }
 
     @Override
-    public Map<Long, String> findAllByProductId(Long productId) {
-        return null;
+    public Map<Long, String> findAllProductsByShopId(Long shopId) {
+        Map<Long, String> map = new HashMap<>();
+        Set<Product> products = findById(shopId).getProducts();
+        for (Product product : products) {
+            map.put(product.getId(),product.getName());
+        }
+        return map;
     }
 }

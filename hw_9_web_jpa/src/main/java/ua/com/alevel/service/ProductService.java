@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductService extends BaseService<Product> {
-    Map<Long, String> findAllByShopId(Long shopId);
+    Map<Long, String> findAllShopsByProductId(Long shopId);
 
     void createRelationship(Product p, List<Integer> shopsId);
 }

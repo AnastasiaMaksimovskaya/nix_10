@@ -5,5 +5,5 @@ import ua.com.alevel.persistence.entity.Shop;
 import java.util.Map;
 
 public interface ShopService extends BaseService<Shop> {
-    Map<Long, String> findAllByProductId(Long productId);
+    Map<Long, String> findAllProductsByShopId(Long productId);
 }

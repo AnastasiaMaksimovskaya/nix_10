@@ -83,7 +83,7 @@ public class ShopController extends BaseController {
     @GetMapping("/details/{id}")
     public String findById(@PathVariable Long id, Model model) {
         model.addAttribute("shop", shopFacade.findById(id));
-        model.addAttribute("products", productFacade.findAllByShopId(id));
+        model.addAttribute("products", shopFacade.findAllProductsByShopId(id));
         return "pages/shop/shop_details";
     }
 }
