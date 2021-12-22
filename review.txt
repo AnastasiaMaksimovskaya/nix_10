@@ -31,3 +31,5 @@ module_2 = 9
 я не придумала ничего лучше, чем записать это в скрипт:
 SET global sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 ONLY_FULL_GROUP_BY у меня не стояло и все работало, я не знаю хорошо это или нет
+
+hw_8 = 9
