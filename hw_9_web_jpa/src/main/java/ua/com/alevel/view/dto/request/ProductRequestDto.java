@@ -1,19 +1,22 @@
 package ua.com.alevel.view.dto.request;
 
+import ua.com.alevel.persistence.entity.Shop;
+
 import java.util.List;
+import java.util.Set;
 
 public class ProductRequestDto extends RequestDto {
     private String productName;
     private String brand;
     private Integer price;
     private String shopName;
-    private List<Integer> shopsId;
+    private Set<Long> shopsId;
 
-    public List<Integer> getShopsId() {
+    public Set<Long>  getShopsId() {
         return shopsId;
     }
 
-    public void setShopsId(List<Integer> shopsId) {
+    public void setShopsId(Set<Long>  shopsId) {
         this.shopsId = shopsId;
     }
 

@@ -6,7 +6,9 @@ import ua.com.alevel.facade.ProductFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.Product;
+import ua.com.alevel.persistence.entity.Shop;
 import ua.com.alevel.service.ProductService;
+import ua.com.alevel.service.ShopService;
 import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.util.WebResponseUtil;
 import ua.com.alevel.view.dto.request.ProductRequestDto;
@@ -14,17 +16,21 @@ import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.ProductResponseDto;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductFacadeImpl implements ProductFacade {
 
     private final ProductService productService;
+    private final ShopService shopService;
 
-    public ProductFacadeImpl(ProductService productService) {
+    public ProductFacadeImpl(ProductService productService, ShopService shopService) {
         this.productService = productService;
+        this.shopService = shopService;
     }
 
     @Override
@@ -33,9 +39,17 @@ public class ProductFacadeImpl implements ProductFacade {
         product.setName(productRequestDto.getProductName());
         product.setBrand(productRequestDto.getBrand());
         product.setPrice(productRequestDto.getPrice());
-        List<Integer> shopsId = productRequestDto.getShopsId();
-        productService.create(product);
-        productService.createRelationship(product,shopsId);
+        try {
+            Set<Long> shopsId = productRequestDto.getShopsId();
+            productService.create(product);
+            for (Long id : shopsId) {
+                Shop shop = shopService.findById(id);
+                (shop).addProduct(product);
+                shopService.update(shop);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

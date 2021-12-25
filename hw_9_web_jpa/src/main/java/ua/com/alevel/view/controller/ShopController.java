@@ -63,7 +63,6 @@ public class ShopController extends BaseController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        System.out.println("ShopController.delete");
         shopFacade.delete(id);
         return "redirect:/shops";
     }

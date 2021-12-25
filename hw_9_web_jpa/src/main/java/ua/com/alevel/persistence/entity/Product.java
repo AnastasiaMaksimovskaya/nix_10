@@ -16,9 +16,8 @@ public class Product extends BaseEntity {
     private Integer price;
 
     @ManyToMany(mappedBy = "products", cascade = {
-            CascadeType.PERSIST,
             CascadeType.MERGE,
-            CascadeType.REMOVE
+           // CascadeType.REMOVE
     })
     private Set<Shop> shops;
 

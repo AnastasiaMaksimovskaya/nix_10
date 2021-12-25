@@ -11,20 +11,19 @@ public class Shop extends BaseEntity {
     private String address;
     private String name;
 
-    @ManyToMany(cascade = {
+    @ManyToMany(cascade= {
             CascadeType.PERSIST,
-            CascadeType.MERGE,
             CascadeType.REMOVE
     })
     @JoinTable(
             name = "shop_product",
             joinColumns = @JoinColumn(name = "shop_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products;
+
+    private Set<Product> products=new HashSet<>();
 
     public Shop(){
         super();
-        this.products = new HashSet<>();
     }
 
     public String getAddress() {
@@ -52,13 +51,16 @@ public class Shop extends BaseEntity {
     }
 
     public void removeProduct(Product product) {
-        products.remove(product);
         product.getShops().remove(this);
+        products.remove(product);
     }
 
     public void addProduct(Product product) {
+        System.out.println(Shop.this);
+        System.out.println("Shop.addProduct");
         products.add(product);
         product.getShops().add(this);
+        System.out.println("product = " + product);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package ua.com.alevel.persistence.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.alevel.persistence.dao.ProductDao;
 import ua.com.alevel.persistence.dao.ShopDao;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
@@ -14,9 +16,8 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -24,6 +25,9 @@ public class ShopDaoImpl implements ShopDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    ProductDao productDao;
 
     @Override
     public void create(Shop entity) {
@@ -37,9 +41,10 @@ public class ShopDaoImpl implements ShopDao {
 
     @Override
     public void delete(Long id) {
-        entityManager.createQuery("delete from Shop s where s.id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+        Shop shop = entityManager.find(Shop.class,id);
+        List<Product> one =shop.getProducts().stream().filter(product -> productDao.findAllShopsByProductId(product.getId()).size()==1).collect(Collectors.toList());
+        shop.getProducts().retainAll(one);
+        entityManager.remove(shop);
     }
 
     @Override
