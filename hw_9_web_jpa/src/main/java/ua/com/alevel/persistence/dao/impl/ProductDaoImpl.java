@@ -87,8 +87,5 @@ public class ProductDaoImpl implements ProductDao {
         return map;
     }
 
-    @Override
-    public void createRelationship(Product p, List<Integer> shopsId) {
 
-    }
 }

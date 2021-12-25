@@ -15,6 +15,7 @@ public class ShopResponseDto extends ResponseDto {
         setId(shop.getId());
         setCreated(shop.getCreated());
         setUpdated(shop.getUpdated());
+        this.productCount=shop.getProducts().size();
         this.name = shop.getName();
         this.address = shop.getAddress();
     }

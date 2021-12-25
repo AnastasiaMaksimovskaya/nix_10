@@ -16,7 +16,7 @@
         <td th:text="${product.getName()}"></td>
         <td th:text="${product.getBrand()}"></td>
         <td th:text="${product.getPrice()}"></td>
-<!--        <td th:text="${product.getShopCount()}"></td>-->
+        <td th:text="${product.getShopCount()}"></td>
         <td>
             <a th:href="@{'/products/details/' + ${product.getId()}}" type="button" class="btn btn-info">details</a>
         </td>

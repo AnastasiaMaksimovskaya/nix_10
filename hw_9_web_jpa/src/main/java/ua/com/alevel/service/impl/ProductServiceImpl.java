@@ -53,8 +53,4 @@ public class ProductServiceImpl implements ProductService {
         return productDao.findAllShopsByProductId(shopId);
     }
 
-    @Override
-    public void createRelationship(Product p, List<Integer> shopsId) {
-        productDao.createRelationship(p, shopsId);
-    }
 }

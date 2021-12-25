@@ -21,9 +21,9 @@ public class ShopController extends BaseController {
     private final ShopFacade shopFacade;
     private final HeaderName[] columnNames = new HeaderName[]{
             new HeaderName("#", null, null),
-            new HeaderName("Shop Name", "shop_name", "shop_name"),
+            new HeaderName("Shop Name", "name", "name"),
             new HeaderName("Shop address", "address", "address"),
-//            new HeaderName("Amount of products", "productCount", "productCount"),
+            new HeaderName("Amount of products", null, null),
             new HeaderName("details", null, null),
             new HeaderName("update", null, null),
             new HeaderName("delete", null, null)

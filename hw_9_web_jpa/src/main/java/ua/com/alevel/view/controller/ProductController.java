@@ -20,10 +20,10 @@ public class ProductController extends BaseController {
     private final ShopFacade shopFacade;
     private final HeaderName[] columnNames = new HeaderName[]{
             new HeaderName("#", null, null),
-            new HeaderName("Brand", null, null),
-            new HeaderName("Product name", null, null),
+            new HeaderName("Brand", "brand", "brand"),
+            new HeaderName("Product name", "name", "name"),
             new HeaderName("Price", "price", "price"),
-//            new HeaderName("Amount of shops", "shopCount", "shopCount"),
+            new HeaderName("Amount of shops", null, null),
             new HeaderName("details", null, null),
             new HeaderName("update", null, null),
             new HeaderName("delete", null, null)

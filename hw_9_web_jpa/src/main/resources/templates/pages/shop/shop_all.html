@@ -16,7 +16,7 @@
         <td th:text="${iter.count}"></td>
         <td th:text="${shop.getName()}"></td>
         <td th:text="${shop.getAddress()}"></td>
-        <!--        <td th:text="${shop.getProductCount()}"></td>-->
+        <td th:text="${shop.getProductCount()}"></td>
         <td>
             <a th:href="@{'/shops/details/' + ${shop.getId()}}" type="button" class="btn btn-info">details</a>
         </td>

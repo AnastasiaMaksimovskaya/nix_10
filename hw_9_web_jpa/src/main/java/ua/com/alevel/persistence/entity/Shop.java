@@ -9,6 +9,7 @@ import java.util.Set;
 public class Shop extends BaseEntity {
 
     private String address;
+    @Column(name = "shop_name")
     private String name;
 
     @ManyToMany(cascade= {
@@ -66,8 +67,7 @@ public class Shop extends BaseEntity {
     @Override
     public String toString() {
         return "Shop{" +
-                "id='" + super.getId() + '\'' +
-                ", address='" + address + '\'' +
+                "address='" + address + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }

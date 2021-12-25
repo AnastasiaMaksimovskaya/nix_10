@@ -1,9 +1,6 @@
 package ua.com.alevel.persistence.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,13 +8,13 @@ import java.util.Set;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
+    @Column(name = "product_name")
     private String name;
     private String brand;
     private Integer price;
 
     @ManyToMany(mappedBy = "products", cascade = {
             CascadeType.MERGE,
-           // CascadeType.REMOVE
     })
     private Set<Shop> shops;
 
