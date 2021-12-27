@@ -47,7 +47,7 @@ public class ProductFacadeImpl implements ProductFacade {
                 (shop).addProduct(product);
                 shopService.update(shop);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

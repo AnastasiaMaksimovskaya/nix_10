@@ -41,8 +41,8 @@ public class ShopDaoImpl implements ShopDao {
 
     @Override
     public void delete(Long id) {
-        Shop shop = entityManager.find(Shop.class,id);
-        List<Product> one =shop.getProducts().stream().filter(product -> productDao.findAllShopsByProductId(product.getId()).size()==1).collect(Collectors.toList());
+        Shop shop = entityManager.find(Shop.class, id);
+        List<Product> one = shop.getProducts().stream().filter(product -> productDao.findAllShopsByProductId(product.getId()).size() == 1).collect(Collectors.toList());
         shop.getProducts().retainAll(one);
         entityManager.remove(shop);
     }
@@ -51,17 +51,17 @@ public class ShopDaoImpl implements ShopDao {
     public boolean existById(Long id) {
         Query query = entityManager.createQuery("select count(s.id) from Shop s where s.id = :id")
                 .setParameter("id", id);
-        return (Long) query.getSingleResult() == 1;    }
+        return (Long) query.getSingleResult() == 1;
+    }
 
     @Override
     public Shop findById(Long id) {
-        return entityManager.find(Shop.class, id);    }
+        return entityManager.find(Shop.class, id);
+    }
 
     @Override
     public DataTableResponse<Shop> findAll(DataTableRequest request) {
-
         int fr = (request.getCurrentPage() - 1) * request.getPageSize();
-
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Shop> criteriaQuery = criteriaBuilder.createQuery(Shop.class);
         Root<Shop> from = criteriaQuery.from(Shop.class);
@@ -79,7 +79,6 @@ public class ShopDaoImpl implements ShopDao {
         return dataTableResponse;
     }
 
-
     @Override
     public long count() {
         Query query = entityManager.createQuery("select count(id) from Shop");
@@ -91,7 +90,7 @@ public class ShopDaoImpl implements ShopDao {
         Map<Long, String> map = new HashMap<>();
         Set<Product> products = findById(shopId).getProducts();
         for (Product product : products) {
-            map.put(product.getId(),product.getName());
+            map.put(product.getId(), product.getName());
         }
         return map;
     }

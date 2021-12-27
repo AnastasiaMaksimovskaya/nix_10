@@ -49,7 +49,8 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product findById(Long id) {
-        return entityManager.find(Product.class, id);    }
+        return entityManager.find(Product.class, id);
+    }
 
     @Override
     public DataTableResponse<Product> findAll(DataTableRequest request) {
@@ -82,10 +83,8 @@ public class ProductDaoImpl implements ProductDao {
         Map<Long, String> map = new HashMap<>();
         Set<Shop> shops = findById(productId).getShops();
         for (Shop shop : shops) {
-            map.put(shop.getId(),shop.getName());
+            map.put(shop.getId(), shop.getName());
         }
         return map;
     }
-
-
 }

@@ -12,7 +12,7 @@ public class Shop extends BaseEntity {
     @Column(name = "shop_name")
     private String name;
 
-    @ManyToMany(cascade= {
+    @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.REMOVE
     })
@@ -21,9 +21,9 @@ public class Shop extends BaseEntity {
             joinColumns = @JoinColumn(name = "shop_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
 
-    private Set<Product> products=new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
-    public Shop(){
+    public Shop() {
         super();
     }
 
@@ -57,11 +57,8 @@ public class Shop extends BaseEntity {
     }
 
     public void addProduct(Product product) {
-        System.out.println(Shop.this);
-        System.out.println("Shop.addProduct");
         products.add(product);
         product.getShops().add(this);
-        System.out.println("product = " + product);
     }
 
     @Override

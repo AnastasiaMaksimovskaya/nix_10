@@ -20,6 +20,7 @@ public abstract class BaseEntity {
         this.created = new Date();
         this.updated = new Date();
     }
+
     @PreUpdate
     public void preUpdate() {
         this.updated = new Date();

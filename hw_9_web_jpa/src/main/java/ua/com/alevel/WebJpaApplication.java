@@ -5,10 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 @SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
-public class Hw9WebJpaApplication {
-
+public class WebJpaApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Hw9WebJpaApplication.class, args);
+        SpringApplication.run(WebJpaApplication.class, args);
     }
-
 }

@@ -4,7 +4,7 @@ import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.BaseEntity;
 
-public interface BaseDao<ENTITY extends BaseEntity> {
+public interface BaseDao<ENTITY extends BaseEntity>{
 
     void create(ENTITY entity);
 

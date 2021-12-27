@@ -49,6 +49,7 @@ public final class WebRequestUtil {
         return new SortData(sort, order);
     }
 
+
     public static SortData defaultSortData() {
         return new SortData(DEFAULT_SORT_PARAM_VALUE, DEFAULT_ORDER_PARAM_VALUE);
     }

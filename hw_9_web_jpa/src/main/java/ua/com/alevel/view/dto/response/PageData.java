@@ -58,11 +58,10 @@ public class PageData<RES extends ResponseDto> {
                 currentShowFromEntries = 0;
 
             }
-        } else if (itemsSize!=0) {
+        } else if (itemsSize != 0) {
             currentShowToEntries = itemsSize;
             currentShowFromEntries = 1;
-        }
-        else {
+        } else {
             currentShowToEntries = 0;
             currentShowFromEntries = 0;
         }

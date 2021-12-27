@@ -8,7 +8,6 @@ import ua.com.alevel.persistence.entity.Product;
 import ua.com.alevel.service.ProductService;
 import ua.com.alevel.util.WebResponseUtil;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
