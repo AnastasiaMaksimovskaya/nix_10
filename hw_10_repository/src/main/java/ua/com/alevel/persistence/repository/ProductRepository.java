@@ -9,6 +9,5 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-
 public interface ProductRepository extends BaseRepository<Product> {
 }

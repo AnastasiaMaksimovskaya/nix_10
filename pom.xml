@@ -13,8 +13,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -33,6 +33,9 @@
         <module>module2</module>
         <module>csv_converter</module>
         <module>hw_7_ionio</module>
+        <module>hw_8_web_jdbc</module>
+        <module>hw_9_web_jpa</module>
+        <module>hw_10_repository</module>
     </modules>
 
 

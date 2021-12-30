@@ -14,7 +14,7 @@ import java.util.Random;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class WebJpaApplicationTests {
+class RepositoryApplicationTests {
 
     private static final Integer DEFAULT_SIZE_OF_ITEMS = 10;
 
@@ -34,7 +34,7 @@ class WebJpaApplicationTests {
     @Test
     @Order(1)
     void init() {
-        if (init){
+        if (init) {
             for (int i = 0; i < DEFAULT_SIZE_OF_ITEMS; i++) {
                 Shop shop = new Shop();
                 shop.setUpdated(new Date(System.currentTimeMillis()));
@@ -64,7 +64,7 @@ class WebJpaApplicationTests {
     void shouldBeUpdatedShop() {
         Random random = new Random();
         long id = random.nextInt(DEFAULT_SIZE_OF_ITEMS);
-        Shop shop = shopService.findById(id+1);
+        Shop shop = shopService.findById(id + 1);
         shop.setName("New");
         shopService.update(shop);
         Assertions.assertEquals(shop.getName(), "New");
@@ -75,9 +75,9 @@ class WebJpaApplicationTests {
     void shouldBeUpdatedProduct() {
         Random random = new Random();
         long id = random.nextInt(DEFAULT_SIZE_OF_ITEMS);
-        Product product = productService.findById(id + DEFAULT_SIZE_OF_ITEMS+1);
+        Product product = productService.findById(id + DEFAULT_SIZE_OF_ITEMS + 1);
         product.setPrice(666);
         productService.update(product);
         Assertions.assertEquals(product.getPrice(), 666);
     }
-    }
+}

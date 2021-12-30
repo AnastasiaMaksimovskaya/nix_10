@@ -17,7 +17,6 @@ import ua.com.alevel.persistence.repository.BaseRepository;
 import java.util.Optional;
 
 @Service
-//@Transactional
 public class CrudRepositoryHelperImpl<
         E extends BaseEntity,
         R extends BaseRepository<E>>
