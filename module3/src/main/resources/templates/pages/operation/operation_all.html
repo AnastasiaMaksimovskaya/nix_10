@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/data_table}">
+<head>
+    <meta charset="utf-8">
+    <title>Operations</title>
+</head>
+<body>
+
+<div layout:fragment="data_table_content">
+
+    <tr th:each="operation,iter : ${pageData.getItems()}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${operation.getId()}"></td>
+        <td th:text="${operation.getCategoryName()}"></td>
+        <td th:text="${operation.getAccountName()}"></td>
+        <td th:text="${operation.getCreated()}"></td>
+        <td th:text="${operation.getIsIncome()}"></td>
+        <td th:text="${operation.getSum()}"></td>
+    </tr>
+</div>
+
+</body>
+</html>

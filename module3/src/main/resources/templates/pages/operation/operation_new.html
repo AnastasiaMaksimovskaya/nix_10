@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>New Operation</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>New Operation</h4>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/operations/create}" th:object="${operation}" method="post"
+                          enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="accountName">Sum</label>
+                            <input type="number" class="form-control" min="1" th:required="required" id="accountName"
+                                   aria-describedby="accountName" placeholder="Enter account name"
+                                   th:field="*{sum}">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryName">Category Name</label>
+                            <select name="categoryName" id="categoryName">
+                            <option th:each="name : ${T(ua.com.alevel.entity.Category.Name).values()}"
+                                    th:value="${name}" th:text="${name}" th:field="*{categoryName}"></option>
+                        </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

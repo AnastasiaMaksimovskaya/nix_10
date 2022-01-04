@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/data_table}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div class="col-12">
+
+    <div layout:fragment="data_table_content">
+
+        <div class="container">
+            <tr th:each="user,iter : ${pageData.getItems()}">
+                <td th:text="${iter.count}"></td>
+                <td th:text="${user.getName()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getAccountCount()}"></td>
+                <td>
+                    <a th:href="@{'/users/details/' + ${user.getId()}}" type="button" class="btn btn-info">details</a>
+                </td>
+                <td>
+                    <a th:href="@{'/users/update/' + ${user.getId()}}" type="button" class="btn btn-primary">update</a>
+                </td>
+                <td>
+                    <a th:href="@{'/users/delete/' + ${user.getId()}}" type="button" class="btn btn-danger">delete</a>
+                </td>
+            </tr>
+        </div>
+
+        <div class="card mt-2 mb-2">
+            <div class="card-footer">
+                <div class="bottom">
+                    <button class="btn btn-primary" th:href="@{${createNew}}">Add</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
