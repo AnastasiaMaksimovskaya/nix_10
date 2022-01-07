@@ -1,5 +1,9 @@
 package ua.com.alevel.view.controller;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -7,12 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.AccountFacade;
+import ua.com.alevel.facade.OperationFacade;
 import ua.com.alevel.facade.UserFacade;
 import ua.com.alevel.view.dto.request.AccountRequestDto;
 import ua.com.alevel.view.dto.response.AccountResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
-import ua.com.alevel.view.dto.response.UserResponseDto;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 @Controller
@@ -22,6 +29,7 @@ public class AccountController extends BaseController {
     private Long idToCreate = 0L;
     private final UserFacade userFacade;
     private final AccountFacade accountFacade;
+    private final OperationFacade operationFacade;
 
     private final HeaderName[] columnNames = new HeaderName[]{
             new HeaderName("#", null, null),
@@ -34,9 +42,10 @@ public class AccountController extends BaseController {
             new HeaderName("delete", null, null)
     };
 
-    public AccountController(UserFacade userFacade, AccountFacade accountFacade) {
+    public AccountController(UserFacade userFacade, AccountFacade accountFacade, OperationFacade operationFacade) {
         this.userFacade = userFacade;
         this.accountFacade = accountFacade;
+        this.operationFacade = operationFacade;
     }
 
 
@@ -81,12 +90,6 @@ public class AccountController extends BaseController {
         return "redirect:/accounts";
     }
 
-    @GetMapping("/update/{id}")
-    public String update(@ModelAttribute("account") AccountRequestDto dto, @PathVariable Long id) {
-        idToUpdate = id;
-        return "pages/account/account_update";
-    }
-
     @PostMapping("/update")
     public String update(@ModelAttribute("account") AccountRequestDto dto) {
         accountFacade.update(dto, idToUpdate);
@@ -98,5 +101,25 @@ public class AccountController extends BaseController {
         model.addAttribute("account", accountFacade.findById(id));
         model.addAttribute("user", accountFacade.findUserByAccountId(id));
         return "pages/account/account_details";
+    }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<InputStreamResource> getAnExtract(@PathVariable Long id)
+    {
+        operationFacade.writeOutByAccId(id);
+        File file = new File("acc"+id+".csv");
+        MediaType mediaType = MediaType.parseMediaType("application/octet-stream");
+
+        InputStreamResource resource = null;
+        try {
+            resource = new InputStreamResource(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                .contentType(mediaType)
+                .contentLength(file.length()) //
+                .body(resource);
     }
 }

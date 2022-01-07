@@ -21,7 +21,7 @@
             <a th:href="@{'/accounts/details/' + ${account.getId()}}" type="button" class="btn btn-info">details</a>
         </td>
         <td>
-            <a th:href="@{'/operations/new'}" type="button" class="btn btn-primary">do operation</a>
+            <a th:href="@{'/operations/new/' + ${account.getId()}}" type="button" class="btn btn-primary">do operation</a>
         </td>
         <td>
             <a th:href="@{'/accounts/delete/' + ${account.getId()}}" type="button" class="btn btn-danger">delete</a>

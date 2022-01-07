@@ -8,5 +8,6 @@ import java.sql.SQLException;
 
 public interface OperationFacade extends BaseFacade<OperationRequestDto, OperationResponseDto> {
     Category findCategoryByName(String name) throws SQLException;
-
+    void writeOutByAccId(Long id);
+    void writeOutByUserId(Long id);
 }

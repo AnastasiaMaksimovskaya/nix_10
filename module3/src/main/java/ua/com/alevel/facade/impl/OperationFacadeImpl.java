@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+
 public class OperationFacadeImpl implements OperationFacade {
 
     private final OperationService operationService;
@@ -34,12 +35,12 @@ public class OperationFacadeImpl implements OperationFacade {
     public void create(OperationRequestDto operationRequestDto) throws SQLException {
         Operation operation = new Operation();
         operation.setCreated(new Date(System.currentTimeMillis()));
-        operation.setAccount(operationRequestDto.getAccount());
-        System.out.println("OperationFacadeImpl.create");
-        System.out.println("operation.getAccount() = " + operation.getAccount());
         operation.setCategory(findCategoryByName(operationRequestDto.getCategoryName()));
         operation.setSum(operationRequestDto.getSum());
+        operation.setAccount(operationRequestDto.getAccount());
         operationService.create(operation);
+        operationService.changeAccBalance(operation.getSum(), operation.getId(), operation.getCategory().getIncome());
+        operationService.update(operation);
     }
 
     @Override
@@ -74,5 +75,15 @@ public class OperationFacadeImpl implements OperationFacade {
     @Override
     public Category findCategoryByName(String name) throws SQLException {
         return operationService.findCategoryByName(name);
+    }
+
+    @Override
+    public void writeOutByAccId(Long id) {
+        operationService.writeOutByAccId(id);
+    }
+
+    @Override
+    public void writeOutByUserId(Long id) {
+        operationService.writeOutByUserId(id);
     }
 }

@@ -44,7 +44,7 @@ public class OperationController extends BaseController {
         model.addAttribute("createUrl", "/operations/all");
         model.addAttribute("createNew", "/operations/new");
         model.addAttribute("cardHeader", "All Operations");
-        return "pages/operation/operation_all";
+        return "pages/user/user_all";
     }
 
     @PostMapping("/all")
@@ -61,15 +61,9 @@ public class OperationController extends BaseController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("operation") OperationRequestDto dto) {
+    public String create(@ModelAttribute("operation") OperationRequestDto dto) throws SQLException {
         dto.setAccount(accountService.findById(accId));
-        System.out.println("OperationController.create");
-        System.out.println("acc = " + accountService.findById(accId));
-        try {
-            operationFacade.create(dto);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/operations";
+        operationFacade.create(dto);
+        return "redirect:/accounts/details/"+accId;
     }
 }

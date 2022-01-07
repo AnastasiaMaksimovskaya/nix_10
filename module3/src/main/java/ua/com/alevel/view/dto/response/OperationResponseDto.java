@@ -16,8 +16,6 @@ public class OperationResponseDto extends ResponseDto {
         this.categoryName = operation.getCategory().getName().name();
         this.isIncome = operation.getCategory().getIncome() ? "+" : "-";
         this.sum = operation.getSum();
-        System.out.println("OperationResponseDto.OperationResponseDto");
-        System.out.println("operation = " + operation);
         this.accountName = operation.getAccount().getName();
     }
 

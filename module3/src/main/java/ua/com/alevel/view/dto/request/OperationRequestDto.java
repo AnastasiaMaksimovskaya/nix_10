@@ -32,4 +32,13 @@ public class OperationRequestDto extends RequestDto{
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    @Override
+    public String toString() {
+        return "OperationRequestDto{" +
+                "categoryName='" + categoryName + '\'' +
+                ", sum=" + sum +
+                ", account=" + account +
+                '}';
+    }
 }

@@ -28,6 +28,10 @@
                             <td th:text="${account.getName()}"></td>
                         </tr>
                         <tr>
+                            <th>Balance</th>
+                            <td th:text="${account.getBalance()}"></td>
+                        </tr>
+                        <tr>
                             <th>Created</th>
                             <td th:text="${#calendars.format(account.getCreated(),'dd MMMM yyyy')}"></td>
                         </tr>
@@ -44,16 +48,17 @@
                     <div class="card mt-2 mb-2">
                         <div class="card-footer">
                             <div class="force-to-bottom">
-                                <a type="button"  class="btn btn-dark" th:href="@{'/operations/new/'+${account.getId()}}">Do operation</a>
+                                <a type="button" class="btn btn-dark"
+                                   th:href="@{'/operations/new/'+${account.getId()}}">Do operation</a>
+                                <a type="button" class="btn btn-dark"
+                                   th:href="@{'/accounts/download/'+${account.getId()}}">Download history of operation</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-
-</div>
-
 </body>
 </html>

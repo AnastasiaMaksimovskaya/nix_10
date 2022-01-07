@@ -1,6 +1,8 @@
 package ua.com.alevel.service.impl;
 
+import com.opencsv.CSVWriter;
 import org.springframework.stereotype.Service;
+import ua.com.alevel.dao.AccountDao;
 import ua.com.alevel.dao.OperationDao;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
@@ -10,15 +12,23 @@ import ua.com.alevel.entity.Operation;
 import ua.com.alevel.service.OperationService;
 import ua.com.alevel.util.WebResponseUtil;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OperationServiceImpl implements OperationService {
 
     private final OperationDao operationDao;
+    private final AccountDao accountDao;
 
-    public OperationServiceImpl(OperationDao operationDao) {
+    public OperationServiceImpl(OperationDao operationDao, AccountDao accountDao) {
         this.operationDao = operationDao;
+        this.accountDao = accountDao;
     }
 
     @Override
@@ -46,9 +56,53 @@ public class OperationServiceImpl implements OperationService {
         DataTableResponse<Operation> dataTableResponse = operationDao.findAll(request);
         long count = operationDao.count();
         WebResponseUtil.initDataTableResponse(request, dataTableResponse, count);
-        return dataTableResponse;    }
+        return dataTableResponse;
+    }
+
     @Override
     public Category findCategoryByName(String name) throws SQLException {
         return operationDao.findCategoryByName(name);
+    }
+
+    @Override
+    public void changeAccBalance(Integer sum, Long operationId, Boolean isIncome) {
+        Account account = operationDao.findAccountById(operationId);
+        int balance = account.getBalance();
+        balance = isIncome ? balance + sum : balance - sum;
+        System.out.println("balance = " + balance);
+        account.setBalance(balance);
+        accountDao.update(account);
+    }
+
+    @Override
+    public void writeOutByAccId(Long id) {
+        List<Operation> operations = operationDao.findOperationsByAccountId(id);
+        String csv = "acc" + id + ".csv";
+        File file = new File(csv);
+        try (CSVWriter writer = new CSVWriter(new FileWriter(file))){
+            for (Operation operation : operations) {
+                String values[] = {operation.getAccount().getUser().getEmail(),operation.getCategory().getName().name(),operation.getCategory().getIncome()?"+":"-",String.valueOf(operation.getSum())};
+                writer.writeNext(values);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void writeOutByUserId(Long id) {
+        List<Operation> operations = operationDao.findOperationsByUserId(id);
+        String csv = "user" + id + ".csv";
+        File file = new File(csv);
+        System.out.println("OperationServiceImpl.writeOutByUserId");
+        try (CSVWriter writer = new CSVWriter(new FileWriter(file))){
+            for (Operation operation : operations) {
+                System.out.println("operation.getSum() = " + operation.getSum());
+                String values[] = {operation.getAccount().getUser().getEmail(),operation.getCategory().getName().name(),operation.getCategory().getIncome()?"+":"-",String.valueOf(operation.getSum())};
+                writer.writeNext(values);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
