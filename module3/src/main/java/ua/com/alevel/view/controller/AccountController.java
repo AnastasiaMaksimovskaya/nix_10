@@ -48,7 +48,6 @@ public class AccountController extends BaseController {
         this.operationFacade = operationFacade;
     }
 
-
     @GetMapping
     public String findAll(Model model, WebRequest request) {
         PageData<AccountResponseDto> response = accountFacade.findAll(request);
@@ -104,10 +103,9 @@ public class AccountController extends BaseController {
     }
 
     @GetMapping("/download/{id}")
-    public ResponseEntity<InputStreamResource> getAnExtract(@PathVariable Long id)
-    {
+    public ResponseEntity<InputStreamResource> getAnExtract(@PathVariable Long id) {
         operationFacade.writeOutByAccId(id);
-        File file = new File("acc"+id+".csv");
+        File file = new File("acc" + id + ".csv");
         MediaType mediaType = MediaType.parseMediaType("application/octet-stream");
 
         InputStreamResource resource = null;

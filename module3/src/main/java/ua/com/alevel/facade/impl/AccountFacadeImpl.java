@@ -67,10 +67,8 @@ public class AccountFacadeImpl implements AccountFacade {
         List<AccountResponseDto> accounts = tableResponse.getItems().stream().
                 map(AccountResponseDto::new).
                 collect(Collectors.toList());
-
         PageData<AccountResponseDto> pageData = (PageData<AccountResponseDto>) WebResponseUtil.initPageData(tableResponse);
         pageData.setItems(accounts);
-
         return pageData;
     }
 

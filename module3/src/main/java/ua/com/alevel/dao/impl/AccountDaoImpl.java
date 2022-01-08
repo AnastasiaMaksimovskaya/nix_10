@@ -5,7 +5,6 @@ import ua.com.alevel.dao.AccountDao;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.Account;
-import ua.com.alevel.entity.Category;
 import ua.com.alevel.entity.User;
 
 import javax.persistence.EntityManager;
@@ -15,10 +14,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,7 +36,6 @@ public class AccountDaoImpl implements AccountDao {
     @Override
     public void delete(Long id) {
         entityManager.remove(findById(id));
-
     }
 
     @Override
@@ -77,7 +71,8 @@ public class AccountDaoImpl implements AccountDao {
     @Override
     public long count() {
         Query query = entityManager.createQuery("select count(id) from Account");
-        return (Long) query.getSingleResult();    }
+        return (Long) query.getSingleResult();
+    }
 
     @Override
     public User findUserByAccountId(Long accountId) {

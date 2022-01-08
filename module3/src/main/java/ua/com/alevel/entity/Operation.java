@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "operations")
-public class Operation extends BaseEntity{
+public class Operation extends BaseEntity {
 
     @AttributeOverride(name = "id", column = @Column(name = "operation_id"))
 

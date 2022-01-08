@@ -4,7 +4,7 @@ import ua.com.alevel.entity.Account;
 import ua.com.alevel.entity.Category;
 import ua.com.alevel.exception.InvalidInputException;
 
-public class OperationRequestDto extends RequestDto{
+public class OperationRequestDto extends RequestDto {
 
     private String categoryName;
     private Double sum;
@@ -13,7 +13,7 @@ public class OperationRequestDto extends RequestDto{
     public Double getSum() {
         try {
             return sum;
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidInputException("сумма должна быть числом");
         }
     }

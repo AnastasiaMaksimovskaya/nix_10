@@ -10,7 +10,6 @@ import ua.com.alevel.service.AccountService;
 import ua.com.alevel.service.UserService;
 import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.util.WebResponseUtil;
-import ua.com.alevel.view.dto.request.AccountRequestDto;
 import ua.com.alevel.view.dto.request.UserRequestDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.UserResponseDto;
@@ -66,7 +65,6 @@ public class UserFacadeImpl implements UserFacade {
         List<UserResponseDto> users = tableResponse.getItems().stream().
                 map(UserResponseDto::new).
                 collect(Collectors.toList());
-
         PageData<UserResponseDto> pageData = (PageData<UserResponseDto>) WebResponseUtil.initPageData(tableResponse);
         pageData.setItems(users);
         return pageData;

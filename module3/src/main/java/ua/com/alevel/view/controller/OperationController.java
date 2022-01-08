@@ -18,7 +18,7 @@ import java.sql.SQLException;
 @RequestMapping("/operations")
 public class OperationController extends BaseController {
 
-    private Long accId=0L;
+    private Long accId = 0L;
 
     private final OperationFacade operationFacade;
     private final AccountService accountService;
@@ -54,7 +54,7 @@ public class OperationController extends BaseController {
 
     @GetMapping("/new/{id}")
     public String redirectToNewOperationPage(@PathVariable Long id, Model model) {
-        accId= id;
+        accId = id;
         System.out.println("accId = " + accId);
         model.addAttribute("operation", new OperationRequestDto());
         return "pages/operation/operation_new";
@@ -64,6 +64,6 @@ public class OperationController extends BaseController {
     public String create(@ModelAttribute("operation") OperationRequestDto dto) throws SQLException {
         dto.setAccount(accountService.findById(accId));
         operationFacade.create(dto);
-        return "redirect:/accounts/details/"+accId;
+        return "redirect:/accounts/details/" + accId;
     }
 }

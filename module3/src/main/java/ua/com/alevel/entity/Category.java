@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table (name = "categories")
-public class Category extends BaseEntity{
+@Table(name = "categories")
+public class Category extends BaseEntity {
 
     @AttributeOverride(name = "id", column = @Column(name = "category_id"))
 
@@ -27,7 +27,8 @@ public class Category extends BaseEntity{
         public String getIsIncome() {
             return isIncome;
         }
-        }
+    }
+
     @Enumerated(EnumType.STRING)
     private Name name;
 
@@ -37,7 +38,7 @@ public class Category extends BaseEntity{
     @OneToMany(mappedBy = "category")
     private Set<Operation> operations;
 
-    public Category(){
+    public Category() {
         super();
         this.operations = new HashSet<>();
     }

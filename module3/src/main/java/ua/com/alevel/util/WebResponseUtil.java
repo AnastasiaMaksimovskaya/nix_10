@@ -3,7 +3,6 @@ package ua.com.alevel.util;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.BaseEntity;
-import ua.com.alevel.entity.User;
 
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.ResponseDto;

@@ -7,5 +7,4 @@ import java.util.Map;
 
 public interface UserFacade extends BaseFacade<UserRequestDto, UserResponseDto> {
     Map<Long, String> findAllAccountsByUserId(Long userId);
-
 }

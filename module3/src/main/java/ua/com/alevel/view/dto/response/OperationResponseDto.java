@@ -1,7 +1,5 @@
 package ua.com.alevel.view.dto.response;
 
-import ua.com.alevel.entity.Account;
-import ua.com.alevel.entity.Category;
 import ua.com.alevel.entity.Operation;
 import ua.com.alevel.util.Parser;
 

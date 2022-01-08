@@ -6,5 +6,4 @@ import java.util.Map;
 
 public interface UserDao extends BaseDao<User>{
     Map<Long, String> findAllAccountsByUserId(Long userId);
-
 }

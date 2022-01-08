@@ -4,19 +4,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
+import ua.com.alevel.entity.Account;
 import ua.com.alevel.entity.Category;
 import ua.com.alevel.entity.Operation;
-import ua.com.alevel.entity.User;
-import ua.com.alevel.exception.InvalidInputException;
+import ua.com.alevel.exception.NotEnoughMoneyException;
 import ua.com.alevel.facade.OperationFacade;
 import ua.com.alevel.service.OperationService;
 import ua.com.alevel.util.Parser;
 import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.util.WebResponseUtil;
 import ua.com.alevel.view.dto.request.OperationRequestDto;
+import ua.com.alevel.view.dto.request.RequestDto;
 import ua.com.alevel.view.dto.response.OperationResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
-import ua.com.alevel.view.dto.response.UserResponseDto;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -35,29 +35,21 @@ public class OperationFacadeImpl implements OperationFacade {
 
     @Override
     public void create(OperationRequestDto operationRequestDto) throws SQLException {
+        Long sum = (Parser.convertToKopeyka(operationRequestDto.getSum()));
+        Account account = operationRequestDto.getAccount();
+        Category category = findCategoryByName(operationRequestDto.getCategoryName());
+        try {
+            operationService.changeAccBalance(sum, account.getId(), category.getIncome());
+        } catch (NotEnoughMoneyException e) {
+            throw new NotEnoughMoneyException(e.getMessage());
+        }
         Operation operation = new Operation();
         operation.setCreated(new Date(System.currentTimeMillis()));
-        operation.setCategory(findCategoryByName(operationRequestDto.getCategoryName()));
-        operation.setSum(Parser.convertToKopeyka(operationRequestDto.getSum()));
-        operation.setAccount(operationRequestDto.getAccount());
+        operation.setCategory(category);
+        operation.setSum(sum);
+        operation.setAccount(account);
         operationService.create(operation);
-        operationService.changeAccBalance(operation.getSum(), operation.getId(), operation.getCategory().getIncome());
         operationService.update(operation);
-    }
-
-    @Override
-    public void update(OperationRequestDto operationRequestDto, Long id) {
-
-    }
-
-    @Override
-    public void delete(Long id) {
-
-    }
-
-    @Override
-    public OperationResponseDto findById(Long id) {
-        return null;
     }
 
     @Override
@@ -88,4 +80,5 @@ public class OperationFacadeImpl implements OperationFacade {
     public void writeOutByUserId(Long id) {
         operationService.writeOutByUserId(id);
     }
+
 }

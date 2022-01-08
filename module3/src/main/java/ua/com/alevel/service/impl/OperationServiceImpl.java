@@ -65,8 +65,8 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public void changeAccBalance(Long sum, Long operationId, Boolean isIncome) {
-        Account account = operationDao.findAccountById(operationId);
+    public void changeAccBalance(Long sum, Long accountId, Boolean isIncome) {
+        Account account = accountDao.findById(accountId);
         long balance = account.getBalance();
         if (!isIncome && balance - sum < 0) {
             System.out.println("balance = " + balance);
@@ -98,11 +98,11 @@ public class OperationServiceImpl implements OperationService {
     public void writeOutByUserId(Long id) {
         List<Operation> operations = operationDao.findOperationsByUserId(id);
         String csv = "user" + id + ".csv";
-        File file = new File( csv);
+        File file = new File(csv);
         System.out.println("OperationServiceImpl.writeOutByUserId");
         try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
             for (Operation operation : operations) {
-                String values[] = {operation.getAccount().getName(), operation.getAccount().getUser().getEmail(), operation.getCategory().getName().name(), operation.getCategory().getIncome() ? "+" : "-",String.valueOf(Parser.convertFromKopeyka(operation.getSum()))};
+                String values[] = {operation.getAccount().getName(), operation.getAccount().getUser().getEmail(), operation.getCategory().getName().name(), operation.getCategory().getIncome() ? "+" : "-", String.valueOf(Parser.convertFromKopeyka(operation.getSum()))};
                 writer.writeNext(values);
             }
         } catch (IOException e) {

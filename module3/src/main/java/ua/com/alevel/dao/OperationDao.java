@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface OperationDao extends BaseDao<Operation>{
     Category findCategoryByName(String Name) throws SQLException;
-    Account findAccountById(Long id);
     List<Operation> findOperationsByAccountId(Long id);
     List<Operation> findOperationsByUserId(Long id);
 }

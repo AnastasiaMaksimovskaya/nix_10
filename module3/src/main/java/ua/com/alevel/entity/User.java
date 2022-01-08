@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends  BaseEntity{
+public class User extends BaseEntity {
 
     @AttributeOverride(name = "id", column = @Column(name = "user_id"))
 
@@ -14,7 +14,7 @@ public class User extends  BaseEntity{
 
     private String email;
 
-    @OneToMany(mappedBy = "user",cascade = {
+    @OneToMany(mappedBy = "user", cascade = {
             CascadeType.REMOVE
     })
     private Set<Account> accounts;

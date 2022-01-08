@@ -44,7 +44,6 @@ public class UserController extends BaseController {
         this.operationFacade = operationFacade;
     }
 
-
     @GetMapping
     public String findAll(Model model, WebRequest request) {
         PageData<UserResponseDto> response = userFacade.findAll(request);

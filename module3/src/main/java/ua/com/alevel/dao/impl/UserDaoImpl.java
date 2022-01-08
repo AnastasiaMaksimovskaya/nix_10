@@ -9,7 +9,6 @@ import ua.com.alevel.entity.Account;
 import ua.com.alevel.entity.Category;
 import ua.com.alevel.entity.User;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -24,7 +23,6 @@ public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     private EntityManager entityManager;
-
 
     @Override
     public void create(User entity) {
@@ -54,7 +52,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public DataTableResponse<User> findAll(DataTableRequest request) {
         Long count = (Long) entityManager.createQuery("select count(id) from Category").getSingleResult();
-        if (count==0){
+        if (count == 0) {
             initCategories();
         }
         int fr = (request.getCurrentPage() - 1) * request.getPageSize();
@@ -90,15 +88,14 @@ public class UserDaoImpl implements UserDao {
         }
         return map;
     }
-    private void initCategories(){
+
+    private void initCategories() {
         for (int i = 0; i < Category.Name.values().length; i++) {
             Category category = new Category();
-
             category.setName(Category.Name.values()[i]);
-            if (Category.Name.values()[i].getIsIncome().equals("+")){
+            if (Category.Name.values()[i].getIsIncome().equals("+")) {
                 category.setIncome(true);
-            }
-            else category.setIncome(false);
+            } else category.setIncome(false);
             category.setCreated(new Date(System.currentTimeMillis()));
             entityManager.persist(category);
         }

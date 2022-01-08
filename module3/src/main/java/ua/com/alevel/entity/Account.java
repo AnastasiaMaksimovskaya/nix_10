@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table (name = "accounts")
-public class Account extends BaseEntity{
+@Table(name = "accounts")
+public class Account extends BaseEntity {
 
     @AttributeOverride(name = "id", column = @Column(name = "account_id"))
 
@@ -18,7 +18,7 @@ public class Account extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "account",cascade = {
+    @OneToMany(mappedBy = "account", cascade = {
             CascadeType.REMOVE
     })
     private Set<Operation> operations;

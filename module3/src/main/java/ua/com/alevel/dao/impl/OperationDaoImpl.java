@@ -105,12 +105,6 @@ public class OperationDaoImpl implements OperationDao {
     }
 
     @Override
-    public Account findAccountById(Long id) {
-        Query query = entityManager.createNativeQuery("select a.id,balance,user_id,a.name,a.created from accounts a left join operations o on a.id = o.account_id where o.id = " + id, Account.class);
-        return ((Account) query.getSingleResult());
-    }
-
-    @Override
     public List<Operation> findOperationsByAccountId(Long id) {
         List<Operation> operations = new ArrayList<>();
         try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(OUT_ACC_ID + id)) {
