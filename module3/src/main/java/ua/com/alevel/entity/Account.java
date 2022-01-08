@@ -10,7 +10,7 @@ public class Account extends BaseEntity{
 
     @AttributeOverride(name = "id", column = @Column(name = "account_id"))
 
-    private Integer balance;
+    private Long balance;
 
     private String name;
 
@@ -18,7 +18,9 @@ public class Account extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account",cascade = {
+            CascadeType.REMOVE
+    })
     private Set<Operation> operations;
 
     public Account() {
@@ -26,11 +28,11 @@ public class Account extends BaseEntity{
         this.operations = new HashSet<>();
     }
 
-    public Integer getBalance() {
+    public Long getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 

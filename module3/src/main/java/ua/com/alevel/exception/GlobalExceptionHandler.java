@@ -9,8 +9,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {EntityNotFoundException.class})
     public ModelAndView defaultErrorHandler(EntityNotFoundException exception) {
-        exception.printStackTrace();
-        System.out.println(exception.getMessage());
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("showMessage", true);
+        mav.addObject("errorMessage", exception.getMessage());
+        mav.setViewName("error");
+        return mav;
+    }
+    @ExceptionHandler(value = {NotEnoughMoneyException.class, InvalidInputException.class})
+    public ModelAndView defaultErrorHandler(NotEnoughMoneyException exception) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("showMessage", true);
         mav.addObject("errorMessage", exception.getMessage());

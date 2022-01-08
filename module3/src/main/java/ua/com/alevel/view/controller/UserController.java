@@ -1,16 +1,24 @@
 package ua.com.alevel.view.controller;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.alevel.facade.OperationFacade;
 import ua.com.alevel.facade.UserFacade;
 import ua.com.alevel.view.dto.request.UserRequestDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.UserResponseDto;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 @Controller
@@ -19,6 +27,7 @@ public class UserController extends BaseController {
 
     private Long idToUpdate = 0L;
     private final UserFacade userFacade;
+    private final OperationFacade operationFacade;
 
     private final HeaderName[] columnNames = new HeaderName[]{
             new HeaderName("#", null, null),
@@ -30,8 +39,9 @@ public class UserController extends BaseController {
             new HeaderName("delete", null, null)
     };
 
-    public UserController(UserFacade userFacade) {
+    public UserController(UserFacade userFacade, OperationFacade operationFacade) {
         this.userFacade = userFacade;
+        this.operationFacade = operationFacade;
     }
 
 
@@ -89,5 +99,23 @@ public class UserController extends BaseController {
         model.addAttribute("user", userFacade.findById(id));
         model.addAttribute("accounts", userFacade.findAllAccountsByUserId(id));
         return "pages/user/user_details";
+    }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<InputStreamResource> getAnExtract(@PathVariable Long id) {
+        operationFacade.writeOutByUserId(id);
+        File file = new File("user" + id + ".csv");
+        InputStreamResource resource = null;
+        MediaType mediaType = MediaType.parseMediaType("application/octet-stream");
+        try {
+            resource = new InputStreamResource(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                .contentType(mediaType)
+                .contentLength(file.length())
+                .body(resource);
     }
 }

@@ -11,8 +11,23 @@ public class Category extends BaseEntity{
     @AttributeOverride(name = "id", column = @Column(name = "category_id"))
 
     public enum Name {
-        пополнение_мобильного, перевод_между_картами
-    }
+        refill("-"),
+        transfer_to_card("+"),
+        transfer_from_the_card("-"),
+        buying_food("-"),
+        salary("+"),
+        social_charges("+");
+
+        private String isIncome;
+
+        Name(String isIncome) {
+            this.isIncome = isIncome;
+        }
+
+        public String getIsIncome() {
+            return isIncome;
+        }
+        }
     @Enumerated(EnumType.STRING)
     private Name name;
 

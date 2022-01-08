@@ -21,7 +21,7 @@
                     <form action="#" th:action="@{/users/update}" th:object="${user}" method="post">
                         <div class="form-group">
                             <label for="userEmail">Shop name</label>
-                            <input type="text" th:required="required" class="form-control" id="userEmail"
+                            <input type="email" th:required="required" class="form-control" id="userEmail"
                                    aria-describedby="userEmail" placeholder="Enter new user email" th:field="*{email}">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>

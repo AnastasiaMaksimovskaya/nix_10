@@ -7,6 +7,9 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import ua.com.alevel.config.jpa.JpaConfig;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 @SpringBootApplication (exclude = HibernateJpaAutoConfiguration.class)
 public class Module3Application {
 

@@ -1,10 +1,11 @@
 package ua.com.alevel.view.dto.response;
 
 import ua.com.alevel.entity.Account;
+import ua.com.alevel.util.Parser;
 
 public class AccountResponseDto extends ResponseDto {
 
-    private Integer balance;
+    private Double balance;
     private String name;
     private Long Id;
     private String userEmail;
@@ -17,7 +18,7 @@ public class AccountResponseDto extends ResponseDto {
         setCreated(account.getCreated());
         this.name = account.getName();
         this.userEmail = account.getUser().getEmail();
-        this.balance = account.getBalance();
+        this.balance = Parser.convertFromKopeyka(account.getBalance());
     }
 
     public String getUserEmail() {
@@ -48,11 +49,11 @@ public class AccountResponseDto extends ResponseDto {
         Id = id;
     }
 
-    public Integer getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 

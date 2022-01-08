@@ -41,6 +41,8 @@
                         </tr>
                     </table>
                     <a th:href="@{'/accounts/new/'+${user.getId()}}" type="button" class="btn btn-dark">Add new account</a>
+                    <a type="button" class="btn btn-dark"
+                       th:href="@{'/users/download/'+${user.getId()}}">Download history of operation</a>
                 </div>
             </div>
         </div>

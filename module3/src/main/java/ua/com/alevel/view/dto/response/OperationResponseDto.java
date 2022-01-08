@@ -3,11 +3,12 @@ package ua.com.alevel.view.dto.response;
 import ua.com.alevel.entity.Account;
 import ua.com.alevel.entity.Category;
 import ua.com.alevel.entity.Operation;
+import ua.com.alevel.util.Parser;
 
 public class OperationResponseDto extends ResponseDto {
     private String categoryName;
     private String isIncome;
-    private int sum;
+    private Double sum;
     private String accountName;
 
     public OperationResponseDto(Operation operation) {
@@ -15,7 +16,7 @@ public class OperationResponseDto extends ResponseDto {
         setCreated(operation.getCreated());
         this.categoryName = operation.getCategory().getName().name();
         this.isIncome = operation.getCategory().getIncome() ? "+" : "-";
-        this.sum = operation.getSum();
+        this.sum = Parser.convertFromKopeyka(operation.getSum());
         this.accountName = operation.getAccount().getName();
     }
 
@@ -35,11 +36,11 @@ public class OperationResponseDto extends ResponseDto {
         this.isIncome = isIncome;
     }
 
-    public int getSum() {
+    public Double getSum() {
         return sum;
     }
 
-    public void setSum(int sum) {
+    public void setSum(Double sum) {
         this.sum = sum;
     }
 

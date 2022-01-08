@@ -133,11 +133,12 @@ public class OperationDaoImpl implements OperationDao {
         } catch (SQLException e) {
             System.out.println("problem: = " + e.getMessage());
         }
-        return operations;    }
+        return operations;
+    }
 
     private Operation convertResultSetToOperation(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong("id");
-        Integer sum = resultSet.getInt("sum");
+        Long sum = resultSet.getLong("sum");
         Long accId = resultSet.getLong("account_id");
         Long catId = resultSet.getLong("category_id");
         Timestamp created = resultSet.getTimestamp("created");
@@ -149,5 +150,4 @@ public class OperationDaoImpl implements OperationDao {
         operation.setCreated(new Date(created.getTime()));
         return operation;
     }
-
 }

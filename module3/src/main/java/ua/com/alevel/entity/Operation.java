@@ -16,17 +16,17 @@ public class Operation extends BaseEntity{
     @JoinColumn(name = "category_id")
     private Category category;
 
-    private Integer sum;
+    private Long sum;
 
     public Operation() {
         super();
     }
 
-    public Integer getSum() {
+    public Long getSum() {
         return sum;
     }
 
-    public void setSum(Integer sum) {
+    public void setSum(Long sum) {
         this.sum = sum;
     }
 

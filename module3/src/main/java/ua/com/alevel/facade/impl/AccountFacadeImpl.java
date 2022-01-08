@@ -35,7 +35,7 @@ public class AccountFacadeImpl implements AccountFacade {
     @Override
     public void create(AccountRequestDto accountRequestDto) {
         Account account = new Account();
-        account.setBalance(100);
+        account.setBalance(10000L);
         account.setUser(userService.findById(accountRequestDto.getUserId()));
         account.setName(accountRequestDto.getName());
         account.setCreated(new Timestamp(System.currentTimeMillis()));

@@ -2,18 +2,23 @@ package ua.com.alevel.view.dto.request;
 
 import ua.com.alevel.entity.Account;
 import ua.com.alevel.entity.Category;
+import ua.com.alevel.exception.InvalidInputException;
 
 public class OperationRequestDto extends RequestDto{
 
     private String categoryName;
-    private int sum;
+    private Double sum;
     private Account account;
 
-    public int getSum() {
-        return sum;
+    public Double getSum() {
+        try {
+            return sum;
+        }catch (NumberFormatException e){
+            throw new InvalidInputException("сумма должна быть числом");
+        }
     }
 
-    public void setSum(int sum) {
+    public void setSum(Double sum) {
         this.sum = sum;
     }
 
