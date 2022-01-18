@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/data_table}">
+<head>
+    <meta charset="utf-8">
+    <title>Products</title>
+</head>
+<body>
+
+<div layout:fragment="data_table_content">
+
+    <tr th:each="cube,iter : ${pageData.getItems()}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${cube.getName()}"></td>
+        <td th:text="${cube.getBrand().getName()}"></td>
+        <td th:text="${cube.getPrice()}"></td>
+        <td th:text="${cube.getShopCount()}"></td>
+        <td>
+            <a th:href="@{'/cubes/details/' + ${cube.getId()}}" type="button" class="btn btn-info">details</a>
+        </td>
+        <td>
+            <a th:href="@{'/cubes/update/' + ${cube.getId()}}" type="button" class="btn btn-primary">update</a>
+        </td>
+        <td>
+            <a th:href="@{'/cubes/delete/' + ${cube.getId()}}" type="button" class="btn btn-danger">delete</a>
+        </td>
+    </tr>
+
+</div>
+
+</body>
+</html>
