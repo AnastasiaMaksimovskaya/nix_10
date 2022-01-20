@@ -40,6 +40,7 @@ public class ElasticBookSearchServiceImpl implements ElasticBookSearchService {
                         IndexCoordinates.of(CUBE_INDEX));
         final List<String> suggestions = new ArrayList<>();
         searchSuggestions.getSearchHits().forEach(searchHit-> suggestions.add(searchHit.getContent().getName()));
+        System.out.println("ElasticBookSearchServiceImpl.searchCubeName");
         return suggestions;
     }
 }

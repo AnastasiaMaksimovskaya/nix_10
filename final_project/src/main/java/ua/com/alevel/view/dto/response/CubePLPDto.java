@@ -11,16 +11,20 @@ import ua.com.alevel.persistence.entity.store.Cube;
 @ToString
 public class CubePLPDto {
 
+    private Long id;
     private String name;
     private Brand brand;
     private Integer price;
     private String image;
     private Boolean visible;
+    private String description;
 
     public CubePLPDto() {
     }
 
     public CubePLPDto(Cube cube) {
+        this.description=cube.getDescription();
+        this.id = cube.getId();
         this.price = cube.getPrice();
         this.visible = cube.getVisible();
         this.image = cube.getImage();

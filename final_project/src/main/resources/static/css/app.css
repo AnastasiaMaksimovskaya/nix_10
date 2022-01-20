@@ -11,7 +11,13 @@ html, body {
 }
 
 a.nav-item.nav-link {
-    color: yellow;
+    color: white;
+    background-color: #6bb00c;
+    border-radius: 0.4rem
+}
+
+.navbar{
+    border-radius: 0.3rem
 }
 
 .sort {

@@ -5,6 +5,7 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.repository.BaseRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CrudRepositoryHelper<E extends BaseEntity, R extends BaseRepository<E>> {
@@ -18,4 +19,6 @@ public interface CrudRepositoryHelper<E extends BaseEntity, R extends BaseReposi
     Optional<E> findById(R repository, Long id);
 
     DataTableResponse<E> findAll(R repository, DataTableRequest dataTableRequest);
+
+    List<E> findAll(R repository);
 }

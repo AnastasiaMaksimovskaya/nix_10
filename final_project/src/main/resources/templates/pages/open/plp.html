@@ -15,7 +15,6 @@
 
         .fixed-container {
             min-width: 1200px;
-            overflow: scroll;
         }
 
         .card-product-list,
@@ -40,6 +39,31 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 23px;
             margin-top: 50px
+        }
+
+        .box {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 9px;
+            margin-top: 100px;
+            margin-left: 0;
+            float: left;
+            width: 200px !important;
+            height: 20%;
+            padding-left: 20px;
+            text-align: left;
+            font-size: 20px;
         }
 
         .card-product-grid:hover {
@@ -83,6 +107,7 @@
         }
 
         .card-product-grid .info-wrap {
+            height: 23%;
             overflow: hidden;
             padding: 18px 20px
         }
@@ -124,6 +149,7 @@
         }
 
         .bottom-wrap-payment {
+            /*margin-bottom:15%;*/
             padding: 0px;
             border-top: 1px solid #e4e4e4
         }
@@ -131,6 +157,11 @@
         .rated {
             font-size: 10px;
             color: #b3b4b6
+        }
+
+        .price {
+            font-size: 16px;
+            color: #343a40;
         }
 
         .btn {
@@ -160,26 +191,40 @@
         .fa {
             color: #FF5722
         }
+        .form-check-input{
+            width: 50px;
+        }
     </style>
 </head>
 <body>
 <div layout:fragment="open_content">
 
-    <div class="container fixed-container d-flex justify-content-center">
+
+    <div class="container fixed-container d-flex justify-content-space-between">
+
+        <div class="card-product-grid box">
+            <div class="form-check" th:each="brand : ${brands}">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault" th:text="${brand.getName()}">
+                    Brand
+                </label>
+            </div>
+            <div class="bottom-wrap">
+                <a href="#" class="btn btn-success float-right" data-abc="true">Применить</a>
+            </div>
+        </div>
+
         <div class="row mt-4 mb-4">
-<!--            <div class="col col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch" th:each="book : ${bookList}">-->
             <div class="col d-flex align-items-stretch" th:each="cube : ${cubeList}">
                 <figure class="card card-product-grid">
-                    <a href="#" class="img-wrap" data-abc="true">
+                    <a th:href="@{'cubes/' + ${cube.getId()}}" class="img-wrap" data-abc="true">
                         <img th:src="${cube.getImage()}"> </a>
                     <figcaption class="info-wrap">
                         <div class="row">
                             <div class="col-md-9">
                                 <a href="#" class="title" data-abc="true" th:text="${cube.getName()}">name</a>
-                                <a th:href="@{'/cubes' + '?brand=' + ${cube.getBrand().getId()}}" class="rated" th:text="${cube.getBrand().getName()}">name</a>
-<!--                                <div th:each="author : ${book.getAuthors()}">-->
-<!--                                    <span class="rated" th:text="${author}">author</span>-->
-<!--                                </div>-->
+                                <a th:href="@{'/cubes' + '?brand=' + ${cube.getBrand().getId()}}" class="rated"
+                                   th:text="${cube.getBrand().getName()}">name</a>
                             </div>
                             <div class="col-md-3 col-xs-3">
                                 <div class="rating text-right">
@@ -196,19 +241,14 @@
                         <figcaption class="info-wrap">
                             <div class="row">
                                 <div class="col-md-9 col-xs-9">
-                                    <span class="rated" th:text="${'$' + cube.getPrice()}">$0,0</span>
-                                </div>
-                                <div class="col-md-3 col-xs-3">
-                                    <div class="rating text-right"> #### 8787 </div>
+                                    <span class="price" th:text="${'₴' + cube.getPrice()}">₴0,0</span>
                                 </div>
                             </div>
                         </figcaption>
                     </div>
                     <div class="bottom-wrap">
-                        <a href="#" class="btn btn-primary float-right" data-abc="true" th:disabled="${!cube.getVisible()}">add to cart</a>
-<!--                        <div class="price-wrap">-->
-<!--                            <a href="#" class="btn btn-danger float-left" data-abc="true">add to my favourites</a>-->
-<!--                        </div>-->
+                        <a href="#" class="btn btn-primary float-right" data-abc="true"
+                           th:disabled="${!cube.getVisible()}">add to cart</a>
                     </div>
                 </figure>
             </div>

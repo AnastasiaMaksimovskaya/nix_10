@@ -12,6 +12,7 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.repository.BaseRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -71,6 +72,12 @@ public class CrudRepositoryHelperImpl<
         dataTableResponse.setPageSize(dataTableRequest.getSize());
 
         return dataTableResponse;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<E> findAll(R repository) {
+        return repository.findAll();
     }
 
     private void checkById(R repository, Long id) {

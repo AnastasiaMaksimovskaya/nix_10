@@ -1,8 +1,9 @@
 $(document).ready(function () {
-    $('#bookNamed').autocomplete({
+    $('#cubeNamed').autocomplete({
             source: function (request, response) {
-                $.get("http://localhost:8080/books/suggestions?", { query: request.term }, function (data, status) {
+                $.get("http://localhost:8080/cubes/suggestions?", { query: request.term }, function (data, status) {
                     $("#results").html("");
+                    console.log(status)
                     if (status === 'success') {
                         response(data);
                     }

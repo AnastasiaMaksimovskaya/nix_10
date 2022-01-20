@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "shops")
 public class Shop extends BaseEntity {

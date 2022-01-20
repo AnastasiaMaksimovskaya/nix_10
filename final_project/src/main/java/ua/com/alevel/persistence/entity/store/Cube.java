@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "cubes")
 public class Cube extends BaseEntity {

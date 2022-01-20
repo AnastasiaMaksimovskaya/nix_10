@@ -82,7 +82,7 @@ public class CubeController extends BaseController {
     }
 
     @GetMapping("/details/{id}")
-    public String redirectToNewAuthorPage(@PathVariable Long id, Model model) {
+    public String redirectToNewCubePage(@PathVariable Long id, Model model) {
         model.addAttribute("cube", cubeFacade.findById(id));
         model.addAttribute("shops", cubeFacade.findAllShopsByProductId(id));
         return "pages/cube/admin/cube_details";
