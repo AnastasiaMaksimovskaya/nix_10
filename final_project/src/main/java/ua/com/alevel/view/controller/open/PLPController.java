@@ -1,9 +1,12 @@
 package ua.com.alevel.view.controller.open;
 
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.com.alevel.facade.BrandFacade;
 import ua.com.alevel.facade.CubeFacade;
@@ -14,6 +17,7 @@ import ua.com.alevel.view.dto.response.CubeResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cubes")
@@ -36,6 +40,19 @@ public class PLPController {
         model.addAttribute("pageData", response);
         model.addAttribute("brands", brandFacade.findAll());
         return "pages/open/plp";
+    }
+
+    @PostMapping("/all")
+    public ModelAndView findAllRedirect(WebRequest request, ModelMap model) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (MapUtils.isNotEmpty(parameterMap)) {
+            parameterMap.forEach((key, value) -> {
+                if (!key.equals("_csrf")) {
+                    model.addAttribute(key, value);
+                }
+            });
+        }
+        return new ModelAndView("redirect:/cubes", model);
     }
 
     @GetMapping("/suggestions")

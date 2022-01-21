@@ -9,7 +9,11 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ua.com.alevel.persistence.entity.user.Admin;
+import ua.com.alevel.persistence.repository.store.BrandRepository;
 import ua.com.alevel.persistence.repository.user.AdminRepository;
+import ua.com.alevel.persistence.tmp.BrandTmp;
+
+import java.util.List;
 
 @SpringBootApplication
         (exclude = {
@@ -19,10 +23,12 @@ import ua.com.alevel.persistence.repository.user.AdminRepository;
 public class FinalProjectApplication {
     private final BCryptPasswordEncoder encoder;
     private final AdminRepository adminRepository;
+    private final BrandRepository brandRepository;
 
-    public FinalProjectApplication(BCryptPasswordEncoder encoder, AdminRepository adminRepository) {
+    public FinalProjectApplication(BCryptPasswordEncoder encoder, AdminRepository adminRepository, BrandRepository brandRepository) {
         this.encoder = encoder;
         this.adminRepository = adminRepository;
+        this.brandRepository = brandRepository;
     }
 
     public static void main(String[] args) {
@@ -37,6 +43,11 @@ public class FinalProjectApplication {
             admin.setEmail("admin@mail.com");
             admin.setPassword(encoder.encode("rootroot"));
             adminRepository.save(admin);
+        }
+        List<BrandTmp> list = brandRepository.findAllBrandTmp();
+        for (BrandTmp brandTmp : list) {
+            System.out.println("brandTmp id = " + brandTmp.id());
+            System.out.println("brandTmp name = " + brandTmp.name());
         }
     }
 

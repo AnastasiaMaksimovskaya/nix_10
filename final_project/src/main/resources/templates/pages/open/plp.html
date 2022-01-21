@@ -382,6 +382,14 @@
             </ul>
         </div>
     </div>
+
+    <form method="POST" th:action="@{/cubes/all}" id="personalSearch">
+        <input type="submit"
+               id="personalSearchSubmit"
+               style="visibility: hidden"
+        />
+    </form>
+
     <span th:data-sort="${pageData.getSort()}"
           th:data-order="${pageData.getOrder()}"
           th:data-page="${pageData.getCurrentPage()}"

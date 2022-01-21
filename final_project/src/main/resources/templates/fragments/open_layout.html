@@ -39,21 +39,10 @@
     </div>
 </div>
 
-
-<span th:data-sort="${pageData.getSort()}"
-      th:data-order="${pageData.getOrder()}"
-      th:data-page="${pageData.getCurrentPage()}"
-      th:data-size="${pageData.getPageSize()}"
-      id="pageData">
-    </span>
-
-
-
 <th:block layout:fragment="scripts">
     <script type="text/javascript" th:src="@{/js/pagination.js}"></script>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <script type="text/javascript" th:src="@{/js/search.js}"></script>
 </th:block>
+
 </body>
 </html>
