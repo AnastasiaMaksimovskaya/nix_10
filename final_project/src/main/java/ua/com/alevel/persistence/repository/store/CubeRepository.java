@@ -1,6 +1,7 @@
 package ua.com.alevel.persistence.repository.store;
 
 import org.springframework.stereotype.Repository;
+import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Brand;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.repository.BaseRepository;

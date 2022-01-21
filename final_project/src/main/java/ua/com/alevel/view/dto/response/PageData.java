@@ -2,12 +2,14 @@ package ua.com.alevel.view.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class PageData<RES extends ResponseDto> {
 
     private int currentPage;
@@ -27,7 +29,7 @@ public class PageData<RES extends ResponseDto> {
 
     public PageData() {
         this.currentPage = 0;
-        this.pageSizeItems = new int[]{2, 5, 10, 25, 50, 100};
+        this.pageSizeItems = new int[]{2,8, 16, 20};
         this.pageSize = this.pageSizeItems[0];
         this.totalPageSize = 0;
         this.items = new ArrayList<>();

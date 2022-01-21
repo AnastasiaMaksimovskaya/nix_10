@@ -131,6 +131,22 @@
             padding: 18px 20px
         }
 
+        .w {
+            min-width: 1200px;
+            align-self: center
+        }
+
+        .al-center {
+            align-self: center;
+        }
+
+        .al-right {
+            float: right;
+            font-size: 16px;
+            color: #e4e4e4;
+            font-weight: bold;
+        }
+
         [class*='card-product'] a.title {
             color: #212529;
             display: block
@@ -249,22 +265,29 @@
 
     <div class="container up">
         <div class="dropdown">
-            <button type="button" class="btn-confirm btn-success dropdown-toggle sort" data-abc="true" data-toggle="dropdown">
+            <button type="button" class="btn-confirm btn-success dropdown-toggle sort" data-abc="true"
+                    data-toggle="dropdown">
                 Сортировать по
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">По новизне</a>
-                <a class="dropdown-item" href="#">По убыванию цены</a>
-                <a class="dropdown-item" href="#">По возрастанию цены</a>
+                <a class="dropdown-item"
+                   th:href="@{'?sort=created&order=asc&page=1&size=' + ${pageData.getPageSize()}}">По новизне</a>
+                <a class="dropdown-item" th:href="@{'?sort=price&order=desc&page=1&size=' + ${pageData.getPageSize()}}">По
+                    убыванию цены</a>
+                <a class="dropdown-item" th:href="@{'?sort=price&order=asc&page=1&size=' + ${pageData.getPageSize()}}">По
+                    возрастанию цены</a>
             </div>
             <div class="dropdown">
-                <button type="button" class="btn-confirm btn-success dropdown-toggle page" data-abc="true" data-toggle="dropdown">
+                <button type="button" class="btn-confirm btn-success dropdown-toggle page" data-abc="true"
+                        data-toggle="dropdown">
                     Показать на странице
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">8</a>
-                    <a class="dropdown-item" href="#">16</a>
-                    <a class="dropdown-item" href="#">20</a>
+                    <section th:each="size : ${pageData.getPageSizeItems()}">
+                        <a class="dropdown-item" th:href="@{'?page=1&size='+ ${size}}"
+                           th:onclick="|runPagination(1, ${size}, 0)|"
+                           th:text="${size}">@size</a>
+                    </section>
                 </div>
             </div>
         </div>
@@ -317,6 +340,57 @@
             </div>
         </div>
     </div>
+    <div class="d-flex justify-content-end align-items-center">
+        <div class="p-1 al-right">Показаны элементы с [[${pageData.getCurrentShowFromEntries()}]] по
+            [[${pageData.getCurrentShowToEntries()}]] из [[${pageData.getItemsSize()}]]
+        </div>
+        <div class="p-1 al-center">
+            <div class="dropdown dropup">
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <section th:each="size : ${pageData.getPageSizeItems()}">
+                        <a class="dropdown-item" href="#" th:onclick="|runPagination(1, ${size}, 0)|"
+                           th:text="${size}">@size</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="p-1" style="margin-top: 1em !important;">
+            <ul class="pagination align-middle">
+                <li class="page-item" th:classappend="${pageData.isShowFirst() ? '' : 'disabled'}">
+                    <a class="page-link" href="#"
+                       th:onclick="|runPagination(1, ${pageData.getPageSize()}, 0)|" title="First Page"><i
+                            class="fa fa-fast-backward"></i></a>
+                </li>
+                <li class="page-item" th:classappend="${pageData.isShowPrevious() ? '' : 'disabled'}">
+                    <a class="page-link" href="#"
+                       th:onclick="|runPagination(${pageData.getCurrentPage()}, ${pageData.getPageSize()}, -1)|"
+                       title="Previous Page"><i class="fa fa-backward"></i></a>
+                </li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="" th:text="${pageData.getCurrentPage()}">@Model.currentPage</a>
+                </li>
+                <li class="page-item" th:classappend="${pageData.isShowNext() ? '' : 'disabled'}">
+                    <a class="page-link" href="#"
+                       th:onclick="|runPagination(${pageData.getCurrentPage()}, ${pageData.getPageSize()}, 1)|"
+                       title="Next Page"><i class="fa fa-forward"></i></a>
+                </li>
+                <li class="page-item" th:classappend="${pageData.isShowLast() ? '' : 'disabled'}">
+                    <a class="page-link" href="#"
+                       th:onclick="|runPagination(${pageData.getTotalPageSize()}, ${pageData.getPageSize()}, 0)|"
+                       title="Last Page"><i class="fa fa-fast-forward"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <span th:data-sort="${pageData.getSort()}"
+          th:data-order="${pageData.getOrder()}"
+          th:data-page="${pageData.getCurrentPage()}"
+          th:data-size="${pageData.getPageSize()}"
+          id="pageData">
+    </span>
 </div>
+<th:block layout:fragment="scripts">
+    <script type="text/javascript" th:src="@{/js/pagination.js}"></script>
+</th:block>
 </body>
 </html>

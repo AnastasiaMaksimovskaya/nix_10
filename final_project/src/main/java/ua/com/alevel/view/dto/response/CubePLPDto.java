@@ -9,26 +9,26 @@ import ua.com.alevel.persistence.entity.store.Cube;
 @Getter
 @Setter
 @ToString
-public class CubePLPDto {
+public class CubePLPDto extends ResponseDto {
 
-    private Long id;
     private String name;
     private Brand brand;
     private Integer price;
     private String image;
-    private Boolean visible;
     private String description;
 
     public CubePLPDto() {
     }
 
     public CubePLPDto(Cube cube) {
-        this.description=cube.getDescription();
-        this.id = cube.getId();
+        setCreated(cube.getCreated());
+        setUpdated(cube.getUpdated());
+        this.description = cube.getDescription();
+        setId(cube.getId());
         this.price = cube.getPrice();
-        this.visible = cube.getVisible();
+        setVisible(cube.getVisible());
         this.image = cube.getImage();
-       this.brand = cube.getBrand();
+        this.brand = cube.getBrand();
         this.name = cube.getName();
     }
 }

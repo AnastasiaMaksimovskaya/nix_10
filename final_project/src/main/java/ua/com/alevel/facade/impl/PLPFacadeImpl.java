@@ -5,11 +5,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.exception.BadRequestException;
 import ua.com.alevel.facade.PLPFacade;
+import ua.com.alevel.persistence.datatable.DataTableRequest;
+import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.service.ElasticBookSearchService;
 import ua.com.alevel.service.PLPService;
 import ua.com.alevel.util.WebRequestUtil;
+import ua.com.alevel.util.WebResponseUtil;
 import ua.com.alevel.view.dto.response.CubePLPDto;
+import ua.com.alevel.view.dto.response.CubeResponseDto;
+import ua.com.alevel.view.dto.response.PageData;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +32,9 @@ public class PLPFacadeImpl implements PLPFacade {
     }
 
     @Override
-    public List<CubePLPDto> search(WebRequest webRequest) {
+    public PageData<CubePLPDto> search(WebRequest webRequest) {
         Map<String, Object> queryMap = new HashMap<>();
+        DataTableRequest dataTableRequest = WebRequestUtil.initDataTableRequest(webRequest);
         if (webRequest.getParameterMap().get(WebRequestUtil.BRAND_PARAM) != null) {
             String[] params = webRequest.getParameterMap().get(WebRequestUtil.BRAND_PARAM);
             if (StringUtils.isBlank(params[0])) {
@@ -45,9 +51,11 @@ public class PLPFacadeImpl implements PLPFacade {
             String searchBook = params[0];
             queryMap.put(WebRequestUtil.SEARCH_CUBE_PARAM, searchBook);
         }
-        List<Cube> cubes = plpService.search(queryMap);
-        List<CubePLPDto> cubePLPDtos = cubes.stream().map(CubePLPDto::new).toList();
-        return cubePLPDtos;
+        DataTableResponse<Cube> cubes = plpService.search(queryMap,dataTableRequest);
+        List<CubePLPDto> cubePLPDtos = cubes.getItems().stream().map(CubePLPDto::new).toList();
+        PageData<CubePLPDto> pageData = (PageData<CubePLPDto>) WebResponseUtil.initPageData(cubes);
+        pageData.setItems(cubePLPDtos);
+        return pageData;
     }
 
     @Override
