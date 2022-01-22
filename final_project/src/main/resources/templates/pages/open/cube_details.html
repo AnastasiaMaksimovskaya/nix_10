@@ -221,7 +221,7 @@
         <p class="caption">Описание:</p>
         <span class="description" th:text="${cube.getDescription()}">description</span>
         <p class="caption">Характеристики:</p>
-        <a th:href="@{'/cubes' + '?brand=' + ${cube.getBrand().getId()}}" class="description"
+        <a th:href="@{'/cubes' + '?brand=' + ${cube.getBrand().getName()}}" class="description"
            th:text="${'Марка : '+cube.getBrand().getName()}">name</a>
         <span class="description" th:text="${'Категория : ' + cube.getCubeCategory().getName()}">description</span>
     </div>

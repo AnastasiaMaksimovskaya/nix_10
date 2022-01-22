@@ -270,12 +270,10 @@
                 Сортировать по
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item"
-                   th:href="@{'?sort=created&order=asc&page=1&size=' + ${pageData.getPageSize()}}">По новизне</a>
-                <a class="dropdown-item" th:href="@{'?sort=price&order=desc&page=1&size=' + ${pageData.getPageSize()}}">По
-                    убыванию цены</a>
-                <a class="dropdown-item" th:href="@{'?sort=price&order=asc&page=1&size=' + ${pageData.getPageSize()}}">По
-                    возрастанию цены</a>
+                <input id ="hiddenSort" type="hidden" th:value="${pageData.getPageSize()}">
+                <a class="dropdown-item order" id="createdUp">По новизне</a>
+                <a class="dropdown-item order" id="priceDown">По убыванию цены</a>
+                <a class="dropdown-item order" id="priceUp">По возрастанию цены</a>
             </div>
             <div class="dropdown">
                 <button type="button" class="btn-confirm btn-success dropdown-toggle page" data-abc="true"
@@ -298,14 +296,12 @@
         <div class="box">
             <div class="box-container">
                 <div class="form-check" th:each="brand : ${brands}">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <input class="form-check-input" type="checkbox" id="flexCheckDefault" th:value="${brand.getName()}">
+                    <input id ="hidden" type="hidden" th:value="'?sort='+ ${pageData.getSort()}+'&order='+ ${pageData.getOrder()} +'&page=1&size=' + ${pageData.getPageSize()}">
                     <label class="form-check-label" for="flexCheckDefault" th:text="${brand.getName()}">
                         Brand
                     </label>
                 </div>
-            </div>
-            <div class="bottom-wrap">
-                <a href="#" class="btn-confirm btn-success" data-abc="true">Применить</a>
             </div>
         </div>
 
@@ -318,7 +314,7 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <a href="#" class="title" data-abc="true" th:text="${cube.getName()}">name</a>
-                                <a th:href="@{'/cubes' + '?brand=' + ${cube.getBrand().getId()}}" class="rated"
+                                <a th:href="@{'/cubes' + '?brand=' + ${cube.getBrand().getName()}}" class="rated"
                                    th:text="${cube.getBrand().getName()}">name</a>
                             </div>
                         </div>
@@ -399,6 +395,8 @@
 </div>
 <th:block layout:fragment="scripts">
     <script type="text/javascript" th:src="@{/js/pagination.js}"></script>
+    <script type="text/javascript" th:src="@{/js/box.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </th:block>
 </body>
 </html>

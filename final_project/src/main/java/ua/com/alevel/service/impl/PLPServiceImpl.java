@@ -33,12 +33,9 @@ public class PLPServiceImpl implements PLPService {
 
     @Override
     public DataTableResponse<Cube> search(Map<String, Object> queryMap, DataTableRequest dataTableRequest) {
-        String sortBy = dataTableRequest.getSort();
-        String orderBy = dataTableRequest.getOrder();
         if (queryMap.get(WebRequestUtil.BRAND_PARAM) != null) {
-            Long brandId = Long.parseLong(String.valueOf(queryMap.get(WebRequestUtil.BRAND_PARAM)));
-            Optional<Brand> brand = crudRepositoryHelper.findById(brandRepository, brandId);
-            List<Cube> cubes = cubeRepository.findByBrand(brand.get());
+            List<String> brandNames =(List<String>)(queryMap.get(WebRequestUtil.BRAND_PARAM));
+            List<Cube> cubes = cubeRepository.findByBrandNames(brandNames);
             return initDataTableResponseCube(cubes,dataTableRequest);
         }
         if (queryMap.get(WebRequestUtil.SEARCH_CUBE_PARAM) != null) {

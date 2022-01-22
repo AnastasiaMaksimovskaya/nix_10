@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/personal/**").access("hasRole('ROLE_PERSONAL')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/cubes").permitAll()
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/registration").permitAll()
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
 

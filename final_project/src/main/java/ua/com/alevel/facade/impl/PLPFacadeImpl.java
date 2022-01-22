@@ -16,6 +16,7 @@ import ua.com.alevel.view.dto.response.CubePLPDto;
 import ua.com.alevel.view.dto.response.CubeResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +41,9 @@ public class PLPFacadeImpl implements PLPFacade {
             if (StringUtils.isBlank(params[0])) {
                 throw new BadRequestException("bad request");
             }
-            Long brandId = Long.parseLong(params[0]);
-            queryMap.put(WebRequestUtil.BRAND_PARAM, brandId);
+            String[] brandNamesArray = params[0].split(",");
+            List<String> brandNames = Arrays.asList(brandNamesArray);
+            queryMap.put(WebRequestUtil.BRAND_PARAM, brandNames);
         }
         if (webRequest.getParameterMap().get(WebRequestUtil.SEARCH_CUBE_PARAM) != null) {
             String[] params = webRequest.getParameterMap().get(WebRequestUtil.SEARCH_CUBE_PARAM);
