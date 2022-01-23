@@ -16,15 +16,16 @@
         <td th:text="${cube.getName()}"></td>
         <td th:text="${cube.getBrand().getName()}"></td>
         <td th:text="${cube.getPrice()}"></td>
+        <td th:text="${cube.getAmount()}"></td>
         <td th:text="${cube.getShopCount()}"></td>
         <td>
-            <a th:href="@{'/cubes/details/' + ${cube.getId()}}" type="button" class="btn btn-info">details</a>
+            <a th:href="@{'/admin/cubes/details/' + ${cube.getId()}}" type="button" class="btn btn-info">детали</a>
         </td>
         <td>
-            <a th:href="@{'/cubes/update/' + ${cube.getId()}}" type="button" class="btn btn-primary">update</a>
+            <a th:href="@{'/admin/cubes/update/' + ${cube.getId()}}" type="button" class="btn btn-primary">редактировать</a>
         </td>
         <td>
-            <a th:href="@{'/cubes/delete/' + ${cube.getId()}}" type="button" class="btn btn-danger">delete</a>
+            <a th:href="@{'/admin/cubes/delete/' + ${cube.getId()}}" type="button" class="btn btn-danger">удалить</a>
         </td>
     </tr>
 

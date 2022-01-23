@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="utf-8">
-    <title>Update Product</title>
+    <title>Редактировать продукт</title>
 </head>
 <body>
 
@@ -15,16 +15,27 @@
         <div class="col-12">
             <div class="card mt-2">
                 <div class="card-header">
-                    <h4>Update Product</h4>
+                    <h4>Редактировать продукт</h4>
                 </div>
                 <div class="card-body">
-                    <form action="#" th:action="@{/cubes/update}" th:object="${cube}" method="post"
+                    <form action="#" th:action="@{/admin/cubes/update}" th:object="${cube}" method="post"
                           enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="price">Product Price</label>
-
-                            <input type="number" class="form-control" min="1" th:required="required" id="price"
-                                   aria-describedby="price" placeholder="Enter cube price" th:field="*{price}">
+                            <label for="name">Редактировать название</label>
+                            <input type="text" class="form-control" id="name"
+                                   aria-describedby="name" placeholder="Введите название" th:field="*{productName}">
+                            <label for="price">Редактировать цену</label>
+                            <input type="number" class="form-control" min="1" id="price"
+                                   aria-describedby="price" placeholder="Введите цену" th:field="*{price}">
+                            <label for="amount">Редактировать количество в наличии</label>
+                            <input type="number" class="form-control" min="0" id="amount"
+                                   aria-describedby="amount" placeholder="Введите количество" th:field="*{amount}">
+                            <label for="description">Редактировать описание</label>
+                            <input type="text" class="form-control" id="description"
+                                   aria-describedby="description" placeholder="Введите описание" th:field="*{description}">
+                            <label for="image">Редактировать изображение</label>
+                            <input type="text" class="form-control" id="image"
+                                   aria-describedby="image" placeholder="Введите ссылку на изображение" th:field="*{image}">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

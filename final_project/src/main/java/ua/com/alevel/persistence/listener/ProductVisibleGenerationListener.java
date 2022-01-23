@@ -11,7 +11,7 @@ public class ProductVisibleGenerationListener {
     @PostLoad
     @PostPersist
     @PostUpdate
-    public void generateBookVisible(Cube cube) {
+    public static void generateCubeVisible(Cube cube) {
         cube.setVisible(cube.getAmount() != null &&
                 cube.getAmount() > 0 &&
                 cube.getPrice() != null &&

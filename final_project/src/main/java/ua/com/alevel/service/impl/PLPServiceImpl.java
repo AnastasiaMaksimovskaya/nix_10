@@ -1,5 +1,9 @@
 package ua.com.alevel.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
@@ -46,11 +50,19 @@ public class PLPServiceImpl implements PLPService {
         return cubeCrudRepositoryHelper.findAll(cubeRepository,dataTableRequest);
     }
     private DataTableResponse<Cube> initDataTableResponseCube(List<Cube> cubes,DataTableRequest dataTableRequest){
+        int size = dataTableRequest.getSize();
+        int page = dataTableRequest.getPage() - 1;
         String sortBy = dataTableRequest.getSort();
         String orderBy = dataTableRequest.getOrder();
+        Sort sort = orderBy.equals("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        Page<Cube> pageCube = new PageImpl<>(cubes, pageRequest, cubes.size());
         DataTableResponse<Cube> dataTableResponse = new DataTableResponse<>();
-        dataTableResponse.setItemsSize(cubes.size());
-        dataTableResponse.setItems(cubes);
+        dataTableResponse.setTotalPageSize(pageCube.getTotalPages());
+        dataTableResponse.setItemsSize(pageCube.getTotalElements());
+        dataTableResponse.setItems(pageCube.getContent());
         dataTableResponse.setOrder(orderBy);
         dataTableResponse.setSort(sortBy);
         dataTableResponse.setCurrentPage(dataTableRequest.getPage());

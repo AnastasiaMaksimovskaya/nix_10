@@ -13,7 +13,6 @@ import ua.com.alevel.facade.CubeFacade;
 import ua.com.alevel.facade.PLPFacade;
 import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.view.dto.response.CubePLPDto;
-import ua.com.alevel.view.dto.response.CubeResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 
 import java.util.List;
@@ -36,7 +35,7 @@ public class PLPController {
     @GetMapping
     private String allCubes(Model model, WebRequest webRequest) {
         PageData<CubePLPDto> response = plpFacade.search(webRequest);
-        model.addAttribute("cubeList", response.getItems());
+        System.out.println("response = " + response);
         model.addAttribute("pageData", response);
         model.addAttribute("brands", brandFacade.findAll());
         return "pages/open/plp";

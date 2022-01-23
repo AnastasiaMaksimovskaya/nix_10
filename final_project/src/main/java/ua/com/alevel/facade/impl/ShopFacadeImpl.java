@@ -70,4 +70,9 @@ public class ShopFacadeImpl implements ShopFacade {
     public Map<Long, String> findAllProductsByShopId(Long productId) {
         return shopService.findAllProductsByShopId(productId);
     }
+
+    @Override
+    public List<Shop> findAll() {
+        return shopService.findAll();
+    }
 }

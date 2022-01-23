@@ -53,7 +53,7 @@ public class PLPFacadeImpl implements PLPFacade {
             String searchBook = params[0];
             queryMap.put(WebRequestUtil.SEARCH_CUBE_PARAM, searchBook);
         }
-        DataTableResponse<Cube> cubes = plpService.search(queryMap,dataTableRequest);
+        DataTableResponse<Cube> cubes = plpService.search(queryMap, dataTableRequest);
         List<CubePLPDto> cubePLPDtos = cubes.getItems().stream().map(CubePLPDto::new).toList();
         PageData<CubePLPDto> pageData = (PageData<CubePLPDto>) WebResponseUtil.initPageData(cubes);
         pageData.setItems(cubePLPDtos);

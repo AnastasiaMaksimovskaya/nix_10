@@ -306,7 +306,7 @@
         </div>
 
         <div class="row mt-4 mb-4">
-            <div class="col d-flex align-items-stretch" th:each="cube : ${cubeList}">
+            <div class="col d-flex align-items-stretch" th:each="cube : ${pageData.getItems()}">
                 <figure class="card card-product-grid">
                     <a th:href="@{'cubes/' + ${cube.getId()}}" class="img-wrap" data-abc="true">
                         <img th:src="${cube.getImage()}"> </a>

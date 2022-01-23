@@ -5,11 +5,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class PageData<RES extends ResponseDto> {
 
     private int currentPage;
@@ -72,5 +72,24 @@ public class PageData<RES extends ResponseDto> {
             currentShowToEntries = 0;
             currentShowFromEntries = 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "PageData{" +
+                "currentPage=" + currentPage +
+                ", pageSize=" + pageSize +
+                ", totalPageSize=" + totalPageSize +
+                ", itemsSize=" + itemsSize +
+                ", pageSizeItems=" + Arrays.toString(pageSizeItems) +
+                ", showFirst=" + showFirst +
+                ", showPrevious=" + showPrevious +
+                ", showNext=" + showNext +
+                ", showLast=" + showLast +
+                ", sort='" + sort + '\'' +
+                ", order='" + order + '\'' +
+                ", currentShowFromEntries=" + currentShowFromEntries +
+                ", currentShowToEntries=" + currentShowToEntries +
+                '}';
     }
 }

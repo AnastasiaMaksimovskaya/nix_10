@@ -12,7 +12,7 @@ values (1, CURRENT_TIMESTAMP(), 'Gan', CURRENT_TIMESTAMP(), 'CN');
 insert into brands
 values (2, CURRENT_TIMESTAMP(), 'MoYo', CURRENT_TIMESTAMP(), 'CN');
 insert into brands
-values (3, CURRENT_TIMESTAMP(), 'QiYi MofangGe', CURRENT_TIMESTAMP(), 'CN');
+values (3, CURRENT_TIMESTAMP(), 'QiYi', CURRENT_TIMESTAMP(), 'CN');
 
 insert into cubes
 values (1, CURRENT_TIMESTAMP(), 'Gan 12 M Maglev 3x3x3', CURRENT_TIMESTAMP(), 10, 'THREE',

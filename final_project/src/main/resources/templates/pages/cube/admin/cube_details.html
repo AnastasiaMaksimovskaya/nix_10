@@ -5,7 +5,7 @@
       layout:decorate="~{fragments/admin_layout}">
 <head>
     <meta charset="utf-8">
-    <title>Product Details</title>
+    <title>Детали</title>
 </head>
 <body>
 
@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    Cube Details
+                    Детали
                 </div>
                 <div class="card-body">
                     <table class="table table-hover">
@@ -24,37 +24,41 @@
                             <td th:text="${cube.getId()}"></td>
                         </tr>
                         <tr>
-                            <th>Cube Name</th>
+                            <th>Название</th>
                             <td th:text="${cube.getName()}"></td>
                         </tr>
                         <tr>
-                            <th>Price</th>
+                            <th>Цена</th>
                             <td th:text="${cube.getPrice()}"></td>
                         </tr>
                         <tr>
-                            <th>Brand</th>
+                            <th>Описание</th>
+                            <td th:text="${cube.getDescription()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Марка</th>
                             <td>
                                 <a role="button" class="btn btn-link"
-                                   th:href="@{'/brand/details/' + ${cube.getBrand().getId()}}"
+                                   th:href="@{'/admin/brand/details/' + ${cube.getBrand().getId()}}"
                                    th:text="${cube.getBrand().getName()}">details</a>
                             </td>
                         </tr>
                         <tr>
-                            <th>Created</th>
+                            <th>Создан</th>
                             <td th:text="${#calendars.format(cube.getCreated(),'dd-M-yyyy hh:mm:ss')}"></td>
                         </tr>
                         <tr>
-                            <th>Updated</th>
+                            <th>Обновлен</th>
                             <td th:text="${#calendars.format(cube.getUpdated(),'dd-M-yyyy hh:mm:ss')}"></td>
                         </tr>
                         <tr>
-                            <th>Cube Shops</th>
+                            <th>В наличии в магазинах</th>
                             <td>
                                 <table>
                                     <tr th:each="shop : ${shops}">
                                         <td>
                                             <a role="button" class="btn btn-link"
-                                               th:href="@{'/shops/details/' + ${shop.getKey()}}"
+                                               th:href="@{'/admin/shops/details/' + ${shop.getKey()}}"
                                                th:text="${shop.getValue()}">details</a>
                                         </td>
                                     </tr>

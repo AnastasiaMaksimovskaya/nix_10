@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/auth_layout}">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
@@ -13,6 +14,7 @@
 <body>
 <div class="container">
   <nav class="navbar navbar-dark bg-primary justify-content-center">
+    <a class="nav-item nav-link" th:href="@{/shops}">Shops</a>
     <a class="nav-item nav-link" th:href="@{/shops}">Shops</a>
     <a class="nav-item nav-link" th:href="@{/cubes}">Products</a>
   </nav>

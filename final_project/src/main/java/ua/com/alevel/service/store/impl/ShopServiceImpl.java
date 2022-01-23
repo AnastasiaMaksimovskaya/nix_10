@@ -65,4 +65,10 @@ public class ShopServiceImpl implements ShopService {
         }
         return map;
     }
+
+    @Override
+    public List<Shop> findAll() {
+        return crudRepositoryHelper.findAll(shopRepository);
+    }
+
 }

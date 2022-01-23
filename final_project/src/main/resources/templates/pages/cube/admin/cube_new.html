@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="utf-8">
-    <title>New Product</title>
+    <title>Создать новый продукт</title>
 </head>
 <body>
 
@@ -15,36 +15,62 @@
         <div class="col-12">
             <div class="card mt-2">
                 <div class="card-header">
-                    <h4>New Product</h4>
+                    <h4>Новый продукт</h4>
                 </div>
                 <div class="card-body">
-                    <form action="#" th:action="@{/cubes/create}" th:object="${cube}" method="post"
+                    <form action="#" th:action="@{/admin/cubes/create}" th:object="${cube}" method="post"
                           enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="productName">Product Name</label>
+                            <label for="productName">Название</label>
                             <input type="text" class="form-control" th:required="required" id="productName"
-                                   aria-describedby="productName" placeholder="Enter cube name"
+                                   aria-describedby="productName" placeholder="Введите название"
                                    th:field="*{productName}">
                         </div>
                         <div class="form-group">
-                            <label for="productName">Product Brand</label>
-                            <input type="text" class="form-control" id="brand" aria-describedby="productName"
-                                   placeholder="Enter cube brand" th:required="required" th:field="*{brand}">
+                            <label for="description">Описание</label>
+                            <input type="text" class="form-control" id="description" aria-describedby="description"
+                                   placeholder="Введите описание" th:required="required" th:field="*{description}">
                         </div>
                         <div class="form-group">
-                            <label for="price">Product Price</label>
+                            <label for="img">Вставьте ссылку на картинку</label>
+                            <input type="url" class="form-control" id="img" aria-describedby="img"
+                                   placeholder="Введите ссылку" th:required="required" th:field="*{image}">
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Введите количество в наличии</label>
+                            <input type="number" class="form-control" min="0" th:required="required" id="amount"
+                                   aria-describedby="amount" placeholder="Введите количество" th:field="*{amount}">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Цена</label>
                             <input type="number" class="form-control" min="1" th:required="required" id="price"
-                                   aria-describedby="price" placeholder="Enter cube price" th:field="*{price}">
+                                   aria-describedby="price" placeholder="Введите цену" th:field="*{price}">
                         </div>
                         <div class="form-group">
-                            <label for="shopsId">Choose shops</label>
+                            <label for="shopsId">Выберите магазины</label>
                             <select id="shopsId" multiple="multiple" th:field="*{shopsId}">
-                                <option th:required="required" th:each="shop : ${shops.getItems()}"
+                                <option th:required="required" th:each="shop : ${shops}"
                                         th:value="${shop.getId()}" th:text="${shop.getName()}">
                                 </option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="form-group">
+                            <label for="brandId">Выберите марку</label>
+                            <select id="brandId" th:field="*{brandId}">
+                                <option th:required="required" th:each="brand : ${brands}"
+                                        th:value="${brand.getId()}" th:text="${brand.getName()}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Выберите категорию</label>
+                            <select id="category" th:field="*{category}">
+                                <option th:required="required" th:each="category : ${categories}"
+                                        th:value="${category}" th:text="${category.getName()}">
+                                </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Подтвердить</button>
                     </form>
                 </div>
             </div>

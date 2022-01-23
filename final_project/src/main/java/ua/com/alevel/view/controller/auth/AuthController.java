@@ -36,7 +36,7 @@ public class AuthController extends BaseController {
         boolean authenticated = securityService.isAuthenticated();
         if (authenticated) {
             if (SecurityUtil.hasRole(RoleType.ROLE_ADMIN.name())) {
-                return "redirect:/admin";
+                return "redirect:/admin/cubes";
             }
             if (SecurityUtil.hasRole(RoleType.ROLE_PERSONAL.name())) {
                 return "redirect:/personal";
@@ -75,7 +75,7 @@ public class AuthController extends BaseController {
     private String redirectProcess(Model model) {
         showMessage(model, false);
         if (SecurityUtil.hasRole(RoleType.ROLE_ADMIN.name())) {
-            return "redirect:/admin";
+            return "redirect:/admin/cubes";
         }
         if (SecurityUtil.hasRole(RoleType.ROLE_PERSONAL.name())) {
             return "redirect:/personal";

@@ -1,17 +1,22 @@
 package ua.com.alevel.view.controller.admin;
 
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.alevel.facade.BrandFacade;
 import ua.com.alevel.facade.CubeFacade;
 import ua.com.alevel.facade.ShopFacade;
+import ua.com.alevel.persistence.type.CubeCategory;
 import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.request.CubeRequestDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.CubeResponseDto;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/cubes")
@@ -19,41 +24,54 @@ public class CubeController extends BaseController {
     private Long idToUpdate = 0L;
     private final CubeFacade cubeFacade;
     private final ShopFacade shopFacade;
+    private final BrandFacade brandFacade;
 
-    public CubeController(CubeFacade cubeFacade, ShopFacade shopFacade) {
+    public CubeController(CubeFacade cubeFacade, ShopFacade shopFacade, BrandFacade brandFacade) {
         this.cubeFacade = cubeFacade;
         this.shopFacade = shopFacade;
+        this.brandFacade = brandFacade;
     }
     private final HeaderName[] columnNames = new HeaderName[]{
             new HeaderName("#", null, null),
-            new HeaderName("Brand", "brand", "brand"),
-            new HeaderName("Product name", "name", "name"),
-            new HeaderName("Price", "price", "price"),
-            new HeaderName("Amount of shops", null, null),
-            new HeaderName("details", null, null),
-            new HeaderName("update", null, null),
-            new HeaderName("delete", null, null)
+            new HeaderName("Марка", "brand", "brand"),
+            new HeaderName("Название", "name", "name"),
+            new HeaderName("Цена", "price", "price"),
+            new HeaderName("Всего в наличии", "amount", "amount"),
+            new HeaderName("Количество магазинов", null, null),
+            new HeaderName("Детали", null, null),
+            new HeaderName("Редактировать", null, null),
+            new HeaderName("Удалить", null, null)
     };
 
     @GetMapping
     public String findAll(Model model, WebRequest request) {
         PageData<CubeResponseDto> response = cubeFacade.findAll(request);
         initDataTable(response, columnNames, model);
-        model.addAttribute("createUrl", "/cubes/all");
-        model.addAttribute("createNew", "/cubes/new");
+        model.addAttribute("createUrl", "/admin/cubes/all");
+        model.addAttribute("createNew", "/admin/cubes/new");
         model.addAttribute("cardHeader", "All Cubes");
         return "pages/cube/admin/cube_all";
     }
 
     @PostMapping("/all")
     public ModelAndView findAllRedirect(WebRequest request, ModelMap model) {
-        return findAllRedirect(request, model, "admin/cubes");
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (MapUtils.isNotEmpty(parameterMap)) {
+            parameterMap.forEach((key, value) -> {
+                if (!key.equals("_csrf")) {
+                    model.addAttribute(key, value);
+                }
+            });
+        }
+        return new ModelAndView("redirect:/admin/cubes",model);
     }
 
     @GetMapping("/new")
-    public String redirectToNewAuthorPage(Model model, WebRequest request) {
+    public String redirectToNewCubePage(Model model) {
         model.addAttribute("cube", new CubeRequestDto());
-        model.addAttribute("shops", shopFacade.findAll(request));
+        model.addAttribute("shops", shopFacade.findAll());
+        model.addAttribute("brands", brandFacade.findAll());
+        model.addAttribute("categories", CubeCategory.values());
         return "pages/cube/admin/cube_new";
     }
 

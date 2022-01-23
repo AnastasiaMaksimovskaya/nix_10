@@ -19,6 +19,7 @@ public class CubeResponseDto extends ResponseDto {
     private String name;
     private Brand brand;
     private Integer price;
+    private Integer amount;
     private Integer shopCount;
     private Date created;
     private Date updated;
@@ -43,5 +44,6 @@ public class CubeResponseDto extends ResponseDto {
         this.brand=cube.getBrand();
         this.shopCount = cube.getShops().size();
         this.name = cube.getName();
+        this.amount = cube.getAmount();
     }
 }

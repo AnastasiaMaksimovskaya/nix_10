@@ -33,10 +33,11 @@ public class Cube extends BaseEntity {
 
     @ManyToMany(mappedBy = "cubes", cascade = {
             CascadeType.MERGE,
+            CascadeType.REMOVE
     })
     private Set<Shop> shops;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Brand brand;
 
     public Cube() {
