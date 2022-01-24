@@ -18,12 +18,12 @@
             </form>
             <div sec:authorize="hasRole('ROLE_ADMIN')">
                 <nav class="navbar navbar-dark bg-success navbar-fixed-top">
-                    <a class="nav-item nav-link" th:href="@{/admin/dashboard}">Dashboard</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/books}">Books</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/orders}">Orders</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/cards}">Cards</a>
-                    <a class="nav-item nav-link" th:href="@{/admin/personals}">Personals</a>
-                    <a class="nav-item nav-link" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Logout</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/dashboard}">Профиль</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/cubes}">Продукты</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/brands}">Бренды</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/orders}">Заказы</a>
+                    <a class="nav-item nav-link" th:href="@{/admin/personals}">Пользователи</a>
+                    <a class="nav-item nav-link" onclick="document.forms['logoutForm'].submit()" style="cursor: pointer !important;">Выйти</a>
                 </nav>
             </div>
 

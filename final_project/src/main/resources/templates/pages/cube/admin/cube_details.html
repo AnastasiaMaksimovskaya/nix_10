@@ -36,6 +36,14 @@
                             <td th:text="${cube.getDescription()}"></td>
                         </tr>
                         <tr>
+                            <th>Категория</th>
+                            <td th:text="${cube.getCubeCategory().getName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Всего в наличии</th>
+                            <td th:text="${cube.getAmount()}"></td>
+                        </tr>
+                        <tr>
                             <th>Марка</th>
                             <td>
                                 <a role="button" class="btn btn-link"

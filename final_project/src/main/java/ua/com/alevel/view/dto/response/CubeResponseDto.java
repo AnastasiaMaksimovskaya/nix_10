@@ -21,8 +21,6 @@ public class CubeResponseDto extends ResponseDto {
     private Integer price;
     private Integer amount;
     private Integer shopCount;
-    private Date created;
-    private Date updated;
     private String image;
     private String description;
     private CubeCategory cubeCategory;
@@ -38,8 +36,8 @@ public class CubeResponseDto extends ResponseDto {
         this.cubeCategory =cube.getCubeCategory();
         this.description = cube.getDescription();
         this.image = cube.getImage();
-        this.created = cube.getCreated();
-        this.updated = cube.getUpdated();
+        setCreated(cube.getCreated());
+        setUpdated(cube.getUpdated());
         this.price = cube.getPrice();
         this.brand=cube.getBrand();
         this.shopCount = cube.getShops().size();

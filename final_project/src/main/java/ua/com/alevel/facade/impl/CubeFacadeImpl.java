@@ -8,6 +8,7 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.store.Shop;
 import ua.com.alevel.persistence.listener.ProductVisibleGenerationListener;
+import ua.com.alevel.persistence.type.CubeCategory;
 import ua.com.alevel.service.store.BrandService;
 import ua.com.alevel.service.store.CubeService;
 import ua.com.alevel.service.store.ShopService;
@@ -65,29 +66,47 @@ public class CubeFacadeImpl implements CubeFacade {
     @Override
     public void update(CubeRequestDto cubeRequestDto, Long id) {
         Cube cube = cubeService.findById(id).get();
-        Integer price =cubeRequestDto.getPrice();
+        Integer price = cubeRequestDto.getPrice();
         String description = cubeRequestDto.getDescription();
         String name = cubeRequestDto.getProductName();
         String image = cubeRequestDto.getImage();
+        CubeCategory category = cubeRequestDto.getCategory();
+        Long brandId = cubeRequestDto.getBrandId();
         cube.setUpdated(new Date(System.currentTimeMillis()));
         Integer amount = cubeRequestDto.getAmount();
-        if (price!=null){
+        if (price != null) {
             cube.setPrice(price);
         }
-        if (!description.isBlank()){
+        if (!description.isBlank()) {
             cube.setDescription(description);
         }
-        if (!name.isBlank()){
+        if (!name.isBlank()) {
             cube.setName(name);
         }
-        if (!image.isBlank()){
+        if (!image.isBlank()) {
             cube.setImage(image);
         }
-        if(amount!=null){
+        if (amount != null) {
             cube.setAmount(amount);
         }
+        if(!category.getName().equals(cube.getCubeCategory().getName())){
+            cube.setCubeCategory(cubeRequestDto.getCategory());
+        }
+        if(brandId!= cube.getBrand().getId()){
+            cube.setBrand(brandService.findById(cubeRequestDto.getBrandId()).get());
+        }
         ProductVisibleGenerationListener.generateCubeVisible(cube);
-        cubeService.update(cube);
+        try {
+            Set<Long> shopsId = cubeRequestDto.getShopsId();
+            cubeService.update(cube);
+            for (Long ids : shopsId) {
+                Shop shop = shopService.findById(ids).get();
+                (shop).addProduct(cube);
+                shopService.update(shop);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
