@@ -1,5 +1,6 @@
 package ua.com.alevel.view.dto.response;
 
+import com.neovisionaries.i18n.CountryCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,13 +12,13 @@ import ua.com.alevel.persistence.entity.store.Brand;
 public class BrandResponseDto extends ResponseDto{
 
     private String name;
-    private String country;
+    private CountryCode country;
     private Integer cubeAmount;
 
     public BrandResponseDto(){}
 
     public BrandResponseDto(Brand brand){
-        this.country = brand.getCountry().getName();
+        this.country = brand.getCountry();
         this.name = brand.getName();
         this.cubeAmount = brand.getCubes().size();
         setCreated(brand.getCreated());

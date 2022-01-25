@@ -87,11 +87,8 @@ public class BrandController extends BaseController {
 
     @GetMapping("/update/{id}")
     public String update(Model model, @PathVariable Long id,@ModelAttribute("brand") BrandRequestDto dto) {
-//        model.addAttribute("shops", shopFacade.findAll());
-//        model.addAttribute("brands", brandFacade.findAll());
-//        model.addAttribute("brandOfCube",cubeFacade.findById(id).getBrand());
-//        model.addAttribute("categoryOfCube",cubeFacade.findById(id).getCubeCategory());
-//        model.addAttribute("categories", CubeCategory.values());
+        model.addAttribute("brand", brandFacade.findById(id));
+        model.addAttribute("countries", CountryCode.values());
         idToUpdate = id;
         return "pages/brand/brand_update";
     }
