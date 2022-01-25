@@ -7,6 +7,7 @@ import lombok.ToString;
 import ua.com.alevel.persistence.entity.BaseEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -25,5 +26,6 @@ public class Brand extends BaseEntity {
 
     public Brand(){
         super();
+        cubes = new HashSet<>();
     }
 }

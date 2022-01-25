@@ -37,7 +37,12 @@ public class Cube extends BaseEntity {
     })
     private Set<Shop> shops;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {
+            CascadeType.ALL
+//            CascadeType.MERGE,
+//            CascadeType.DETACH
+    })
+
     private Brand brand;
 
     public Cube() {

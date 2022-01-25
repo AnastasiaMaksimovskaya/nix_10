@@ -1,9 +1,6 @@
 package ua.com.alevel.service.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
@@ -37,19 +34,6 @@ public class PLPServiceImpl implements PLPService {
 
     @Override
     public DataTableResponse<Cube> search(Map<String, Object> queryMap, DataTableRequest dataTableRequest) {
-        if (queryMap.get(WebRequestUtil.BRAND_PARAM) != null) {
-            List<String> brandNames =(List<String>)(queryMap.get(WebRequestUtil.BRAND_PARAM));
-            List<Cube> cubes = cubeRepository.findByBrandNames(brandNames);
-            return initDataTableResponseCube(cubes,dataTableRequest);
-        }
-        if (queryMap.get(WebRequestUtil.SEARCH_CUBE_PARAM) != null) {
-            String searchCube = (String) queryMap.get(WebRequestUtil.SEARCH_CUBE_PARAM);
-            List<Cube> cubes = cubeRepository.findByNameContaining(searchCube);
-            return initDataTableResponseCube(cubes,dataTableRequest);
-        }
-        return cubeCrudRepositoryHelper.findAll(cubeRepository,dataTableRequest);
-    }
-    private DataTableResponse<Cube> initDataTableResponseCube(List<Cube> cubes,DataTableRequest dataTableRequest){
         int size = dataTableRequest.getSize();
         int page = dataTableRequest.getPage() - 1;
         String sortBy = dataTableRequest.getSort();
@@ -58,11 +42,25 @@ public class PLPServiceImpl implements PLPService {
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
         PageRequest pageRequest = PageRequest.of(page, size, sort);
-        Page<Cube> pageCube = new PageImpl<>(cubes, pageRequest, cubes.size());
+        if (queryMap.get(WebRequestUtil.BRAND_PARAM) != null) {
+            List<String> brandNames = (List<String>) (queryMap.get(WebRequestUtil.BRAND_PARAM));
+            Page<Cube> cubes = cubeRepository.findByBrandNameIn(brandNames, pageRequest);
+            return initDataTableResponseCube(cubes, dataTableRequest, sortBy, orderBy);
+        }
+        if (queryMap.get(WebRequestUtil.SEARCH_CUBE_PARAM) != null) {
+            String searchCube = (String) queryMap.get(WebRequestUtil.SEARCH_CUBE_PARAM);
+            Page<Cube> cubes = cubeRepository.findByNameContaining(searchCube, pageRequest);
+            return initDataTableResponseCube(cubes, dataTableRequest, sortBy, orderBy);
+        }
+        return cubeCrudRepositoryHelper.findAll(cubeRepository, dataTableRequest);
+    }
+
+    private DataTableResponse<Cube> initDataTableResponseCube(Page<Cube> cubes, DataTableRequest dataTableRequest, String sortBy, String orderBy) {
+
         DataTableResponse<Cube> dataTableResponse = new DataTableResponse<>();
-        dataTableResponse.setTotalPageSize(pageCube.getTotalPages());
-        dataTableResponse.setItemsSize(pageCube.getTotalElements());
-        dataTableResponse.setItems(pageCube.getContent());
+        dataTableResponse.setTotalPageSize(cubes.getTotalPages());
+        dataTableResponse.setItemsSize(cubes.getTotalElements());
+        dataTableResponse.setItems(cubes.getContent());
         dataTableResponse.setOrder(orderBy);
         dataTableResponse.setSort(sortBy);
         dataTableResponse.setCurrentPage(dataTableRequest.getPage());

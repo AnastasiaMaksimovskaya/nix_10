@@ -5,6 +5,7 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.CubeFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.store.Brand;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.store.Shop;
 import ua.com.alevel.persistence.listener.ProductVisibleGenerationListener;
@@ -40,7 +41,7 @@ public class CubeFacadeImpl implements CubeFacade {
     @Override
     public void create(CubeRequestDto cubeRequestDto) {
         Cube cube = new Cube();
-        cube.setBrand(brandService.findById(cubeRequestDto.getBrandId()).get());
+//        cube.setBrand(brandService.findById(cubeRequestDto.getBrandId()).get());
         cube.setName(cubeRequestDto.getProductName());
         cube.setPrice(cubeRequestDto.getPrice());
         cube.setDescription(cubeRequestDto.getDescription());
@@ -52,10 +53,13 @@ public class CubeFacadeImpl implements CubeFacade {
         ProductVisibleGenerationListener.generateCubeVisible(cube);
         try {
             Set<Long> shopsId = cubeRequestDto.getShopsId();
-            cubeService.create(cube);
+            Brand brand = brandService.findById(cubeRequestDto.getBrandId()).get();
+            brand.getCubes().add(cube);
+            brandService.update(brand);
+//            cubeService.create(cube);
             for (Long id : shopsId) {
                 Shop shop = shopService.findById(id).get();
-                (shop).addProduct(cube);
+                shop.addProduct(cube);
                 shopService.update(shop);
             }
         } catch (Exception e) {

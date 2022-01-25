@@ -21,7 +21,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/cubes")
 public class CubeController extends BaseController {
-    private Long idToUpdate = 0L;
     private final CubeFacade cubeFacade;
     private final ShopFacade shopFacade;
     private final BrandFacade brandFacade;
@@ -88,19 +87,30 @@ public class CubeController extends BaseController {
     }
 
     @GetMapping("/update/{id}")
-    public String update(Model model, @PathVariable Long id,@ModelAttribute("cube") CubeRequestDto dto) {
+    public String update(Model model, @PathVariable Long id) {
+        CubeResponseDto cubeResponseDto = cubeFacade.findById(id);
+        CubeRequestDto cubeRequestDto = new CubeRequestDto();
+        cubeRequestDto.setAmount(cubeResponseDto.getAmount());
+        cubeRequestDto.setBrandId(cubeResponseDto.getBrand().getId());
+        cubeRequestDto.setCategory(cubeResponseDto.getCubeCategory());
+        cubeRequestDto.setImage(cubeResponseDto.getImage());
+        cubeRequestDto.setDescription(cubeResponseDto.getDescription());
+        cubeRequestDto.setPrice(cubeResponseDto.getPrice());
+        cubeRequestDto.setProductName(cubeRequestDto.getProductName());
+        cubeRequestDto.setShopsId(cubeRequestDto.getShopsId());
+        model.addAttribute("id",id);
+        model.addAttribute("cube", cubeRequestDto);
         model.addAttribute("shops", shopFacade.findAll());
         model.addAttribute("brands", brandFacade.findAll());
-        model.addAttribute("brandOfCube",cubeFacade.findById(id).getBrand());
-        model.addAttribute("categoryOfCube",cubeFacade.findById(id).getCubeCategory());
+//        model.addAttribute("brandOfCube",cubeFacade.findById(id).getBrand());
+//        model.addAttribute("categoryOfCube",cubeFacade.findById(id).getCubeCategory());
         model.addAttribute("categories", CubeCategory.values());
-        idToUpdate = id;
         return "pages/cube/admin/cube_update";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("cube") CubeRequestDto dto) {
-        cubeFacade.update(dto, idToUpdate);
+    public String update(@RequestParam String id ,@ModelAttribute("cube") CubeRequestDto dto) {
+        cubeFacade.update(dto, Long.parseLong(id));
         return "redirect:/admin/cubes";
     }
 
