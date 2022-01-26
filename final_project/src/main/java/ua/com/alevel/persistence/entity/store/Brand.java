@@ -17,8 +17,13 @@ import java.util.Set;
 @Table(name = "brands")
 public class Brand extends BaseEntity {
 
-    @OneToMany(cascade = {
-           CascadeType.ALL
+    @AttributeOverride(name = "id", column = @Column(name = "brand_id"))
+
+    @OneToMany(
+            mappedBy = "brand",
+            cascade = {
+//            CascadeType.REMOVE,
+//            CascadeType.PERSIST
     })
     private Set<Cube> cubes;
 
@@ -29,9 +34,7 @@ public class Brand extends BaseEntity {
         super();
         this.cubes = new HashSet<>();
     }
-    public void removeCube(Cube cube) {
-        cubes.remove(cube);
-    }
+
 
     public void addCube(Cube cube) {
         cubes.add(cube);

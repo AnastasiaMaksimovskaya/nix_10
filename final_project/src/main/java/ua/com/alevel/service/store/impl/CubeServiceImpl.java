@@ -16,15 +16,11 @@ import java.util.*;
 public class CubeServiceImpl implements CubeService {
 
     private final CrudRepositoryHelper<Cube, CubeRepository> crudRepositoryHelper;
-    private final CrudRepositoryHelper<Shop, ShopRepository> crudRepositoryHelperShop;
     private final CubeRepository cubeRepository;
-    private final ShopRepository shopRepository;
 
-    public CubeServiceImpl(CrudRepositoryHelper<Cube, CubeRepository> crudRepositoryHelper, CrudRepositoryHelper<Shop, ShopRepository> crudRepositoryHelperShop, CubeRepository cubeRepository, ShopRepository shopRepository) {
+    public CubeServiceImpl(CrudRepositoryHelper<Cube, CubeRepository> crudRepositoryHelper, CubeRepository cubeRepository) {
         this.crudRepositoryHelper = crudRepositoryHelper;
-        this.crudRepositoryHelperShop = crudRepositoryHelperShop;
         this.cubeRepository = cubeRepository;
-        this.shopRepository = shopRepository;
     }
 
     @Override

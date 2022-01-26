@@ -34,18 +34,25 @@ public class Cube extends BaseEntity {
     private CubeCategory cubeCategory;
 
     @ManyToMany(mappedBy = "cubes", cascade = {
-            CascadeType.MERGE,
+//            CascadeType.MERGE,
+            CascadeType.PERSIST
     })
     private Set<Shop> shops;
 
     @ManyToOne(cascade = {
-            CascadeType.MERGE
+//            CascadeType.MERGE
     })
-    @JoinColumn(name = "brand_id",nullable = false)
     private Brand brand;
 
     public Cube() {
         super();
         this.shops = new HashSet<>();
+    }
+
+    @PreRemove
+    private void removeCube(){
+            brand.getCubes().remove(this);
+            this.setBrand(null);
+
     }
 }

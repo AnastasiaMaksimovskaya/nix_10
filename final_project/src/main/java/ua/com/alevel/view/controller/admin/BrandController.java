@@ -49,7 +49,7 @@ public class BrandController extends BaseController {
         initDataTable(response, columnNames, model);
         model.addAttribute("createUrl", "/admin/brands/all");
         model.addAttribute("createNew", "/admin/brands/new");
-        model.addAttribute("cardHeader", "All Brands");
+        model.addAttribute("cardHeader", "Все бренды");
         return "pages/brand/brand_all";
     }
 

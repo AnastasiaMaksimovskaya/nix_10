@@ -6,7 +6,7 @@
       xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
 <head>
     <meta charset="UTF-8">
-    <title>Shops</title>
+    <title>Магазины</title>
 </head>
 <body>
 
@@ -18,13 +18,13 @@
         <td th:text="${shop.getAddress()}"></td>
         <td th:text="${shop.getProductCount()}"></td>
         <td>
-            <a th:href="@{'/shops/details/' + ${shop.getId()}}" type="button" class="btn btn-info">details</a>
+            <a th:href="@{'/admin/shops/details/' + ${shop.getId()}}" type="button" class="btn btn-info">детали</a>
         </td>
         <td>
-            <a th:href="@{'/shops/update/' + ${shop.getId()}}" type="button" class="btn btn-primary">update</a>
+            <a th:href="@{'/admin/shops/update/' + ${shop.getId()}}" type="button" class="btn btn-primary">редактировать</a>
         </td>
         <td>
-            <a th:href="@{'/shops/delete/' + ${shop.getId()}}" type="button" class="btn btn-danger">delete</a>
+            <a th:href="@{'/admin/shops/delete/' + ${shop.getId()}}" type="button" class="btn btn-danger">удалить</a>
         </td>
     </tr>
 

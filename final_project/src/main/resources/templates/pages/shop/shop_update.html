@@ -18,13 +18,30 @@
                     <h4>Update Shop</h4>
                 </div>
                 <div class="card-body">
-                    <form action="#" th:action="@{/shops/update}" th:object="${shop}" method="post">
+                    <form action="#" th:action="@{/admin/shops/update}" th:object="${shop}" method="post">
                         <div class="form-group">
-                            <label for="shopName">Shop name</label>
-                            <input type="text" th:required="required" class="form-control" id="shopName"
-                                   aria-describedby="shopName" placeholder="Enter shop name" th:field="*{name}">
+                            <input type="hidden" th:value="${id}" th:name="'id'">
+                            <label for="shopName">Название магазина</label>
+                            <input type="text" class="form-control" id="shopName"
+                                   aria-describedby="shopName" placeholder="Введите название" th:field="*{name}" th:value="${shop.getName()}">
+                            <label for="shopAddress">Адрес магазина</label>
+                            <input type="text" class="form-control" id="shopAddress"
+                                   aria-describedby="shopAddress" placeholder="Введите адрес"
+                                   th:field="*{address}" th:value="${shop.getAddress()}">
+                            <label for="openTime">Выберите время открытия</label>
+                            <select id="openTime" th:field="*{openTime}" th:value="${shop.getOpenTime()}">
+                                <option th:each="time : ${times}"
+                                        th:value="${time.getTime()}" th:text="${time.getTime()}">
+                                </option>
+                            </select>
+                            <label for="closedTime">Выберите время закрытия</label>
+                            <select id="closedTime" th:field="*{closedTime}" th:value="${shop.getClosedTime()}">
+                                <option th:each="time : ${times}"
+                                        th:value="${time.getTime()}" th:text="${time.getTime()}">
+                                </option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Подтвердить</button>
                     </form>
                 </div>
             </div>

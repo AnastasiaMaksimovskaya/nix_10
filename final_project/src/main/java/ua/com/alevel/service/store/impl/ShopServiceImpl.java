@@ -18,10 +18,12 @@ public class ShopServiceImpl implements ShopService {
 
     private final CrudRepositoryHelper<Shop, ShopRepository> crudRepositoryHelper;
     private final ShopRepository shopRepository;
+    private final CubeService cubeService;
 
-    public ShopServiceImpl(CrudRepositoryHelper<Shop, ShopRepository> crudRepositoryHelper, ShopRepository shopRepository, CubeService cubeService) {
+    public ShopServiceImpl(CrudRepositoryHelper<Shop, ShopRepository> crudRepositoryHelper, ShopRepository shopRepository, CubeService cubeService, CubeService cubeService1) {
         this.crudRepositoryHelper = crudRepositoryHelper;
         this.shopRepository = shopRepository;
+        this.cubeService = cubeService1;
     }
 
 
@@ -37,10 +39,10 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public void delete(Long id) {
-//        Shop shop = crudRepositoryHelper.findById(shopRepository, id).get();
-//        List<Cube> one = shop.getCubes().stream().filter(product -> cubeService.findAllShopsByProductId(product.getId()).size() == 1).collect(Collectors.toList());
-//        shop.getCubes().retainAll(one);
-//        crudRepositoryHelper.update(shopRepository, shop);
+        Shop shop = crudRepositoryHelper.findById(shopRepository, id).get();
+        List<Cube> one = shop.getCubes().stream().filter(product -> cubeService.findAllShopsByProductId(product.getId()).size() == 1).collect(Collectors.toList());
+        shop.getCubes().retainAll(one);
+        crudRepositoryHelper.update(shopRepository, shop);
         crudRepositoryHelper.delete(shopRepository, id);
     }
 

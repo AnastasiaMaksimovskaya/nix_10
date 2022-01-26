@@ -23,7 +23,7 @@ public class Shop extends BaseEntity {
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
-//            CascadeType.MERGE,
+            CascadeType.MERGE,
             CascadeType.REMOVE
     })
     @JoinTable(

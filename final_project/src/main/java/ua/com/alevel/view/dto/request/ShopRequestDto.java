@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class ShopRequestDto extends RequestDto {
     private String name;
-
     private String address;
+    private String openTime;
+    private String closedTime;
 }

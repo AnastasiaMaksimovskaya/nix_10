@@ -1,5 +1,4 @@
 function runPagination(page, size, pageOperator) {
-    console.log("pshpsh");
     let pageData = document.getElementById('pageData');
     const sort = pageData.getAttribute('data-sort');
     const order = pageData.getAttribute('data-order');

@@ -54,9 +54,10 @@ public class CubeFacadeImpl implements CubeFacade {
         try {
             Set<Long> shopsId = cubeRequestDto.getShopsId();
             Brand brand = brandService.findById(cubeRequestDto.getBrandId()).get();
-            brand.addCube(cube);
             cube.setBrand(brand);
             cubeService.create(cube);
+            brand.addCube(cube);
+            brandService.update(brand);
             for (Long id : shopsId) {
                 Shop shop = shopService.findById(id).get();
                 shop.addProduct(cube);
@@ -78,39 +79,16 @@ public class CubeFacadeImpl implements CubeFacade {
         Long brandId = cubeRequestDto.getBrandId();
         cube.setUpdated(new Date(System.currentTimeMillis()));
         Integer amount = cubeRequestDto.getAmount();
-        if (price != null) {
-            cube.setPrice(price);
-        }
-        if (!description.isBlank()) {
-            cube.setDescription(description);
-        }
-        if (!name.isBlank()) {
-            cube.setName(name);
-        }
-        if (!image.isBlank()) {
-            cube.setImage(image);
-        }
-        if (amount != null) {
-            cube.setAmount(amount);
-        }
-        if(!category.getName().equals(cube.getCubeCategory().getName())){
-            cube.setCubeCategory(cubeRequestDto.getCategory());
-        }
-        if(brandId!= cube.getBrand().getId()){
-            cube.setBrand(brandService.findById(cubeRequestDto.getBrandId()).get());
-        }
+        cube.setPrice(price);
+
+        cube.setDescription(description);
+        cube.setName(name);
+        cube.setImage(image);
+        cube.setAmount(amount);
+        cube.setCubeCategory(cubeRequestDto.getCategory());
+        cube.setBrand(brandService.findById(cubeRequestDto.getBrandId()).get());
         ProductVisibleGenerationListener.generateCubeVisible(cube);
-        try {
-            Set<Long> shopsId = cubeRequestDto.getShopsId();
-            cubeService.update(cube);
-            for (Long ids : shopsId) {
-                Shop shop = shopService.findById(ids).get();
-                (shop).addProduct(cube);
-                shopService.update(shop);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        cubeService.update(cube);
     }
 
     @Override

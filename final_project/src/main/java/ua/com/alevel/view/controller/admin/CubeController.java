@@ -48,7 +48,7 @@ public class CubeController extends BaseController {
         initDataTable(response, columnNames, model);
         model.addAttribute("createUrl", "/admin/cubes/all");
         model.addAttribute("createNew", "/admin/cubes/new");
-        model.addAttribute("cardHeader", "All Cubes");
+        model.addAttribute("cardHeader", "Все кубы");
         return "pages/cube/admin/cube_all";
     }
 
@@ -96,21 +96,18 @@ public class CubeController extends BaseController {
         cubeRequestDto.setImage(cubeResponseDto.getImage());
         cubeRequestDto.setDescription(cubeResponseDto.getDescription());
         cubeRequestDto.setPrice(cubeResponseDto.getPrice());
-        cubeRequestDto.setProductName(cubeRequestDto.getProductName());
+        cubeRequestDto.setProductName(cubeResponseDto.getName());
         cubeRequestDto.setShopsId(cubeRequestDto.getShopsId());
         model.addAttribute("id",id);
         model.addAttribute("cube", cubeRequestDto);
         model.addAttribute("shops", shopFacade.findAll());
         model.addAttribute("brands", brandFacade.findAll());
-//        model.addAttribute("brandOfCube",cubeFacade.findById(id).getBrand());
-//        model.addAttribute("categoryOfCube",cubeFacade.findById(id).getCubeCategory());
         model.addAttribute("categories", CubeCategory.values());
         return "pages/cube/admin/cube_update";
     }
 
     @PostMapping("/update")
     public String update(@RequestParam Long id ,@ModelAttribute("cube") CubeRequestDto dto) {
-        System.out.println("dto = " + dto);
         cubeFacade.update(dto, id);
         return "redirect:/admin/cubes";
     }

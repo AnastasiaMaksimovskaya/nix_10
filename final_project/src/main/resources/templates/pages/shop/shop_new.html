@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="utf-8">
-    <title>New Shop</title>
+    <title>Создать магазин</title>
 </head>
 <body>
 
@@ -15,20 +15,36 @@
         <div class="col-12">
             <div class="card mt-2">
                 <div class="card-header">
-                    <h4>New Shop</h4>
+                    <h4>Создать магазин</h4>
                 </div>
                 <div class="card-body">
-                    <form action="#" th:action="@{/shops/create}" th:object="${shop}" method="post">
+                    <form action="#" th:action="@{/admin/shops/create}" th:object="${shop}" method="post">
                         <div class="form-group">
-                            <label for="shopName">Shop Name</label>
+                            <label for="shopName">Название магазина</label>
                             <input type="text" th:required="required" class="form-control" id="shopName"
-                                   aria-describedby="shopName" placeholder="Enter shop name" th:field="*{name}">
+                                   aria-describedby="shopName" placeholder="Введите название" th:field="*{name}">
                         </div>
                         <div class="form-group">
-                            <label for="shopAddress">Shop Address</label>
+                            <label for="shopAddress">Адрес магазина</label>
                             <input type="text" class="form-control" th:required="required" id="shopAddress"
-                                   aria-describedby="shopAddress" placeholder="Enter shop address"
+                                   aria-describedby="shopAddress" placeholder="Введите адрес"
                                    th:field="*{address}">
+                        </div>
+                        <div class="form-group">
+                            <label for="openTime">Выберите время открытия</label>
+                            <select id="openTime" th:field="*{openTime}">
+                                <option th:required="required" th:each="time : ${times}"
+                                        th:value="${time.getTime()}" th:text="${time.getTime()}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="closedTime">Выберите время закрытия</label>
+                            <select id="closedTime" th:field="*{closedTime}">
+                                <option th:required="required" th:each="time : ${times}"
+                                        th:value="${time.getTime()}" th:text="${time.getTime()}">
+                                </option>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

@@ -34,7 +34,7 @@ insert into cubes
 values (4, CURRENT_TIMESTAMP(), 'QiYi WuXia 2x2 stickerless', CURRENT_TIMESTAMP(), 10, 'TWO',
         'Лучший кубик 2х2 в линейке QiYi MoFanGe. Классическая модификация без магнитов имеет очень хорошие скоростные показатели. Новый механизм ядра позволяет кубику избежать заеданий и локапов. Рекомендуем данную модель для спидкуберов и тех, кто учится собирать на скорость.',
         'https://kubik.in.ua/upload/resize_cache/webp/upload/iblock/d65/acaf9b91-86a8-11e8-8500-3a6561333536_50640054-c18f-11e8-a7d7-3a6561333536.webp',
-        1199, true, 2);
+        1199, true, 3);
 
 insert into shop_product
 values (1, 1);

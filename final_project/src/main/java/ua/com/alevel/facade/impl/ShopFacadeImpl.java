@@ -13,6 +13,7 @@ import ua.com.alevel.view.dto.request.ShopRequestDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.ShopResponseDto;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,13 +32,21 @@ public class ShopFacadeImpl implements ShopFacade {
         Shop shop = new Shop();
         shop.setAddress(shopRequestDto.getAddress());
         shop.setName(shopRequestDto.getName());
+        shop.setCreated(new Date(System.currentTimeMillis()));
+        shop.setUpdated(new Date(System.currentTimeMillis()));
+        shop.setClosedTime(shopRequestDto.getClosedTime());
+        shop.setOpenTime(shopRequestDto.getOpenTime());
         shopService.create(shop);
     }
 
     @Override
     public void update(ShopRequestDto shopRequestDto, Long id) {
         Shop shop = shopService.findById(id).get();
+        shop.setAddress(shopRequestDto.getAddress());
         shop.setName(shopRequestDto.getName());
+        shop.setUpdated(new Date(System.currentTimeMillis()));
+        shop.setClosedTime(shopRequestDto.getClosedTime());
+        shop.setOpenTime(shopRequestDto.getOpenTime());
         shopService.update(shop);
     }
 
