@@ -109,8 +109,9 @@ public class CubeController extends BaseController {
     }
 
     @PostMapping("/update")
-    public String update(@RequestParam String id ,@ModelAttribute("cube") CubeRequestDto dto) {
-        cubeFacade.update(dto, Long.parseLong(id));
+    public String update(@RequestParam Long id ,@ModelAttribute("cube") CubeRequestDto dto) {
+        System.out.println("dto = " + dto);
+        cubeFacade.update(dto, id);
         return "redirect:/admin/cubes";
     }
 

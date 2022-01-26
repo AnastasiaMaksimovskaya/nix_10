@@ -14,11 +14,12 @@ import java.util.Set;
 @Getter
 @ToString
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "brands")
 public class Brand extends BaseEntity {
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {
+           CascadeType.ALL
+    })
     private Set<Cube> cubes;
 
     @Enumerated(EnumType.STRING)
@@ -26,6 +27,14 @@ public class Brand extends BaseEntity {
 
     public Brand(){
         super();
-        cubes = new HashSet<>();
+        this.cubes = new HashSet<>();
+    }
+    public void removeCube(Cube cube) {
+        cubes.remove(cube);
+    }
+
+    public void addCube(Cube cube) {
+        cubes.add(cube);
+        cube.setBrand(this);
     }
 }

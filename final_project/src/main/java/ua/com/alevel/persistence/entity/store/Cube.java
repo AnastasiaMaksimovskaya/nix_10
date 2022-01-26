@@ -3,6 +3,8 @@ package ua.com.alevel.persistence.entity.store;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.type.CubeCategory;
 
@@ -33,16 +35,13 @@ public class Cube extends BaseEntity {
 
     @ManyToMany(mappedBy = "cubes", cascade = {
             CascadeType.MERGE,
-            CascadeType.REMOVE
     })
     private Set<Shop> shops;
 
     @ManyToOne(cascade = {
-            CascadeType.ALL
-//            CascadeType.MERGE,
-//            CascadeType.DETACH
+            CascadeType.MERGE
     })
-
+    @JoinColumn(name = "brand_id",nullable = false)
     private Brand brand;
 
     public Cube() {

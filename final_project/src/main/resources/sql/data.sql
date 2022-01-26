@@ -42,4 +42,10 @@ insert into shop_product
 values (2, 1);
 insert into shop_product
 values (3, 1);
+insert into shop_product
+values (3, 2);
+insert into shop_product
+values (3, 3);
+insert into shop_product
+values (2, 2);
 

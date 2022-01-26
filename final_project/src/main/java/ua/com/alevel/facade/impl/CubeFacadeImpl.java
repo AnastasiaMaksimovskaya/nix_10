@@ -54,9 +54,9 @@ public class CubeFacadeImpl implements CubeFacade {
         try {
             Set<Long> shopsId = cubeRequestDto.getShopsId();
             Brand brand = brandService.findById(cubeRequestDto.getBrandId()).get();
-            brand.getCubes().add(cube);
-            brandService.update(brand);
-//            cubeService.create(cube);
+            brand.addCube(cube);
+            cube.setBrand(brand);
+            cubeService.create(cube);
             for (Long id : shopsId) {
                 Shop shop = shopService.findById(id).get();
                 shop.addProduct(cube);

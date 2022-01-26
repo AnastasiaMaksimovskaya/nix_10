@@ -23,6 +23,7 @@ public class Shop extends BaseEntity {
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
+//            CascadeType.MERGE,
             CascadeType.REMOVE
     })
     @JoinTable(
@@ -30,19 +31,20 @@ public class Shop extends BaseEntity {
             joinColumns = @JoinColumn(name = "shop_id"),
             inverseJoinColumns = @JoinColumn(name = "cube_id"))
 
-    private Set<Cube> cubes = new HashSet<>();
+    private Set<Cube> cubes;
 
     public Shop() {
         super();
-    }
-
-    public void removeProduct(Cube cube) {
-        cube.getShops().remove(this);
-        cubes.remove(cube);
+        this.cubes= new HashSet<>();
     }
 
     public void addProduct(Cube cube) {
         cubes.add(cube);
         cube.getShops().add(this);
+    }
+
+    public void removeProduct(Cube cube) {
+        cubes.remove(cube);
+        cube.getShops().remove(this);
     }
 }

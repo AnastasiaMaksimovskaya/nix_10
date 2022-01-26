@@ -7,22 +7,24 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.store.Shop;
 import ua.com.alevel.persistence.repository.store.CubeRepository;
+import ua.com.alevel.persistence.repository.store.ShopRepository;
 import ua.com.alevel.service.store.CubeService;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CubeServiceImpl implements CubeService {
 
     private final CrudRepositoryHelper<Cube, CubeRepository> crudRepositoryHelper;
+    private final CrudRepositoryHelper<Shop, ShopRepository> crudRepositoryHelperShop;
     private final CubeRepository cubeRepository;
+    private final ShopRepository shopRepository;
 
-    public CubeServiceImpl(CrudRepositoryHelper<Cube, CubeRepository> crudRepositoryHelper, CubeRepository cubeRepository) {
+    public CubeServiceImpl(CrudRepositoryHelper<Cube, CubeRepository> crudRepositoryHelper, CrudRepositoryHelper<Shop, ShopRepository> crudRepositoryHelperShop, CubeRepository cubeRepository, ShopRepository shopRepository) {
         this.crudRepositoryHelper = crudRepositoryHelper;
+        this.crudRepositoryHelperShop = crudRepositoryHelperShop;
         this.cubeRepository = cubeRepository;
+        this.shopRepository = shopRepository;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class CubeServiceImpl implements CubeService {
 
     @Override
     public void delete(Long id) {
+        cubeRepository.detachCubeFromShop(id);
         crudRepositoryHelper.delete(cubeRepository, id);
     }
 
