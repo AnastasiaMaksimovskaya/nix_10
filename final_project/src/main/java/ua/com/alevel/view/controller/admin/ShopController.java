@@ -37,15 +37,15 @@ public class ShopController extends BaseController {
         this.shopFacade = shopFacade;
     }
 
-    @GetMapping
-    public String findAll(Model model, WebRequest request) {
-        PageData<ShopResponseDto> response = shopFacade.findAll(request);
-        initDataTable(response, columnNames, model);
-        model.addAttribute("createUrl", "/admin/shops/all");
-        model.addAttribute("createNew", "/admin/shops/new");
-        model.addAttribute("cardHeader", "Все магазины");
-        return "pages/shop/shop_all";
-    }
+        @GetMapping
+        public String findAll(Model model, WebRequest request) {
+            PageData<ShopResponseDto> response = shopFacade.findAll(request);
+            initDataTable(response, columnNames, model);
+            model.addAttribute("createUrl", "/admin/shops/all");
+            model.addAttribute("createNew", "/admin/shops/new");
+            model.addAttribute("cardHeader", "Все магазины");
+            return "pages/shop/shop_all";
+        }
 
     @PostMapping("/all")
     public ModelAndView findAllRedirect(WebRequest request, ModelMap model) {

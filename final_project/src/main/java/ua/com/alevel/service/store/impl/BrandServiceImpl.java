@@ -18,17 +18,13 @@ import java.util.Set;
 @Service
 public class BrandServiceImpl implements BrandService {
     private final CrudRepositoryHelper<Brand, BrandRepository> crudRepositoryHelper;
-    private final CrudRepositoryHelper<Cube, CubeRepository> crudRepositoryHelperCube;
 
     private final BrandRepository brandRepository;
-    private final CubeRepository cubeRepository;
     private final CubeService cubeService;
 
-    public BrandServiceImpl(CrudRepositoryHelper<Brand, BrandRepository> crudRepositoryHelper, CrudRepositoryHelper<Cube, CubeRepository> crudRepositoryHelperCube, BrandRepository brandRepository, CubeRepository cubeRepository, CubeService cubeService) {
+    public BrandServiceImpl(CrudRepositoryHelper<Brand, BrandRepository> crudRepositoryHelper, BrandRepository brandRepository, CubeService cubeService) {
         this.crudRepositoryHelper = crudRepositoryHelper;
-        this.crudRepositoryHelperCube = crudRepositoryHelperCube;
         this.brandRepository = brandRepository;
-        this.cubeRepository = cubeRepository;
         this.cubeService = cubeService;
     }
 

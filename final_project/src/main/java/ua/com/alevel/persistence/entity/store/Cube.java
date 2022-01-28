@@ -6,10 +6,12 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ua.com.alevel.persistence.entity.BaseEntity;
+import ua.com.alevel.persistence.entity.Order;
 import ua.com.alevel.persistence.type.CubeCategory;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Setter
@@ -39,6 +41,16 @@ public class Cube extends BaseEntity {
     })
     private Set<Shop> shops;
 
+    @ManyToMany(cascade = {
+//            CascadeType.MERGE,
+            CascadeType.PERSIST
+    })
+    @JoinTable(
+            name = "cube_order",
+            joinColumns = @JoinColumn(name = "cube_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id"))
+    private Set<Order> orders;
+
     @ManyToOne(cascade = {
 //            CascadeType.MERGE
     })
@@ -46,6 +58,7 @@ public class Cube extends BaseEntity {
 
     public Cube() {
         super();
+        this.orders = new HashSet<>();
         this.shops = new HashSet<>();
     }
 
@@ -54,5 +67,18 @@ public class Cube extends BaseEntity {
             brand.getCubes().remove(this);
             this.setBrand(null);
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cube cube = (Cube) o;
+        return price.equals(cube.price) && description.equals(cube.description) && image.equals(cube.image) && amount.equals(cube.amount) && visible.equals(cube.visible) && cubeCategory == cube.cubeCategory && shops.equals(cube.shops) && orders.equals(cube.orders) && brand.equals(cube.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(price, description, image, amount, visible, cubeCategory, shops, orders, brand);
     }
 }

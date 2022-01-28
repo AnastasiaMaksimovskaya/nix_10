@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Brand;
 import ua.com.alevel.persistence.entity.store.Cube;
+import ua.com.alevel.persistence.entity.store.Shop;
 import ua.com.alevel.persistence.repository.BaseRepository;
 
 import java.util.List;

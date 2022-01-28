@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ua.com.alevel.persistence.entity.BaseEntity;
+import ua.com.alevel.persistence.entity.Order;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -33,8 +34,18 @@ public class Shop extends BaseEntity {
 
     private Set<Cube> cubes;
 
+
+    @OneToMany(
+            mappedBy = "shop",
+            cascade = {
+//            CascadeType.REMOVE,
+//            CascadeType.PERSIST
+            })
+    private Set<Order> orders;
+
     public Shop() {
         super();
+        this.orders = new HashSet<>();
         this.cubes= new HashSet<>();
     }
 

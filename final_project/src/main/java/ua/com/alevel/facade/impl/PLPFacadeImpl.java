@@ -10,25 +10,26 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.service.ElasticBookSearchService;
 import ua.com.alevel.service.PLPService;
+import ua.com.alevel.service.store.CubeService;
 import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.util.WebResponseUtil;
 import ua.com.alevel.view.dto.response.CubePLPDto;
-import ua.com.alevel.view.dto.response.CubeResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PLPFacadeImpl implements PLPFacade {
 
+    private List<Long> cart= new ArrayList<>();
+
     private final PLPService plpService;
+    private final CubeService cubeService;
     private final ElasticBookSearchService elasticBookSearchService;
 
-    public PLPFacadeImpl(PLPService plpService, ElasticBookSearchService elasticBookSearchService) {
+    public PLPFacadeImpl(PLPService plpService, CubeService cubeService, ElasticBookSearchService elasticBookSearchService) {
         this.plpService = plpService;
+        this.cubeService = cubeService;
         this.elasticBookSearchService = elasticBookSearchService;
     }
 
@@ -63,5 +64,18 @@ public class PLPFacadeImpl implements PLPFacade {
     @Override
     public List<String> searchCubeName(String query) {
         return elasticBookSearchService.searchCubeName(query);
+    }
+
+    @Override
+    public List<Long> addToCart(Long id) {
+        cart.add(id);
+        return cart;
+    }
+
+    @Override
+    public List<Cube> getCart() {
+        List<Cube> cubes = new ArrayList<>();
+        cart.stream().forEach(id -> cubes.add(cubeService.findById(id).get()));
+        return cubes;
     }
 }
