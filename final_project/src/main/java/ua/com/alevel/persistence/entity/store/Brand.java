@@ -17,6 +17,8 @@ import java.util.Set;
 @Table(name = "brands")
 public class Brand extends BaseEntity {
 
+    private String name;
+
     @AttributeOverride(name = "id", column = @Column(name = "brand_id"))
 
     @OneToMany(

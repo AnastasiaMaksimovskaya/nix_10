@@ -18,6 +18,7 @@ public class Shop extends BaseEntity {
 
     @AttributeOverride(name = "id", column = @Column(name = "shop_id"))
 
+    private String name;
     private String address;
     private String openTime;
     private String closedTime;

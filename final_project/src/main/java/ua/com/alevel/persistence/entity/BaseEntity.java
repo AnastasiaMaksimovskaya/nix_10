@@ -13,12 +13,11 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    private String name;
 }

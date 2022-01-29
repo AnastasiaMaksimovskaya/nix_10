@@ -1,6 +1,7 @@
 package ua.com.alevel.view.controller.personal;
 
 import org.apache.commons.collections4.MapUtils;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.*;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.store.Shop;
+import ua.com.alevel.persistence.entity.user.Personal;
+import ua.com.alevel.persistence.entity.user.User;
 import ua.com.alevel.view.dto.request.OrderRequestDto;
 import ua.com.alevel.view.dto.response.CubePLPDto;
 import ua.com.alevel.view.dto.response.PageData;
@@ -45,6 +48,15 @@ public class PersonaController {
         return "pages/cube/personal/cubes_all";
     }
 
+    @GetMapping("/dashboard")
+    private String dashboard(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Personal user = orderFacade.findUserByEmail(auth.getName());
+        model.addAttribute("user",user);
+        model.addAttribute("orders",user.getOrders());
+        return "pages/personal/dashboard";
+    }
+
     @PostMapping("/all")
     public ModelAndView findAllRedirect(WebRequest request, ModelMap model) {
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -77,7 +89,11 @@ public class PersonaController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute("order") OrderRequestDto dto) {
+        List<Cube> newList = new ArrayList<>();
+        plpFacade.getCart().stream().forEach(cube -> {cube.setAmount(cube.getAmount()-1); newList.add(cube);});
+        dto.setList(newList);
         orderFacade.create(dto);
+        plpFacade.setCart(new ArrayList<>());
         return "redirect:/personal";
     }
 

@@ -26,6 +26,7 @@ public class Cube extends BaseEntity {
 
     @Column(columnDefinition ="TEXT")
     private String description;
+    private String name;
 
     private String image;
     private Integer amount;
@@ -42,8 +43,7 @@ public class Cube extends BaseEntity {
     private Set<Shop> shops;
 
     @ManyToMany(cascade = {
-//            CascadeType.MERGE,
-            CascadeType.PERSIST
+            CascadeType.MERGE
     })
     @JoinTable(
             name = "cube_order",

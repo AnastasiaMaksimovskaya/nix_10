@@ -19,7 +19,6 @@ public class OrderResponseDto extends ResponseDto{
         setUpdated(order.getUpdated());
         setId(order.getId());
         this.status = order.getOrderStatus();
-        this.name = order.getName();
         this.userEmail = order.getUser().getEmail();
         this.shopName = order.getShop().getName();
     }

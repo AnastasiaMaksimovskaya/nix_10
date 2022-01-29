@@ -9,6 +9,7 @@ import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.Order;
 import ua.com.alevel.persistence.entity.store.Cube;
+import ua.com.alevel.persistence.entity.user.Personal;
 import ua.com.alevel.persistence.entity.user.User;
 import ua.com.alevel.persistence.type.OrderStatus;
 import ua.com.alevel.service.OrderService;
@@ -48,8 +49,11 @@ public class OrderFacadeImpl implements OrderFacade {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         order.setUser(orderService.findUserByEmail(auth.getName()));
         order.setOrderStatus(OrderStatus.WAIT_FOR_PROCESSING);
-        Set<Cube> cubes = new HashSet<>();
-        order.setCubes(cubes);
+        Set<Cube> cubes = new HashSet<>(orderRequestDto.getList());
+        for (Cube cube: cubes) {
+            cube.getOrders().add(order);
+            cubeService.update(cube);
+        }
         orderService.create(order);
     }
 
@@ -83,5 +87,10 @@ public class OrderFacadeImpl implements OrderFacade {
         PageData<OrderResponseDto> pageData = (PageData<OrderResponseDto>) WebResponseUtil.initPageData(tableResponse);
         pageData.setItems(orders);
         return pageData;
+    }
+
+    @Override
+    public Personal findUserByEmail(String email) {
+        return orderService.findUserByEmail(email);
     }
 }

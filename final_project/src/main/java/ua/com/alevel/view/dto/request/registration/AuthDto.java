@@ -10,5 +10,6 @@ public class AuthDto {
     private String email;
     private String password;
     private String passwordConfirm;
-
+    private String firstName;
+    private String lastName;
 }

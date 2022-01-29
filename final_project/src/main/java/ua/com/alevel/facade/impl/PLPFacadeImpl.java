@@ -78,4 +78,8 @@ public class PLPFacadeImpl implements PLPFacade {
         cart.stream().forEach(id -> cubes.add(cubeService.findById(id).get()));
         return cubes;
     }
+
+    public void setCart(List<Long> cart) {
+        this.cart = cart;
+    }
 }

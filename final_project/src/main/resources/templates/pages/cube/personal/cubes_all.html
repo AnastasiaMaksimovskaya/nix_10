@@ -330,8 +330,12 @@
                         </figcaption>
                     </div>
                     <div class="bottom-wrap">
-                        <a th:href="@{'personal/buy/' + ${cube.getId()}}" class="btn btn-primary float-right" data-abc="true"
-                           th:disabled="${!cube.getVisible()}">add to cart</a>
+                        <a th:href="@{'personal/buy/' + ${cube.getId()}}">
+                            <button type="button" class="btn btn-primary float-right" data-abc="true"
+                                    th:disabled="${!cube.getVisible()}">
+                                добавить в корзину</button>
+                        </a>
+
                     </div>
                 </figure>
             </div>

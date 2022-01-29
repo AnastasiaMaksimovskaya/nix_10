@@ -13,4 +13,5 @@ public interface PLPFacade {
     List<String> searchCubeName(String query);
     List<Long> addToCart(Long id);
     List<Cube> getCart();
+    void setCart(List<Long> cart);
 }

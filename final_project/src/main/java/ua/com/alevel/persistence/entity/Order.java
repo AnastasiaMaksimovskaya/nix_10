@@ -26,8 +26,8 @@ public class Order extends BaseEntity{
     private Shop shop;
 
     @ManyToMany(mappedBy = "orders",cascade = {
-//            CascadeType.MERGE,
-            CascadeType.PERSIST
+            CascadeType.PERSIST,
+            CascadeType.MERGE
     })
     private Set<Cube> cubes;
 

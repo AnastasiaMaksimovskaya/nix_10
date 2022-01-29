@@ -2,6 +2,7 @@ package ua.com.alevel.view.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
+import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.type.OrderStatus;
 
 import java.util.List;
@@ -11,4 +12,5 @@ import java.util.List;
 public class OrderRequestDto extends RequestDto{
     private Long shopId;
     private OrderStatus status;
+    private List<Cube> list;
 }
