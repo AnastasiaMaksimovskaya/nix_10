@@ -13,6 +13,7 @@ import ua.com.alevel.persistence.repository.store.BrandRepository;
 import ua.com.alevel.persistence.repository.user.AdminRepository;
 import ua.com.alevel.persistence.tmp.BrandTmp;
 
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -41,6 +42,8 @@ public class FinalProjectApplication {
         if (admin == null) {
             admin = new Admin();
             admin.setEmail("admin@mail.com");
+            admin.setCreated(new Date(System.currentTimeMillis()));
+            admin.setUpdated(new Date(System.currentTimeMillis()));
             admin.setPassword(encoder.encode("rootroot"));
             adminRepository.save(admin);
         }

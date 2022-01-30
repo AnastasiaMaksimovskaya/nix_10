@@ -42,22 +42,22 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Override
     public void update(Personal entity) {
-
+        crudRepositoryHelper.update(personalRepository,entity);
     }
 
     @Override
     public void delete(Long id) {
-
+        crudRepositoryHelper.delete(personalRepository,id);
     }
 
     @Override
     public Optional<Personal> findById(Long id) {
-        return Optional.empty();
+        return crudRepositoryHelper.findById(personalRepository,id);
     }
 
     @Override
     public DataTableResponse<Personal> findAll(DataTableRequest request) {
-        return null;
+        return crudRepositoryHelper.findAll(personalRepository,request);
     }
 
     @Bean

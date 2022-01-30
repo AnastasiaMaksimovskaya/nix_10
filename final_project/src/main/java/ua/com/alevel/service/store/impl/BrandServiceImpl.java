@@ -42,9 +42,6 @@ public class BrandServiceImpl implements BrandService {
     public void delete(Long id) {
         Set<Cube> cubeSet = findById(id).get().getCubes();
         cubeSet.stream().forEach(cube -> cubeService.delete(cube.getId()));
-//        for (Cube cube : cubeSet) {
-//            crudRepositoryHelperCube.update(cubeRepository, cube);
-//        }
         crudRepositoryHelper.delete(brandRepository,id);
     }
 

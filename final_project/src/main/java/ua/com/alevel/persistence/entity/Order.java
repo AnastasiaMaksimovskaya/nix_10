@@ -5,10 +5,13 @@ import lombok.Setter;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.store.Shop;
 import ua.com.alevel.persistence.entity.user.User;
+import ua.com.alevel.persistence.listener.ProductVisibleGenerationListener;
 import ua.com.alevel.persistence.type.OrderStatus;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -41,4 +44,13 @@ public class Order extends BaseEntity{
         this.cubes = new HashSet<>();
     }
 
+
+    @PreRemove
+    private void removeOrder(){
+        this.getCubes().stream().forEach(cube -> {cube.setAmount(cube.getAmount()+1);
+            cube.getOrders().remove(this);
+            ProductVisibleGenerationListener.generateCubeVisible(cube);
+        });
+        this.setCubes(Collections.emptySet());
+    }
 }

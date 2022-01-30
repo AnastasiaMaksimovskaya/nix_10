@@ -5,11 +5,11 @@ import ua.com.alevel.persistence.crud.CrudRepositoryHelper;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.Order;
+import ua.com.alevel.persistence.entity.user.Admin;
 import ua.com.alevel.persistence.entity.user.Personal;
-import ua.com.alevel.persistence.entity.user.User;
 import ua.com.alevel.persistence.repository.OrderRepository;
+import ua.com.alevel.persistence.repository.user.AdminRepository;
 import ua.com.alevel.persistence.repository.user.PersonalRepository;
-import ua.com.alevel.persistence.repository.user.UserRepository;
 import ua.com.alevel.service.OrderService;
 
 import java.util.Optional;
@@ -20,11 +20,13 @@ public class OrderServiceImpl implements OrderService {
     private final CrudRepositoryHelper<Order, OrderRepository> crudRepositoryHelper;
     private final OrderRepository orderRepository;
     private final PersonalRepository personalRepository;
+    private final AdminRepository adminRepository;
 
-    public OrderServiceImpl(CrudRepositoryHelper<Order, OrderRepository> crudRepositoryHelper, OrderRepository orderRepository, PersonalRepository personalRepository) {
+    public OrderServiceImpl(CrudRepositoryHelper<Order, OrderRepository> crudRepositoryHelper, OrderRepository orderRepository, PersonalRepository personalRepository, AdminRepository adminRepository) {
         this.crudRepositoryHelper = crudRepositoryHelper;
         this.orderRepository = orderRepository;
         this.personalRepository = personalRepository;
+        this.adminRepository = adminRepository;
     }
 
     @Override
@@ -55,5 +57,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Personal findUserByEmail(String email) {
         return personalRepository.findByEmail(email);
+    }
+
+    @Override
+    public Admin findAdminByEmail(String email) {
+        return adminRepository.findAdminByEmail(email);
     }
 }

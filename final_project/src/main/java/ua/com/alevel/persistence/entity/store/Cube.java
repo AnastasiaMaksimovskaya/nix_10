@@ -43,7 +43,8 @@ public class Cube extends BaseEntity {
     private Set<Shop> shops;
 
     @ManyToMany(cascade = {
-            CascadeType.MERGE
+            CascadeType.MERGE,
+            CascadeType.REMOVE
     })
     @JoinTable(
             name = "cube_order",
@@ -79,6 +80,6 @@ public class Cube extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(price, description, image, amount, visible, cubeCategory, shops, orders, brand);
+        return Objects.hash(this.getId());
     }
 }

@@ -9,6 +9,7 @@ import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.Order;
 import ua.com.alevel.persistence.entity.store.Cube;
+import ua.com.alevel.persistence.entity.user.Admin;
 import ua.com.alevel.persistence.entity.user.Personal;
 import ua.com.alevel.persistence.entity.user.User;
 import ua.com.alevel.persistence.type.OrderStatus;
@@ -21,10 +22,7 @@ import ua.com.alevel.view.dto.request.OrderRequestDto;
 import ua.com.alevel.view.dto.response.OrderResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,11 +48,11 @@ public class OrderFacadeImpl implements OrderFacade {
         order.setUser(orderService.findUserByEmail(auth.getName()));
         order.setOrderStatus(OrderStatus.WAIT_FOR_PROCESSING);
         Set<Cube> cubes = new HashSet<>(orderRequestDto.getList());
+        orderService.create(order);
         for (Cube cube: cubes) {
             cube.getOrders().add(order);
             cubeService.update(cube);
         }
-        orderService.create(order);
     }
 
     @Override
@@ -92,5 +90,10 @@ public class OrderFacadeImpl implements OrderFacade {
     @Override
     public Personal findUserByEmail(String email) {
         return orderService.findUserByEmail(email);
+    }
+
+    @Override
+    public Admin findAdminByEmail(String email) {
+        return orderService.findAdminByEmail(email);
     }
 }
