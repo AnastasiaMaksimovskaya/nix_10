@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/data_table}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<head>
+    <meta charset="UTF-8">
+    <title>Магазины</title>
+</head>
+<body>
+
+<div layout:fragment="data_table_content">
+
+    <tr th:each="shop,iter : ${pageData.getItems()}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${shop.getName()}"></td>
+        <td th:text="${shop.getAddress()}"></td>
+        <td th:text="${shop.getProductCount()}"></td>
+        <td>
+            <a th:href="@{'/admin/shops/details/' + ${shop.getId()}}" type="button" class="btn btn-info">детали</a>
+        </td>
+        <td>
+            <a th:href="@{'/admin/shops/update/' + ${shop.getId()}}" type="button" class="btn btn-primary">редактировать</a>
+        </td>
+        <td>
+            <a th:href="@{'/admin/shops/delete/' + ${shop.getId()}}" type="button" class="btn btn-danger">удалить</a>
+        </td>
+    </tr>
+
+</div>
+
+</body>
+</html>

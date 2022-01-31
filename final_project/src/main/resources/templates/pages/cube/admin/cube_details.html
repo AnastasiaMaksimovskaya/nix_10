@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Детали</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Детали
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${cube.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Название</th>
+                            <td th:text="${cube.getName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Цена</th>
+                            <td th:text="${cube.getPrice()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Описание</th>
+                            <td th:text="${cube.getDescription()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Категория</th>
+                            <td th:text="${cube.getCubeCategory().getName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Всего в наличии</th>
+                            <td th:text="${cube.getAmount()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Марка</th>
+                            <td>
+                                <a role="button" class="btn btn-link"
+                                   th:href="@{'/admin/brands/details/' + ${cube.getBrand().getId()}}"
+                                   th:text="${cube.getBrand().getName()}">details</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Создан</th>
+                            <td th:text="${#calendars.format(cube.getCreated(),'dd-M-yyyy hh:mm:ss')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Обновлен</th>
+                            <td th:text="${#calendars.format(cube.getUpdated(),'dd-M-yyyy hh:mm:ss')}"></td>
+                        </tr>
+                        <tr>
+                            <th>В наличии в магазинах</th>
+                            <td>
+                                <table>
+                                    <tr th:each="shop : ${shops}">
+                                        <td>
+                                            <a role="button" class="btn btn-link"
+                                               th:href="@{'/admin/shops/details/' + ${shop.getKey()}}"
+                                               th:text="${shop.getValue()}">details</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

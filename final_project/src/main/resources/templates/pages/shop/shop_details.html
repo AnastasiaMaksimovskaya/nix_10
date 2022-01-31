@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Shop Details</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Shop Details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${shop.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Адрес</th>
+                            <td th:text="${shop.getAddress()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Название</th>
+                            <td th:text="${shop.getName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Создан</th>
+                            <td th:text="${#calendars.format(shop.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Обновлен</th>
+                            <td th:text="${#calendars.format(shop.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Время открытия</th>
+                            <td th:text="${shop.getOpenTime()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Время закрытия</th>
+                            <td th:text="${shop.getClosedTime()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Все кубы</th>
+                            <td>
+                                <ul th:each="cube : ${cubes}">
+                                    <li>
+                                        <a role="button" class="btn btn-link"
+                                           th:href="@{'/admin/cubes/details/' + ${cube.getKey()}}"
+                                           th:text="${cube.getValue()}">details</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
