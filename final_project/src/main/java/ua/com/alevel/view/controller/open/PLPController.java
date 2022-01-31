@@ -35,7 +35,6 @@ public class PLPController {
     @GetMapping
     private String allCubes(Model model, WebRequest webRequest) {
         PageData<CubePLPDto> response = plpFacade.search(webRequest);
-        System.out.println("response = " + response);
         model.addAttribute("pageData", response);
         model.addAttribute("brands", brandFacade.findAll());
         return "pages/open/plp";
@@ -57,13 +56,7 @@ public class PLPController {
     @GetMapping("/suggestions")
     private @ResponseBody
     List<String> allSearchBooks(@RequestParam String query) {
-        System.out.println("PLPController.allSearchBooks");
         return plpFacade.searchCubeName(query);
-    }
-
-    @GetMapping("/brand/{id}")
-    String brandDetails(@PathVariable Long id) {
-        return " ";
     }
 
     @GetMapping("/{id}")
