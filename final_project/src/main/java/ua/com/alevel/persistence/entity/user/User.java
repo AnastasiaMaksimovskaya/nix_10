@@ -29,11 +29,7 @@ public class User extends BaseEntity {
     private RoleType roleType;
 
     @OneToMany(
-            mappedBy = "user",
-            cascade = {
-//            CascadeType.REMOVE,
-//            CascadeType.PERSIST
-            })
+            mappedBy = "user")
     private Set<Order> orders;
 
     public User() {

@@ -282,8 +282,8 @@
                 </button>
                 <div class="dropdown-menu">
                     <section th:each="size : ${pageData.getPageSizeItems()}">
-                        <a class="dropdown-item" th:href="@{'?page=1&size='+ ${size}}"
-                           th:onclick="|runPagination(1, ${size}, 0)|"
+                        <a class="dropdown-item" href="#"
+                           th:onclick="|showOnPage(${size})|"
                            th:text="${size}">@size</a>
                     </section>
                 </div>
@@ -313,9 +313,11 @@
                     <figcaption class="info-wrap">
                         <div class="row">
                             <div class="col-md-9">
-                                <a href="#" class="title" data-abc="true" th:text="${cube.getName()}">name</a>
-                                <a th:href="@{'/cubes' + '?brand=' + ${cube.getBrand().getName()}}" class="rated"
-                                   th:text="${cube.getBrand().getName()}">name</a>
+                                <span class="title" data-abc="true" th:text="${cube.getName()}">name</span>
+                               <a>
+                                   <span class="rated"
+                                         th:text="${cube.getBrand().getName()}">name</span>
+                               </a>
                             </div>
                         </div>
                     </figcaption>
@@ -329,8 +331,11 @@
                         </figcaption>
                     </div>
                     <div class="bottom-wrap">
-                        <a href="#" class="btn btn-primary float-right" data-abc="true"
-                           th:disabled="${!cube.getVisible()}">add to cart</a>
+                        <a th:href="@{'personal/buy/' + ${cube.getId()}}">
+                            <button type="button" class="btn btn-primary float-right" data-abc="true"
+                                    th:disabled="${!cube.getVisible()}">
+                                добавить в корзину</button>
+                        </a>
                     </div>
                 </figure>
             </div>

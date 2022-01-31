@@ -20,7 +20,7 @@ import java.util.List;
         (exclude = {
                 DataSourceAutoConfiguration.class,
                 DataSourceTransactionManagerAutoConfiguration.class,
-                HibernateJpaAutoConfiguration.class })
+                HibernateJpaAutoConfiguration.class})
 public class FinalProjectApplication {
     private final BCryptPasswordEncoder encoder;
     private final AdminRepository adminRepository;
@@ -47,11 +47,5 @@ public class FinalProjectApplication {
             admin.setPassword(encoder.encode("rootroot"));
             adminRepository.save(admin);
         }
-        List<BrandTmp> list = brandRepository.findAllBrandTmp();
-        for (BrandTmp brandTmp : list) {
-            System.out.println("brandTmp id = " + brandTmp.id());
-            System.out.println("brandTmp name = " + brandTmp.name());
-        }
     }
-
 }

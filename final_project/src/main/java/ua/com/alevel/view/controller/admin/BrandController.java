@@ -11,12 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.BrandFacade;
 import ua.com.alevel.facade.CubeFacade;
 import ua.com.alevel.facade.ShopFacade;
-import ua.com.alevel.persistence.type.CubeCategory;
 import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.request.BrandRequestDto;
-import ua.com.alevel.view.dto.request.CubeRequestDto;
 import ua.com.alevel.view.dto.response.BrandResponseDto;
-import ua.com.alevel.view.dto.response.CubeResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 
 import java.util.Map;

@@ -30,6 +30,7 @@ public class CubeController extends BaseController {
         this.shopFacade = shopFacade;
         this.brandFacade = brandFacade;
     }
+
     private final HeaderName[] columnNames = new HeaderName[]{
             new HeaderName("#", null, null),
             new HeaderName("Марка", "brand", "brand"),
@@ -62,7 +63,7 @@ public class CubeController extends BaseController {
                 }
             });
         }
-        return new ModelAndView("redirect:/admin/cubes",model);
+        return new ModelAndView("redirect:/admin/cubes", model);
     }
 
     @GetMapping("/new")
@@ -98,7 +99,7 @@ public class CubeController extends BaseController {
         cubeRequestDto.setPrice(cubeResponseDto.getPrice());
         cubeRequestDto.setProductName(cubeResponseDto.getName());
         cubeRequestDto.setShopsId(cubeRequestDto.getShopsId());
-        model.addAttribute("id",id);
+        model.addAttribute("id", id);
         model.addAttribute("cube", cubeRequestDto);
         model.addAttribute("shops", shopFacade.findAll());
         model.addAttribute("brands", brandFacade.findAll());
@@ -107,7 +108,7 @@ public class CubeController extends BaseController {
     }
 
     @PostMapping("/update")
-    public String update(@RequestParam Long id ,@ModelAttribute("cube") CubeRequestDto dto) {
+    public String update(@RequestParam Long id, @ModelAttribute("cube") CubeRequestDto dto) {
         cubeFacade.update(dto, id);
         return "redirect:/admin/cubes";
     }

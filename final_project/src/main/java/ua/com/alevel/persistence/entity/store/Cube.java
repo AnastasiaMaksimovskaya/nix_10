@@ -2,9 +2,6 @@ package ua.com.alevel.persistence.entity.store;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.Order;
 import ua.com.alevel.persistence.type.CubeCategory;
@@ -24,7 +21,7 @@ public class Cube extends BaseEntity {
 
     private Integer price;
 
-    @Column(columnDefinition ="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String name;
 
@@ -37,7 +34,6 @@ public class Cube extends BaseEntity {
     private CubeCategory cubeCategory;
 
     @ManyToMany(mappedBy = "cubes", cascade = {
-//            CascadeType.MERGE,
             CascadeType.PERSIST
     })
     private Set<Shop> shops;
@@ -52,9 +48,7 @@ public class Cube extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "order_id"))
     private Set<Order> orders;
 
-    @ManyToOne(cascade = {
-//            CascadeType.MERGE
-    })
+    @ManyToOne()
     private Brand brand;
 
     public Cube() {
@@ -64,9 +58,9 @@ public class Cube extends BaseEntity {
     }
 
     @PreRemove
-    private void removeCube(){
-            brand.getCubes().remove(this);
-            this.setBrand(null);
+    private void removeCube() {
+        brand.getCubes().remove(this);
+        this.setBrand(null);
 
     }
 
@@ -80,6 +74,6 @@ public class Cube extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getId());
+        return Objects.hash(price, description, name, image, amount, visible, cubeCategory, brand);
     }
 }

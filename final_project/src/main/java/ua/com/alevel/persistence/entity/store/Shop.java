@@ -2,7 +2,6 @@ package ua.com.alevel.persistence.entity.store;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.Order;
 
@@ -37,11 +36,7 @@ public class Shop extends BaseEntity {
 
 
     @OneToMany(
-            mappedBy = "shop",
-            cascade = {
-//            CascadeType.REMOVE,
-//            CascadeType.PERSIST
-            })
+            mappedBy = "shop")
     private Set<Order> orders;
 
     public Shop() {

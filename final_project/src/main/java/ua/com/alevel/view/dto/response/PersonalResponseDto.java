@@ -18,5 +18,4 @@ public class PersonalResponseDto extends ResponseDto{
         this.email = personal.getEmail();
         this.fullName = personal.getFullName();
     }
-
 }

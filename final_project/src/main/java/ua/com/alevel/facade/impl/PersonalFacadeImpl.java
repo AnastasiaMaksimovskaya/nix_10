@@ -5,12 +5,10 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.PersonalFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
-import ua.com.alevel.persistence.entity.store.Brand;
 import ua.com.alevel.persistence.entity.user.Personal;
 import ua.com.alevel.service.user.PersonalService;
 import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.util.WebResponseUtil;
-import ua.com.alevel.view.dto.response.BrandResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.PersonalResponseDto;
 

@@ -6,10 +6,8 @@ import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.store.Shop;
-import ua.com.alevel.persistence.entity.user.User;
 import ua.com.alevel.persistence.listener.ProductVisibleGenerationListener;
 import ua.com.alevel.persistence.repository.store.CubeRepository;
-import ua.com.alevel.persistence.repository.store.ShopRepository;
 import ua.com.alevel.service.store.CubeService;
 
 import java.util.*;

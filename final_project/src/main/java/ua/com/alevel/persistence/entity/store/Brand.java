@@ -22,11 +22,7 @@ public class Brand extends BaseEntity {
     @AttributeOverride(name = "id", column = @Column(name = "brand_id"))
 
     @OneToMany(
-            mappedBy = "brand",
-            cascade = {
-//            CascadeType.REMOVE,
-//            CascadeType.PERSIST
-    })
+            mappedBy = "brand")
     private Set<Cube> cubes;
 
     @Enumerated(EnumType.STRING)
@@ -36,7 +32,6 @@ public class Brand extends BaseEntity {
         super();
         this.cubes = new HashSet<>();
     }
-
 
     public void addCube(Cube cube) {
         cubes.add(cube);

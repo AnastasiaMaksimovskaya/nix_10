@@ -57,7 +57,7 @@ public class OrderController extends BaseController {
                 }
             });
         }
-        return new ModelAndView("redirect:/admin/orders",model);
+        return new ModelAndView("redirect:/admin/orders", model);
     }
 
     @GetMapping("/delete/{id}")
@@ -67,7 +67,7 @@ public class OrderController extends BaseController {
     }
 
     @PostMapping("/update")
-    public String update(@RequestParam Long id ,@ModelAttribute("order") OrderRequestDto dto) {
+    public String update(@RequestParam Long id, @ModelAttribute("order") OrderRequestDto dto) {
         orderFacade.update(dto, id);
         return "redirect:/admin/cubes";
     }
@@ -77,10 +77,10 @@ public class OrderController extends BaseController {
         OrderResponseDto orderResponseDto = orderFacade.findById(id);
         OrderRequestDto orderRequestDto = new OrderRequestDto();
         orderRequestDto.setStatus(orderResponseDto.getStatus());
-        model.addAttribute("id",id);
+        model.addAttribute("id", id);
         model.addAttribute("order", orderResponseDto);
         model.addAttribute("newOrder", new OrderRequestDto());
-        model.addAttribute("status",OrderStatus.values());
+        model.addAttribute("status", OrderStatus.values());
         return "pages/order/order_details";
     }
 }

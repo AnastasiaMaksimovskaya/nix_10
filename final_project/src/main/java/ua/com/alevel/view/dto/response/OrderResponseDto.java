@@ -7,13 +7,13 @@ import ua.com.alevel.persistence.type.OrderStatus;
 
 @Setter
 @Getter
-public class OrderResponseDto extends ResponseDto{
+public class OrderResponseDto extends ResponseDto {
     private OrderStatus status;
     private String name;
     private String shopName;
     private String userEmail;
 
-    public OrderResponseDto (Order order){
+    public OrderResponseDto(Order order) {
         setVisible(true);
         setCreated(order.getCreated());
         setUpdated(order.getUpdated());

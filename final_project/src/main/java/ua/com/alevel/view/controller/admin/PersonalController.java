@@ -14,7 +14,6 @@ import ua.com.alevel.facade.PersonalFacade;
 import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.PersonalResponseDto;
-import ua.com.alevel.view.dto.response.ShopResponseDto;
 
 import java.util.Map;
 
@@ -28,11 +27,12 @@ public class PersonalController extends BaseController {
             new HeaderName("Имя", null, null),
             new HeaderName("Почта", "email", "email"),
             new HeaderName("детали", null, null),
-        };
+    };
 
     public PersonalController(PersonalFacade personalFacade) {
         this.personalFacade = personalFacade;
     }
+
     @GetMapping
     public String findAll(Model model, WebRequest request) {
         PageData<PersonalResponseDto> response = personalFacade.findAll(request);
@@ -52,8 +52,9 @@ public class PersonalController extends BaseController {
                 }
             });
         }
-        return new ModelAndView("redirect:/admin/personals",model);
+        return new ModelAndView("redirect:/admin/personals", model);
     }
+
     @GetMapping("/details/{id}")
     public String findById(@PathVariable Long id, Model model) {
         model.addAttribute("user", personalFacade.findById(id));

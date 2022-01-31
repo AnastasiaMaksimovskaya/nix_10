@@ -19,9 +19,11 @@ import java.util.List;
 public interface CubeRepository extends BaseRepository<Cube> {
 
     Page<Cube> findByBrandNameIn(List<String> names, Pageable pageable);
+
     Page<Cube> findByNameContaining(String cubeName, Pageable pageable);
+
     @Transactional
     @Modifying
-    @Query(value = "delete from shop_product where cube_id = :id",nativeQuery = true)
+    @Query(value = "delete from shop_product where cube_id = :id", nativeQuery = true)
     void detachCubeFromShop(@Param("id") Long id);
 }

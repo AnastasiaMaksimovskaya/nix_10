@@ -8,7 +8,6 @@ import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.store.Shop;
 import ua.com.alevel.persistence.type.CubeCategory;
 
-import java.util.Date;
 import java.util.Set;
 
 @Getter

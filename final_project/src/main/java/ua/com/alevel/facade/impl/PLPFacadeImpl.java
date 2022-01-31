@@ -21,7 +21,7 @@ import java.util.*;
 @Service
 public class PLPFacadeImpl implements PLPFacade {
 
-    private List<Long> cart= new ArrayList<>();
+    private List<Long> cart = new ArrayList<>();
 
     private final PLPService plpService;
     private final CubeService cubeService;
@@ -42,7 +42,7 @@ public class PLPFacadeImpl implements PLPFacade {
             if (StringUtils.isBlank(params[0])) {
                 throw new BadRequestException("bad request");
             }
-            String[] brandNamesArray = params[0].split(",");
+            String[] brandNamesArray = params[0].split(",|-");
             List<String> brandNames = Arrays.asList(brandNamesArray);
             queryMap.put(WebRequestUtil.BRAND_PARAM, brandNames);
         }
@@ -81,5 +81,10 @@ public class PLPFacadeImpl implements PLPFacade {
 
     public void setCart(List<Long> cart) {
         this.cart = cart;
+    }
+
+    @Override
+    public List<Long> getCartId() {
+        return cart;
     }
 }

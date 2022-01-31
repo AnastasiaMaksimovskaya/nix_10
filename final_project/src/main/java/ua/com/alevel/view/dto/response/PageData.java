@@ -2,7 +2,6 @@ package ua.com.alevel.view.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Arrays;

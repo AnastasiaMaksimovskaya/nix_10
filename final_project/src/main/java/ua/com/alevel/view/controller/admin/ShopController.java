@@ -7,9 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import ua.com.alevel.facade.CubeFacade;
 import ua.com.alevel.facade.ShopFacade;
-import ua.com.alevel.persistence.type.CubeCategory;
 import ua.com.alevel.persistence.type.WorkTimes;
 import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.request.ShopRequestDto;
@@ -37,15 +35,15 @@ public class ShopController extends BaseController {
         this.shopFacade = shopFacade;
     }
 
-        @GetMapping
-        public String findAll(Model model, WebRequest request) {
-            PageData<ShopResponseDto> response = shopFacade.findAll(request);
-            initDataTable(response, columnNames, model);
-            model.addAttribute("createUrl", "/admin/shops/all");
-            model.addAttribute("createNew", "/admin/shops/new");
-            model.addAttribute("cardHeader", "Все магазины");
-            return "pages/shop/shop_all";
-        }
+    @GetMapping
+    public String findAll(Model model, WebRequest request) {
+        PageData<ShopResponseDto> response = shopFacade.findAll(request);
+        initDataTable(response, columnNames, model);
+        model.addAttribute("createUrl", "/admin/shops/all");
+        model.addAttribute("createNew", "/admin/shops/new");
+        model.addAttribute("cardHeader", "Все магазины");
+        return "pages/shop/shop_all";
+    }
 
     @PostMapping("/all")
     public ModelAndView findAllRedirect(WebRequest request, ModelMap model) {
@@ -57,7 +55,7 @@ public class ShopController extends BaseController {
                 }
             });
         }
-        return new ModelAndView("redirect:/admin/shops",model);
+        return new ModelAndView("redirect:/admin/shops", model);
     }
 
     @GetMapping("/new")
@@ -87,14 +85,14 @@ public class ShopController extends BaseController {
         shopRequestDto.setName(shopResponseDto.getName());
         shopRequestDto.setOpenTime(shopResponseDto.getOpenTime());
         shopRequestDto.setClosedTime(shopResponseDto.getClosedTime());
-        model.addAttribute("id",id);
+        model.addAttribute("id", id);
         model.addAttribute("shop", shopRequestDto);
         model.addAttribute("times", WorkTimes.values());
         return "pages/shop/shop_update";
     }
 
     @PostMapping("/update")
-    public String update(@RequestParam Long id,@ModelAttribute("shop") ShopRequestDto dto) {
+    public String update(@RequestParam Long id, @ModelAttribute("shop") ShopRequestDto dto) {
         shopFacade.update(dto, id);
         return "redirect:/admin/shops";
     }

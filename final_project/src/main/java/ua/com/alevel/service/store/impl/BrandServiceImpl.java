@@ -7,7 +7,6 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Brand;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.repository.store.BrandRepository;
-import ua.com.alevel.persistence.repository.store.CubeRepository;
 import ua.com.alevel.service.store.BrandService;
 import ua.com.alevel.service.store.CubeService;
 

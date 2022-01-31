@@ -11,7 +11,6 @@ import ua.com.alevel.persistence.entity.Order;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.user.Admin;
 import ua.com.alevel.persistence.entity.user.Personal;
-import ua.com.alevel.persistence.entity.user.User;
 import ua.com.alevel.persistence.type.OrderStatus;
 import ua.com.alevel.service.OrderService;
 import ua.com.alevel.service.store.CubeService;

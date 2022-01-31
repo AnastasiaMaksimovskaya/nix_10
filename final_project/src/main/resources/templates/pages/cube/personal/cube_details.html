@@ -204,7 +204,7 @@
         <div class="card card-product-grid right">
             <a href="#" class="title" data-abc="true" th:text="${cube.getName()}">name</a>
             <div class="bottom-wrap">
-                <a th:href="@{'/personal/buy/' + ${cube.getId()}}">
+                <a th:href="@{'buy/' + ${cube.getId()}}">
                     <button type="button" class="btn btn-success float-right" data-abc="true"
                             th:disabled="${!cube.getVisible()}">
                         добавить в корзину 🛒</button>

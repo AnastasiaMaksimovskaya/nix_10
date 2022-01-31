@@ -33,6 +33,9 @@
                             <td th:text="${cube.getName()}"></td>
                             <td th:text="${cube.getBrand().getName()}"></td>
                             <td th:text="${cube.getPrice()}"></td>
+                            <td>
+                                <a th:href="@{'/personal/cart/delete/' + ${cube.getId()}}" type="button" class="btn btn-danger">удалить</a>
+                            </td>
                         </tr>
                     </table>
                 </div>

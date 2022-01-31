@@ -6,13 +6,11 @@ import ua.com.alevel.facade.BrandFacade;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.store.Brand;
-import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.service.store.BrandService;
 import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.util.WebResponseUtil;
 import ua.com.alevel.view.dto.request.BrandRequestDto;
 import ua.com.alevel.view.dto.response.BrandResponseDto;
-import ua.com.alevel.view.dto.response.CubeResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 
 import java.util.Date;
@@ -48,7 +46,7 @@ public class BrandFacadeImpl implements BrandFacade {
         Brand brand = brandService.findById(id).get();
         String name = brandRequestDto.getName();
         brand.setUpdated(new Date(System.currentTimeMillis()));
-        if (!name.isBlank()){
+        if (!name.isBlank()) {
             brand.setName(name);
         }
         brand.setCountry(brandRequestDto.getCountry());
@@ -77,5 +75,6 @@ public class BrandFacadeImpl implements BrandFacade {
 
         PageData<BrandResponseDto> pageData = (PageData<BrandResponseDto>) WebResponseUtil.initPageData(tableResponse);
         pageData.setItems(brands);
-        return pageData;    }
+        return pageData;
+    }
 }

@@ -13,7 +13,6 @@ import ua.com.alevel.facade.*;
 import ua.com.alevel.persistence.entity.store.Cube;
 import ua.com.alevel.persistence.entity.store.Shop;
 import ua.com.alevel.persistence.entity.user.Personal;
-import ua.com.alevel.persistence.entity.user.User;
 import ua.com.alevel.view.dto.request.OrderRequestDto;
 import ua.com.alevel.view.dto.response.CubePLPDto;
 import ua.com.alevel.view.dto.response.PageData;
@@ -52,8 +51,8 @@ public class PersonaController {
     private String dashboard(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Personal user = orderFacade.findUserByEmail(auth.getName());
-        model.addAttribute("user",user);
-        model.addAttribute("orders",user.getOrders());
+        model.addAttribute("user", user);
+        model.addAttribute("orders", user.getOrders());
         return "pages/personal/dashboard";
     }
 
@@ -80,7 +79,7 @@ public class PersonaController {
                 }
             });
         }
-        if (plpFacade.getCart().stream().filter(cube -> Objects.equals(cube.getId(), id)).count() >0){
+        if (plpFacade.getCart().stream().filter(cube -> Objects.equals(cube.getId(), id)).count() > 0) {
             return new ModelAndView("redirect:/personal/cart", model);
         }
         plpFacade.addToCart(id);
@@ -90,7 +89,10 @@ public class PersonaController {
     @PostMapping("/create")
     public String create(@ModelAttribute("order") OrderRequestDto dto) {
         List<Cube> newList = new ArrayList<>();
-        plpFacade.getCart().stream().forEach(cube -> {cube.setAmount(cube.getAmount()-1); newList.add(cube);});
+        plpFacade.getCart().stream().forEach(cube -> {
+            cube.setAmount(cube.getAmount() - 1);
+            newList.add(cube);
+        });
         dto.setList(newList);
         orderFacade.create(dto);
         plpFacade.setCart(new ArrayList<>());
@@ -100,29 +102,41 @@ public class PersonaController {
     @GetMapping("/cart")
     public String redirectToCartPage(Model model) {
 
-        if (plpFacade.getCart().size()==0){
+        if (plpFacade.getCart().size() == 0) {
             return "pages/empty_cart";
         }
-
-        shopFacade.findAll().stream().forEach(s-> System.out.println("s.getCubes() = " + s.getCubes()));
-
-        List<Shop> shopList = shopFacade.findAll().stream().filter(shop ->  contain(plpFacade.getCart(),shop.getCubes())).collect(Collectors.toList());
-        System.out.println("shopList = " + shopList);
+        List<Shop> shopList = shopFacade.findAll().stream().filter(shop -> contain(plpFacade.getCart(), shop.getCubes())).collect(Collectors.toList());
         model.addAttribute("shops", shopList);
         model.addAttribute("cubes", plpFacade.getCart());
         model.addAttribute("order", new OrderRequestDto());
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication());
         return "pages/order/order_new";
     }
-    private boolean contain(List<Cube> list, Set<Cube> set){
+
+    @GetMapping("/cart/delete/{id}")
+    public String deleteFromCart(@PathVariable Long id) {
+        List<Long> newCartId = new ArrayList<>();
+        plpFacade.getCartId().stream().filter(i -> !Objects.equals(i, id)).forEach(i -> newCartId.add(i));
+        plpFacade.setCart(newCartId);
+        return "redirect:/personal/cart";
+    }
+
+    @GetMapping("/{id}")
+    public String redirectToNewCubePage(@PathVariable Long id, Model model) {
+        model.addAttribute("cube", cubeFacade.findById(id));
+        model.addAttribute("shops", cubeFacade.findAllShopsByProductId(id));
+        return "pages/cube/personal/cube_details";
+    }
+
+    private boolean contain(List<Cube> list, Set<Cube> set) {
         List<Cube> listFromSet = new ArrayList<>(set);
         List<Long> idList = new ArrayList<>();
         List<Long> idListFromSet = new ArrayList<>();
         list.stream().forEach(cube -> idList.add(cube.getId()));
         listFromSet.stream().forEach(cube -> idListFromSet.add(cube.getId()));
 
-        for (Long id:idList) {
-            if (!idListFromSet.contains(id)){
+        for (Long id : idList) {
+            if (!idListFromSet.contains(id)) {
                 return false;
             }
         }

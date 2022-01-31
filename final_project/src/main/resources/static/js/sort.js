@@ -32,3 +32,11 @@ for (let button of elementListSort) {
     })
 }
 
+function showOnPage(size){
+    var pos1 = baseUrlSort.indexOf('size=');
+    var pos2 = baseUrlSort.indexOf('&',pos1+1);
+    newUrlSort=baseUrlSort.replace(baseUrlSort.substring(pos1,pos2),'size='+size);
+    history.replaceState(null, null, newUrlSort);
+    location.reload();
+}
+

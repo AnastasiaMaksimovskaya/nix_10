@@ -31,27 +31,27 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void create(Order entity) {
-        crudRepositoryHelper.create(orderRepository,entity);
+        crudRepositoryHelper.create(orderRepository, entity);
     }
 
     @Override
     public void update(Order entity) {
-        crudRepositoryHelper.update(orderRepository,entity);
+        crudRepositoryHelper.update(orderRepository, entity);
     }
 
     @Override
     public void delete(Long id) {
-        crudRepositoryHelper.delete(orderRepository,id);
+        crudRepositoryHelper.delete(orderRepository, id);
     }
 
     @Override
     public Optional<Order> findById(Long id) {
-        return crudRepositoryHelper.findById(orderRepository,id);
+        return crudRepositoryHelper.findById(orderRepository, id);
     }
 
     @Override
     public DataTableResponse<Order> findAll(DataTableRequest request) {
-        return crudRepositoryHelper.findAll(orderRepository,request);
+        return crudRepositoryHelper.findAll(orderRepository, request);
     }
 
     @Override

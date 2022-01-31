@@ -41,7 +41,6 @@ public class CubeFacadeImpl implements CubeFacade {
     @Override
     public void create(CubeRequestDto cubeRequestDto) {
         Cube cube = new Cube();
-//        cube.setBrand(brandService.findById(cubeRequestDto.getBrandId()).get());
         cube.setName(cubeRequestDto.getProductName());
         cube.setPrice(cubeRequestDto.getPrice());
         cube.setDescription(cubeRequestDto.getDescription());
@@ -75,12 +74,9 @@ public class CubeFacadeImpl implements CubeFacade {
         String description = cubeRequestDto.getDescription();
         String name = cubeRequestDto.getProductName();
         String image = cubeRequestDto.getImage();
-        CubeCategory category = cubeRequestDto.getCategory();
-        Long brandId = cubeRequestDto.getBrandId();
         cube.setUpdated(new Date(System.currentTimeMillis()));
         Integer amount = cubeRequestDto.getAmount();
         cube.setPrice(price);
-
         cube.setDescription(description);
         cube.setName(name);
         cube.setImage(image);
@@ -119,5 +115,10 @@ public class CubeFacadeImpl implements CubeFacade {
     @Override
     public Map<Long, String> findAllShopsByProductId(Long shopId) {
         return cubeService.findAllShopsByProductId(shopId);
+    }
+
+    @Override
+    public Cube findCubeById(Long id) {
+        return cubeService.findById(id).get();
     }
 }

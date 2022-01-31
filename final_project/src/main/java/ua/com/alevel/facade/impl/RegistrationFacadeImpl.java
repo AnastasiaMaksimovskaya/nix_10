@@ -26,7 +26,6 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
         personal.setPassword(dto.getPassword());
         personal.setFirstName(dto.getFirstName());
         personal.setLastName(dto.getLastName());
-        System.out.println("personal = " + personal);
         personalService.create(personal);
     }
 }

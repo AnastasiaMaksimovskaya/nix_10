@@ -18,6 +18,7 @@ function runSort(sort, order) {
 }
 
 function submitRequest(sort, order, page, size) {
+    let url = window.location.href;
     let personalSearchSubmit = document.getElementById('personalSearchSubmit');
     if (personalSearchSubmit !== null) {
         let personalSearch = document.getElementById('personalSearch');
@@ -42,6 +43,13 @@ function submitRequest(sort, order, page, size) {
             input.setAttribute("name", "size");
             input.setAttribute("value", size);
             personalSearch.appendChild(input);
+            if(url.includes('brand')){
+                input = document.createElement("input");
+                input.setAttribute("type", "hidden");
+                input.setAttribute("name", "brand");
+                input.setAttribute("value", url.substring(url.lastIndexOf('=')+1).replaceAll(',','-'));
+                personalSearch.appendChild(input);
+            }
             personalSearchSubmit.click();
         }
     }

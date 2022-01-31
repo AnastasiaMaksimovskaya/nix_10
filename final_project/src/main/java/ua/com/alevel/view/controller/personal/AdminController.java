@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.com.alevel.facade.OrderFacade;
 import ua.com.alevel.persistence.entity.user.Admin;
-import ua.com.alevel.persistence.entity.user.User;
 
 @Controller
 @RequestMapping("/admin/dashboard")
@@ -21,10 +20,10 @@ public class AdminController {
     }
 
     @GetMapping
-    public String details (Model model) {
+    public String details(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Admin admin =orderFacade.findAdminByEmail(auth.getName());
-        model.addAttribute("admin",admin);
+        Admin admin = orderFacade.findAdminByEmail(auth.getName());
+        model.addAttribute("admin", admin);
         return "pages/admin/dashboard";
     }
 

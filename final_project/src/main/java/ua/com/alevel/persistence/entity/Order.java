@@ -11,43 +11,40 @@ import ua.com.alevel.persistence.type.OrderStatus;
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "orders")
-public class Order extends BaseEntity{
+public class Order extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @ManyToOne(cascade = {
-//            CascadeType.MERGE
     })
     private Shop shop;
 
-    @ManyToMany(mappedBy = "orders",cascade = {
+    @ManyToMany(mappedBy = "orders", cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
     private Set<Cube> cubes;
 
     @ManyToOne(cascade = {
-//            CascadeType.MERGE
     })
     private User user;
 
-    public Order(){
+    public Order() {
         super();
         this.cubes = new HashSet<>();
     }
 
-
     @PreRemove
-    private void removeOrder(){
-        this.getCubes().stream().forEach(cube -> {cube.setAmount(cube.getAmount()+1);
+    private void removeOrder() {
+        this.getCubes().stream().forEach(cube -> {
+            cube.setAmount(cube.getAmount() + 1);
             cube.getOrders().remove(this);
             ProductVisibleGenerationListener.generateCubeVisible(cube);
         });
